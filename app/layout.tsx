@@ -42,14 +42,15 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   icons: {
+    // Les fichiers du template sont en realite des PNG (signature 89 50 4E 47)
+    // mal renommes en .ico. On pointe vers l'extension reelle, sinon le
+    // navigateur rejette le favicon et affiche son icone par defaut.
     icon: [
-      // favicon.ico est un PNG renomme : on declare aussi le PNG explicitement
-      // pour que les navigateurs modernes l'affichent correctement.
-      { url: "/favicon.ico", sizes: "256x256", type: "image/png" },
-      { url: "/favicon.ico", sizes: "16x16", type: "image/png" },
+      { url: "/logo.png", type: "image/png", sizes: "256x256" },
+      { url: "/logo.png", type: "image/png", sizes: "32x32" },
+      { url: "/logo.png", type: "image/png", sizes: "16x16" },
     ],
-    apple: "/favicon.ico",
-    shortcut: "/favicon.ico",
+    apple: { url: "/logo.png", type: "image/png", sizes: "180x180" },
   },
 };
 
