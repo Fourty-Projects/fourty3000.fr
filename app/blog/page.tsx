@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { formatDate, getBlogPosts } from "app/lib/posts";
 
+export const dynamic = "force-static";
+
 export const metadata = {
   title: "Blog",
   description: "Nextfolio Blog",

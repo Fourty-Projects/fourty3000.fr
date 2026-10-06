@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { socialLinks } from "./lib/config";
 
+export const dynamic = "force-static";
+
 export default function Page() {
   return (
     <section>

@@ -3,6 +3,8 @@ import { getBlogPosts } from "app/lib/posts";
 import { metaData } from "app/lib/config";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-static";
+
 export async function generateStaticParams() {
   return [
     { format: "rss.xml" },

@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { projects } from "./project-data";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Projects",
   description: "Nextfolio Projects",
