@@ -1,0 +1,190 @@
+---
+title: "Markdown : le guide complet pour'écrire sur ce blog"
+publishedAt: "2026-10-06"
+summary: "Apprenez la syntaxe Markdown, les composants MDX disponibles sur ce blog, et les bonnes pratiques pour formater vos articles."
+tags: "Markdown, Rédaction, Guide"
+---
+
+Markdown est un langage de balisage léger qui permet d'écrire du texte formaté
+avec une syntaxe simple et lisible. C'est le format utilisé pour tous les articles
+de ce blog.
+
+Ce guide couvre les bases, puis les composants MDX supplémentaires que ce site
+ajoute.
+
+## Les bases du formatage
+
+### Titres
+
+Le nombre de `#` détermine le niveau. Utilisez un seul `#` pour le titre
+principal, et ne descendez pas au-delà de `###` sans raison.
+
+```
+# Titre de niveau 1
+## Titre de niveau 2
+### Titre de niveau 3
+```
+
+### Gras, italique et barré
+
+```
+**Gras**
+*Italique*
+~~Barré~~
+```
+
+Le GFM (GitHub Flavored Markdown) ajoute le barré. Dans les autres formes, vous
+pouvez aussi écrire `__Gras__` et `_Italique_`.
+
+### Listes
+
+Trois types, très utiles à connaître.
+
+```
+- Liste à puces
+- Deuxième élément
+  - Imbriqué
+
+1. Liste numérotée
+2. Deuxième étape
+
+- [x] Tâche faite
+- [ ] Tâche à faire
+```
+
+Le dernier format produit des cases à cocher, pratique pour une liste de
+vérification.
+
+### Citations
+
+```
+> Une citation se marque avec un chevron.
+> Elle peut s'étendre sur plusieurs lignes.
+```
+
+### Liens et images
+
+```
+[Texte affiché](https://example.com)
+![Texte alternatif](/photos/image.jpg)
+```
+
+Le texte alternatif est important : il s'affiche si l'image ne charge pas, et
+c'est ce que lisent les lecteurs d'écran.
+
+### Filets horizontaux
+
+Trois tirets sur une ligne isolée :
+
+```
+---
+```
+
+Attention : cette syntaxe entre en conflit avec le début du frontmatter.
+N'en mettez pas juste sous le bloc de métadonnées.
+
+### Échappement
+
+Certains caractères ont une signification spéciale. Pour les afficher
+tels quels, precede-les d'une barre oblique inverse.
+
+```
+\*Pas d'italique ici\*
+```
+
+## Les blocs de code
+
+Utilisez trois accents graves pour ouvrir et fermer un bloc. Indiquez le langage
+après les accents pour activer la coloration syntaxique.
+
+````
+```python
+def hello(name: str) -> str:
+    return f"Bonjour {name}"
+```
+````
+
+Pour afficher du texte contenant des accents graves, encadrez le bloc avec
+**quatre** accents graves, comme ci-dessus.
+
+## Les composants de ce blog
+
+Ce site utilise MDX, une extension de Markdown qui permet d'inclure des
+composants React. Les composants suivants sont disponibles dans vos articles.
+
+### Encadrés
+
+```
+<Callout emoji="💡">
+  Un encadré pour attirer l'attention sur une information importante.
+</Callout>
+```
+
+### Légendes
+
+```
+<Caption>
+  Une légende sous une image, dont le texte s'équilibre automatiquement.
+</Caption>
+```
+
+### Tableaux
+
+Passez les en-têtes et les lignes via la prop `data`.
+
+```
+<Table
+  data={{
+    headers: ["Syntaxe", "Rendu"],
+    rows: [
+      ["**Gras**", "Gras"],
+      ["*Italique*", "Italique"],
+    ],
+  }}
+/>
+```
+
+### Grilles d'images
+
+```
+<ImageGrid
+  columns={3}
+  images={[
+    { src: "/photos/1.jpg", alt: "Première image" },
+    { src: "/photos/2.jpg", alt: "Deuxième image" },
+  ]}
+/>
+```
+
+Le champ `href` est facultatif : ajoutez-le pour rendre l'image cliquable.
+
+## Bonnes pratiques
+
+**Utilisez des phrases courtes.** Le Markdown sert à mettre en forme, pas à
+compenser un texte mal structuré. Si un paragraphe dépasse cinq lignes, il
+appelle probablement à être découpé.
+
+**Ne sautez pas de niveau de titre.** Passez de `##` à `####` est une erreur
+d'accessibilité : les lecteurs d'écran s'en servent pour construire la table des
+matières de la page.
+
+**Un diagramme par section longue.** Au-delà de trois ou quatre paragraphes,
+intercalez une liste ou un bloc de code. Cela aère le texte et le rend plus
+rapide à parcourir.
+
+**Reliez vos articles.** Un fil entre deux articles récemment publiés améliore
+le temps de lecture et aide votre lectorat à trouver la suite. Utilisez un lien
+classique vers l'URL de l'article.
+
+**Soignez vos Alternatives d'image.** Une description honnête vaut mieux que
+`image.png` comme texte alternatif.
+
+## Ce que Markdown ne fait pas
+
+Markdown ne gère pas la mise en page. Vous ne pouvez pas créer de colonnes,
+changer la taille d'une police ni gérer l'alignement du texte. Si vous avez
+besoin de mise en page avancée, il faut passer par du HTML ou un composant
+spécifique.
+
+C'est une limitation volontaire : le format reste lisible dans un éditeur de
+texte, sans logiciel particulier, et converti en HTML de façon fiable.
