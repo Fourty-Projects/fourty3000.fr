@@ -8,11 +8,13 @@ interface ImageGridProps {
     href?: string;
   }[];
   columns?: 2 | 3 | 4; // Accepts 2, 3, or 4 columns
+  eager?: boolean; // If true, images load eagerly (for above-the-fold content)
 }
 
 export const ImageGrid: React.FC<ImageGridProps> = ({
   images,
   columns = 3,
+  eager = false,
 }) => {
   const gridClass = {
     2: "grid-cols-2 sm:grid-cols-2",
@@ -37,7 +39,8 @@ export const ImageGrid: React.FC<ImageGridProps> = ({
                   src={image.src}
                   fill
                   sizes="(max-width: 768px) 50vw, 33vw"
-                  priority
+                  priority={eager}
+                  loading={eager ? undefined : "lazy"}
                   className="rounded-lg object-cover"
                 />
               </a>
@@ -47,7 +50,8 @@ export const ImageGrid: React.FC<ImageGridProps> = ({
                 src={image.src}
                 fill
                 sizes="(max-width: 768px) 50vw, 33vw"
-                priority
+                priority={eager}
+                loading={eager ? undefined : "lazy"}
                 className="rounded-lg object-cover"
               />
             )}
