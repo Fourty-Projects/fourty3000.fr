@@ -107,13 +107,7 @@ export default function TermsOfService() {
           qui fait partie intégrante des présentes CGU.
         </p>
 
-        <h2>Article 8 — Publicité et liens sponsorisés</h2>
-        <p>
-          <strong>[À COMPLÉTER — supprimer cette clause si le site ne comporte
-          aucun contenu sponsorisé ou publicitaire]</strong>
-        </p>
-
-        <h2>Article 9 — Droit applicable et juridiction compétente</h2>
+        <h2>Article 8 — Droit applicable et juridiction compétente</h2>
         <p>
           Les présentes CGU sont soumises au droit français. En cas de litige,
           une solution amiable sera recherchée avant toute action judiciaire.
@@ -124,7 +118,7 @@ export default function TermsOfService() {
           prévues par le Code de procédure civile s&apos;appliquent.
         </p>
 
-        <h2>Article 10 — Modification des CGU</h2>
+        <h2>Article 9 — Modification des CGU</h2>
         <p>
           L&apos;éditeur se réserve le droit de modifier les présentes CGU à
           tout moment. Les CGU en vigueur sont celles consultables sur cette
