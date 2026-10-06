@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import {
   FaXTwitter,
   FaGithub,
@@ -12,6 +13,12 @@ import { TbMailFilled } from "react-icons/tb";
 import { metaData, socialLinks } from "app/lib/config";
 
 const YEAR = new Date().getFullYear();
+
+const legalLinks = [
+  { href: "/mentions-legales", name: "Mentions légales" },
+  { href: "/cgu", name: "CGU" },
+  { href: "/politique-confidentialite", name: "Politique de confidentialité" },
+];
 
 function SocialLink({ href, icon: Icon }) {
   return (
@@ -27,7 +34,9 @@ function SocialLinks() {
       <SocialLink href={socialLinks.twitter} icon={FaXTwitter} />
       <SocialLink href={socialLinks.github} icon={FaGithub} />
       <SocialLink href={socialLinks.instagram} icon={FaInstagram} />
-      <SocialLink href={socialLinks.linkedin} icon={FaLinkedinIn} />
+      <SocialLink href={socialLinks.youtube} icon={FaLinkedinIn} />
+      <SocialLink href={socialLinks.tiktok} icon={FaLinkedinIn} />
+      <SocialLink href={socialLinks.discord} icon={FaLinkedinIn} />
       <SocialLink href={socialLinks.email} icon={TbMailFilled} />
       <a href="/rss.xml" target="_self">
         <FaRss />
@@ -38,25 +47,42 @@ function SocialLinks() {
 
 export default function Footer() {
   return (
-    <small className="block lg:mt-24 mt-16 text-[#1C1C1C] dark:text-[#D4D4D4]">
-      <time>© {YEAR}</time>{" "}
-      <a
-        className="no-underline"
-        href={socialLinks.twitter}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {metaData.title}
-      </a>
-      <style jsx>{`
-        @media screen and (max-width: 480px) {
-          article {
-            padding-top: 2rem;
-            padding-bottom: 4rem;
+    <footer className="block lg:mt-24 mt-16 text-[#1C1C1C] dark:text-[#D4D4D4]">
+      <small>
+        <time>© {YEAR}</time>{" "}
+        <a
+          className="no-underline"
+          href={socialLinks.twitter}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {metaData.title}
+        </a>
+        <style jsx>{`
+          @media screen and (max-width: 480px) {
+            article {
+              padding-top: 2rem;
+              padding-bottom: 4rem;
+            }
           }
-        }
-      `}</style>
-      <SocialLinks />
-    </small>
+        `}</style>
+        <SocialLinks />
+      </small>
+
+      <nav
+        aria-label="Liens légaux"
+        className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs"
+      >
+        {legalLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="no-underline hover:underline"
+          >
+            {link.name}
+          </Link>
+        ))}
+      </nav>
+    </footer>
   );
 }
