@@ -28,7 +28,7 @@ export default function Page() {
         />
         <div className="min-w-0">
           <h1 className="text-2xl font-medium leading-tight">{metaData.name}</h1>
-          <p className="text-neutral-600 dark:text-neutral-400 text-sm">
+          <p className="mt-1 text-neutral-600 dark:text-neutral-400">
             Développeur &amp; passionné par l&apos;IA
           </p>
         </div>
@@ -38,9 +38,9 @@ export default function Page() {
         <p>{metaData.description}</p>
         <p>
           Je partage ici mes{" "}
-          <Link href="/projects">projets open source</Link>, mes{" "}
-          <Link href="/blog">réflexions sur le développement</Link> et mes
-          photos. Le code de ce site est{" "}
+          <Link href="/projects">projets open source</Link> et mes{" "}
+          <Link href="/blog">réflexions sur le développement</Link>. Le code de
+          ce site est{" "}
           <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
             open source
           </a>

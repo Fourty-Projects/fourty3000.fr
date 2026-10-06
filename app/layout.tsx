@@ -42,7 +42,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      // favicon.ico est un PNG renomme : on declare aussi le PNG explicitement
+      // pour que les navigateurs modernes l'affichent correctement.
+      { url: "/favicon.ico", sizes: "256x256", type: "image/png" },
+      { url: "/favicon.ico", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/favicon.ico",
+    shortcut: "/favicon.ico",
   },
 };
 
