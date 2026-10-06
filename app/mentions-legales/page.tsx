@@ -23,40 +23,28 @@ export default function LegalNotice() {
         <h2>Éditeur du site</h2>
         <ul>
           <li>
-            Nom / dénomination sociale : <strong>[À COMPLÉTER]</strong>
+            Nom / dénomination sociale : <strong>Fourty3000</strong>
           </li>
           <li>
-            Statut juridique : <strong>[À COMPLÉTER : auto-entrepreneur, EI, EURL…]</strong>
-          </li>
-          <li>
-            SIRET / SIREN : <strong>[À COMPLÉTER]</strong>
-          </li>
-          <li>
-            Adresse du siège social : <strong>[À COMPLÉTER]</strong>
+            Statut juridique : <strong>Personne physique</strong>
           </li>
           <li>
             Courriel : <a href="mailto:fourty3000@gmail.com">fourty3000@gmail.com</a>
-          </li>
-          <li>
-            Téléphone : <strong>[À COMPLÉTER — obligatoire uniquement pour les professionnels]</strong>
           </li>
         </ul>
 
         <h2>Directeur de la publication</h2>
         <p>
-          <strong>[À COMPLÉTER — nom et prénom du directeur de la publication]</strong>
+          <strong>Fourty3000</strong>
         </p>
 
         <h2>Hébergeur du site</h2>
         <ul>
           <li>
-            Raison sociale : <strong>Amber Hosting</strong>
+            Raison sociale : <strong>Fourty3000</strong>
           </li>
           <li>
-            Adresse : <strong>[À COMPLÉTER — adresse postale de l&apos;hébergeur]</strong>
-          </li>
-          <li>
-            Téléphone : <strong>[À COMPLÉTER]</strong>
+            Adresse : <strong>Adresse personnelle, hébergement privé / encadré</strong>
           </li>
         </ul>
 
@@ -77,8 +65,7 @@ export default function LegalNotice() {
 
         <h2>Crédits</h2>
         <p>
-          Site réalisé avec Next.js et Tailwind CSS. Les photographies
-          proviennent d&apos;Unsplash.
+          Site réalisé avec Next.js et Tailwind CSS.
         </p>
 
         <h2>Contact</h2>

@@ -21,7 +21,7 @@ export default function TermsOfService() {
           <strong>Fourty3000.fr</strong> (ci-après « le Site »), édité par{" "}
           <strong>Fourty3000</strong>.
         </p>
-        <p>Dernière mise à jour : <strong>[À COMPLÉTER]</strong></p>
+        <p>Dernière mise à jour : <strong>06/10/2026</strong></p>
 
         <h2>Article 1 — Objet</h2>
         <p>

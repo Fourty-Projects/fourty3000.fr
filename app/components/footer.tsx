@@ -7,7 +7,6 @@ import {
   FaGithub,
   FaInstagram,
   FaRss,
-  FaLinkedinIn,
   FaYoutube,
   FaTiktok,
   FaDiscord,
