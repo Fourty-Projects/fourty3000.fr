@@ -8,8 +8,6 @@ const nextConfig: NextConfig = {
   // Reduit le pic de RAM pendant next build (experimental mais faible risque)
   experimental: {
     webpackMemoryOptimizations: true,
-    // Pas de prechargement des pages au demarrage -> demarrage plus leger
-    preloadEntriesOnStart: false,
   },
 
   // Les source maps consomment beaucoup de RAM et de disque au build
