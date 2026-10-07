@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter } from "next/font/google";
 import { Navbar } from "./components/nav";
 import { Analytics } from "@vercel/analytics/react";
@@ -94,6 +95,23 @@ export default function RootLayout({
             <Footer />
             <Analytics />
             <SpeedInsights />
+            {/* Widget de discussion Brevo Conversations.
+                lazyOnload : injecte le script apres le chargement de la page,
+                sans bloquer ni ralentir le rendu initial. */}
+            <Script id="brevo-conversations" strategy="lazyOnload">
+              {`
+                (function(d, w, c) {
+                  w.BrevoConversationsID = '6ac643e82967d1b71007818a';
+                  w[c] = w[c] || function() {
+                    (w[c].q = w[c].q || []).push(arguments);
+                  };
+                  var s = d.createElement('script');
+                  s.async = true;
+                  s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
+                  if (d.head) d.head.appendChild(s);
+                })(document, window, 'BrevoConversations');
+              `}
+            </Script>
           </main>
         </ThemeProvider>
       </body>

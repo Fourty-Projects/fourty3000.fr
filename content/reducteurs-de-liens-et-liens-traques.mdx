@@ -1,0 +1,313 @@
+---
+title: "Réducteurs de liens et liens traqués : ce qu'il faut savoir avant de cliquer"
+publishedAt: "2026-10-07"
+summary: "Un lien d'activation de compte ne pointe pas toujours vers le domaine attendu. Explication des réducteurs de liens, du tracking des clics et des moyens de vérifier une URL avant de cliquer."
+tags: "Sécurité, Vie privée, Web"
+---
+
+Un fait divers banal : vous recevez un courriel d'activation de compte. Le texte
+du lien annonce un site que vous connaissez. Vous cliquez. Le site est le bon.
+
+Sauf que non. Si vous aviez inspecté l'adresse réelle avant de cliquer, vous
+auriez découvert qu'il ne s'agissait pas du domaine annoncé.
+
+C'est exactement ce qui est arrivé à un membre du forum iode, un OS français
+axé sur la vie privée. Dans un fil de discussion de mai 2023, il rapporte avoir
+été averti par Thunderbird que le lien d'activation de son compte ne menait pas
+au domaine attendu :
+
+```
+Texte affiché : https://community.iode.tech/u/activate-account/abcdefg…
+URL réelle    : https://debadcg.r.bh.d.sendibt3.com/tr/cl/hijklmnopqrs…
+```
+
+Il souligne le paradoxe : « Je ne m'attendais pas à cela de la part d'un système
+d'exploitation orienté vie privée. »
+
+## Ce qu'est un réducteur de liens
+
+Un réducteur de liens (*URL shortener*) transforme une adresse longue en une
+autre, beaucoup plus courte :
+
+```
+https://example.fr/une/page/tres/longue/avec/beaucoup/parametres?utm_source=x
+        ↓
+https://exemple.fr/aB3xYz
+```
+
+La raison d'être est pratique : un lien court occupe moins de place sur un
+écran de téléphone et consomme moins de caractères dans une publication dont la
+longueur est limitée par la plateforme.
+
+Le raccourcissement n'est qu'un détour. Quand vous cliquez, le service de
+réduction reçoit la requête, enregistre des informations, puis vous redirige
+vers la destination. Ce passage par un intermédiaire est le cœur du problème, et
+Kaspersky le formule ainsi dans son analyse des liens courts : « vos données
+finissent entre les mains non seulement du créateur du lien court, mais aussi
+du propriétaire du réducteur ».
+
+## Pourquoi les liens sont traqués
+
+Le tracking des clics répond à une question simple pour un expéditeur de
+newsletters : *quel lien a produit le plus de clics ?*
+
+Pour y répondre, il interpose sa propre adresse devant la destination. Le
+membre du forum iode avait reçu un courriel parfaitement légitime, envoyé par le
+logiciel Discourse lui-même. L'éditeur du forum a ensuite confirmé le
+mécanisme :
+
+> « nous utilisons sendinblue comme service d'email qui, par défaut,
+> redirige tous les liens. »
+
+Autrement dit, ce comportement n'était ni un bug ni une malveillance, mais un
+choix par défaut de la plateforme d'email utilisée.
+
+Le domaine `sendibt3.com` appartient à **Brevo** (anciennement Sendinblue), une
+entreprise française de marketing email. Leur documentation officielle confirme
+le principe :
+
+> « Brevo utilise la redirection de liens pour suivre les clics. Le suivi permet
+> d'accéder au nombre de clics par lien, à une liste des contacts ayant cliqué
+> sur chaque lien, et à la carte de chaleur. Cela n'affecte pas la destination du
+> lien : vos contacts sont toujours redirigés vers les pages que vous avez
+> sélectionnées. »
+
+Ce que l'utilisateur ne voit pas : **quand** il a cliqué, **depuis quelle
+adresse IP**, avec quel **agent utilisateur**, et le **nombre de fois** qu'il a
+cliqué. Cette dernière donnée est celle qui permet de déduire s'il a ouvert le
+message, et s'il l'a lu ou seulement cliqué.
+
+### Un troisième intermédiaire
+
+Le tracking peut se combiner à des paramètres de campagne, les fameux *UTM
+tags*, qui encodent la source du trafic. Alone, ils restent inoffensifs : le
+marketer cherche à savoir d'où viennent ses visiteurs.
+
+Combinés à un réducteur, vos données aboutissent chez **deux** acteurs au lieu
+d'un seul. Vous ne savez plus qui détient votre historique de navigation.
+
+## Les risques concrets
+
+### La destination devient invisible
+
+Le conseil habituel face à un lien suspect est de vérifier la destination avant
+de cliquer. Avec un réducteur, ce conseil ne sert à rien : la destination réelle
+n'est connue qu'après le clic.
+
+C'est le point que souligne Kaspersky : « si les cybercriminels utilisent des
+liens courts, le conseil de les vérifier devient vide de sens : vous ne pouvez
+savoir où il vous mène qu'après avoir cliqué. »
+
+### La destination peut changer
+
+Le second risque, plus pervers, est que la cible est **modifiable après coup**.
+
+Un attaquant envoie des milliers de faux messages d'hameçage pointant vers un
+service de redirection. Sa page de phishing est bientôt signalée et bloquée. Plutôt que de renvoyer des milliers de courriels, il modifie la destination du lien de redirection : la nouvelle cible sert à la même campagne.
+
+Les courriels déjà distribués restent valides, et la campagne continue avec une
+page neuve. C'est ce que Kaspersky décrit comme des redirections dynamiques, un
+mécanisme qui « brouille la piste ».
+
+### Un intermédiaire en position d'espion
+
+Certains outils ne se contentent pas de rediriger. Ils proposent aussi de
+**suivre ce que vous faites après avoir cliqué** : votre adresse IP, le temps
+passé sur la page, et dans certains cas les données que vous y saisissez. Votre
+trafic passe alors par un serveur intermédiaire qui observe tout l'échange, ce
+qui constitue une attaque par l'homme du milieu.
+
+### Le phishing personnalisé
+
+Un lien reçu en message privé, dans un courriel nominatif, permet à l'attaquant
+de informations déjà connues sur votre profil : adresse électronique, banque,
+numéro de
+téléphone. Le lien peut mener vers une copie de votre banque affichant votre
+identifiant pré-rempli, ne demandant que le mot de passe. La crédibilité de la
+page augmente parce que les informations sont vraies.
+
+## Le cas particulier des emails d'activation
+
+L'exemple d'iode mérite un examen à part, car il montre que le problème ne se
+limite pas au spam.
+
+Un lien d'activation est le plus fiable possible : il est censé mener au site
+qui vous envoie le message, et l'adresse affichée le confirme. C'est
+précisément ce qui rend la redirection déloyale : elle exploite la confiance
+accordée au message.
+
+Le lien de votre exemple présente la même structure :
+
+```
+https://bbjbdaair.bh.d.sendibt3.com/tr/cl/Vf0-Ak3_syxSZFd…
+```
+
+Reconnaissons le motif :
+
+| Fragment | Signification |
+| -------- | ------------- |
+| `bbjbdaair` | identifiant aléatoire du compte d'envoi |
+| `.bh` | sous-domaine de région ou de nœud |
+| `.d.sendibt3.com` | domaine de redirection de Brevo |
+| `/tr/cl/` | *track/click* : suivi des clics |
+| `Vf0-…` | identifiant unique du lien et de la campagne |
+
+Le chemin `/tr/cl/` est la signature du mécanisme. Si vous le voyez apparaître
+dans un courriel, vous savez que le clic sera mesuré.
+
+Ce qui rend ces domaines _
+sensibles_ : leur réputation. Le domaine `sendibt3.com` a fait l'objet de
+plaintes pour abus de réseau, notamment via le formulaire de signalement
+d'Abuse.net. Les logicielles de messagerie et les solutions de sécurité
+classent
+progressivement ce type de domaine dans leurs listes de blocage. Conséquence
+pratique : **un courriel légitime peut finir en spam** à cause du domaine de
+redirection de l'expéditeur.
+
+C'est le paradoxe du tracking : la mesure d'audience dégrade la délivrabilité.
+
+## Comment vérifier un lien
+
+### La méthode la plus simple : ne pas cliquer
+
+ Survolez le lien sans cliquer et lisez la barre d'état en bas de la fenêtre,
+qui affiche la vraie destination. La plupart des lecteurs de courriels font de
+même. Si l'adresse affichée ne correspond pas au site attendu, n'insistez pas.
+
+### Vérifier le HTML du message
+
+Si le lien vous semble normal, consultez la source du message
+(`Ctrl+U` dans un navigateur, ou la fonction « afficher le message brut ») et
+cherchez l'attribut `href`. Vous verrez le lien réel, y compris quand le texte
+affiché ne correspond pas — c'est ainsi que Thunderbird a alerté le membre du
+forum iode.
+
+### Développer un lien court
+
+Les services comme unshorten.it ou getlinkinfo.com affichent la destination
+d'une URL raccourcie sans la visiter. Pratique pour un lien received dans un
+SMS, où le survol est impossible.
+
+### Analyser l'adresse sans la ouvrir
+
+La structure d'une URL raconte son histoire. Les éléments à examiner :
+
+- **le domaine de premier niveau**, le plus important. Lisez la fin, pas le
+  début. `google.com.tracking.example.net` est un site `example.net` avec un
+  sous-domaine qui imite Google ;
+- **la présence d'une IP brute** à la place d'un nom de domaine ;
+- **le nombre de segments** séparés par des `/`. Un path profond et incoherent
+  est un signal d'alerte ;
+- **les tirets bas** ou les caractères inhabituels dans le domaine ;
+- **une extension inhabituelle** pour le contenu annoncé.
+
+### Se méfier du contexte
+
+Aucun de ces indicateurs n'est suffisant seul. Un lien d'activation qui arrive
+sans que vous l'ayez demandé mérite la prudence, même avec le bon domaine.
+
+## Vérifier un raccourci qui semble légitime
+
+À l'inverse, un service comme `t.co` (utilisé par Twitter) ou `amzn.to` peut
+être parfaitement légitime. La différence tient à trois facteurs :
+
+**La réputation du service.** Les réducteurs utilisés massivement par de
+grandes plateformes sont plus surveillés.
+
+**Le contexte du message.** Un lien court dans un courriel inattendu reste
+suspect, quel que soit le service.
+
+**La présence d'une alternative.** Un expéditeur sérieux propose généralement
+une URL directe en plus du lien court.
+
+Notez que la réduction d'URL est aussi utilisée pour des raisons de bon
+usage : contourner une limite de longueur, simplifier un lien Parameters à
+partager de vive voix, ou chaque mot-clé proche. Le problème n'est pas le
+raccourcissement, c'est l'opacité qu'il ajoute et le tiers qu'il introduit.
+
+## Le cadre légal
+
+Le tracking des clics est un traitement de données personnelles au sens du
+RGPD, dès lors qu'il permet d'identifier ou de followre une personne.
+
+La CNIL distingue les traceurs soumis à consentement de ceux qui en sont
+exemptés. Les traceurs de mesure d'audience peuvent bénéficier d'une exemption,
+à condition de respecter un cahier des charges strict, notamment l'absence de
+recoupement avec d'autres données et la limitation à la durée de la session.
+
+Un clic tracé dans un courriel nominatif sort de ce cadre : il vise une
+personne identifiée, potentially sur une durée longue. Il relève alors du
+consentement.
+
+## Quand désactiver le tracking
+
+Si vous constrainez un outil qui réécrit les liens de votre site, deux
+solutions existent.
+
+La première consiste à désactiver le tracking dans les paramètres de la
+plateforme. Dans le cas d'iode, l'éditeur explique que la désactivation n'était
+pas disponible depuis le tableau de bord, et qu'il a fallu intervenir
+auprès du support pour que les liens de ses newsletters et activations
+deviennent directs. Autrement dit, **ce n'est pas toujours possible depuis les
+réglages exposés.
+
+La seconde consiste à utiliser un domaine de redirection qui vous appartient,
+plutôt que celui du prestataire. C'est ce que font les services de « custom
+tracking domain » : l'URL affiche alors une marque proche de votre site, tout
+en conservant la mesure. Vous gardez la statistique et vous rendez le lien
+audible.
+
+Si votre activité ne justifie pas ce compromis, un lien direct reste l'option
+la plus simple et la plus respectueuse de vos destinataires.
+
+## Note de transparence
+
+Cet article décrit des pratiques que j'applique moi-même. Pour être cohérent,
+voici ce que fait ce site.
+
+J'utilise **Brevo Conversations** pour la discussion instantanée, c'est-à-dire
+exactement le type d'outil décrit plus haut. Le script est chargé depuis
+`conversations-widget.brevo.com`, un domaine de suivi du même groupe que
+`sendibt3.com`.
+
+Deux différences avec le cas d'iode :
+
+**Le chargement est différé.** Le widget s'injecte après le chargement complet
+de la page, jamais pendant. Il ne retarde donc ni l'affichage ni linteraction.
+
+**Rien n'est mesuré sur vos liens.** Les liens de cet article pointent vers
+leur destination finale. Je n'utilise aucun domaine de redirection intermédiaire,
+donc aucune donnée de navigation ne transite par un tiers.
+
+Si vous préférez discuter sans laisser de trace technique, écrivez-moi
+directement par courriel : `fourty3000@gmail.com`. Les données exposées par le
+widget sont décrites dans la [politique de
+confidentialité](/politique-confidentialite).
+
+## Ce qu'il faut retenir
+
+**La redirection est partout.** Les emails transactionnels, les newsletters et
+les campagnes marketing passent fréquemment par des domaines de suivi, sans que
+vous en soyez informé.
+
+**Le domaine de premier niveau ne ment pas.** Il dit qui contrôle la page. La
+question n'est jamais « le nom ressemble-t-il à la bonne marque ? » mais « qui
+possède ce domaine ? ».
+
+**Vérifier ne coûte rien.** Survoler un lien, lire sa source, ou le développer
+dans un service dédié prend quelques secondes et évite beaucoup de problèmes.
+
+**Le tracking a un coût.** Pour l'expéditeur, il dégrade la délivrabilité de ses
+messages. Pour le destinataire, il ajoute un intermédiaire qui en sait plus que
+lui sur ses habitudes.
+
+## Sources
+
+- Kaspersky — [Les périls des liens courts](https://www.kaspersky.com/blog/link-shorteners-privacy-security/48856/) — Comment fonctionne un réducteur, le pistage des clics, les redirections dynamiques et l'attaque par l'homme du milieu.
+- Forum iode — [« Account activation link is a tracker! »](https://community.iode.tech/t/account-activation-link-is-a-tracker/1507) — Cas réel d'un lien d'activation redirigé via `sendibt3.com`, et explication de l'éditeur du forum (mai 2023).
+- Brevo — [Pourquoi l'URL de mes liens est-elle différente de celle que j'ai choisie ?](https://help.brevo.com/hc/en-us/articles/209421325) — Documentation officielle du mécanisme de redirection et de suivi des clics.
+- CNIL — [Cookies : solutions pour les outils de mesure d'audience](https://www.cnil.fr/fr/cookies-solutions-pour-les-outils-de-mesure-daudience) — Conditions d'exemption de consentement pour les traceurs de mesure d'audience.
+- CNIL — [Cookies et traceurs : que dit la loi ?](https://www.cnil.fr/fr/cookies-et-autres-traceurs/que-dit-la-loi) — Principe du consentement préalable.
+- Menlo Security — [URL shortening allows threats to evade URL filtering](https://www.menlosecurity.com/blog/url-shortening-allows-threats-to-evade-url-filtering-and-categorization-tools) — Contournement des filtres de sécurité par les réducteurs.
+- Cofense — [The URL Shorteners You Didn't Know Were Helping Hackers](https://cofense.com/blog/the-6-url-shorteners-you-didn-t-know-were-helping-hackers) — Répartition des campagnes malveillantes par service de réduction.
+- APWG — [Using URL Shorteners to Compare Phishing and Malware Campaigns](https://docs.apwg.org/ecrimeresearch/2018/5351273.pdf) — Recherche académique sur l'usage des réducteurs dans les campagnes d'hameçage.
