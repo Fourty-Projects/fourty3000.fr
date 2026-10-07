@@ -54,11 +54,11 @@ export default function Footer() {
         <time>© {YEAR}</time>{" "}
         <a
           className="no-underline"
-          href={socialLinks.twitter}
+          href={socialLinks.discord}
           target="_blank"
           rel="noopener noreferrer"
         >
-          {metaData.title}
+          {metaData.title} | Fait avec ❤️ par <span className="font-bold">Fourty3000</span> grâce à <span className="font-bold">Next.js</span> et <span className="font-bold">TailwindCSS</span>.
         </a>
         <style jsx>{`
           @media screen and (max-width: 480px) {
