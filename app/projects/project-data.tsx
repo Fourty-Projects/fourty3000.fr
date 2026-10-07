@@ -6,16 +6,16 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  // {
-  //   title: "Mithril AI",
-  //   year: 2024,
-  //   description: "Open science AI resarch lab",
-  //   url: "https://github.com/mithrilai",
-  // },
-  // {
-  //   title: "OpenDeepLearning",
-  //   year: 2023,
-  //   description: "Open source AI education resources",
-  //   url: "https://opendeeplearning.xyz/",
-  // },
+  {
+    title: "NationsEmpire",
+    year: 2026,
+    description: "NationsEmpire - Minecraft Semi-RP est un serveur moddé où l’on mélange construction, diplomatie et un peu de roleplay léger.",
+    url: "https://nationsempire.eminium.ovh/?ref=fourty3000fr",
+  },
+  {
+    title: "Eminium",
+    year: 2024,
+    description: "「 🌌 」Plonge dans une aventure Minecraft Moddé PvP-Factions unique créée pour les vrais passionnés",
+    url: "https://eminium.ovh/?ref=fourty3000fr",
+  },
 ];

@@ -1,190 +1,352 @@
 ---
-title: "Markdown : le guide complet"
-publishedAt: "2026-10-06"
-summary: "Apprenez la syntaxe Markdown, les composants MDX disponibles sur ce blog, et les bonnes pratiques pour formater vos articles."
+title: "Apprendre le Markdown : guide complet"
+publishedAt: "2026-10-07"
+summary: "Un cours complet et progressif sur la syntaxe Markdown : titres, listes, liens, code, tableaux, dialectes et bonnes pratiques."
 tags: "Markdown, Rédaction, Guide"
 ---
 
-Markdown est un langage de balisage léger qui permet d'écrire du texte formaté
-avec une syntaxe simple et lisible. C'est le format utilisé pour tous les articles
-de ce blog.
+Markdown est un format de texte qui permet d'écrire des documents structurés
+avec une syntaxe courte et lisible. Un texte marqué en Markdown se transforme
+ensuite en HTML, en PDF, ou en à peu près n'importe quel autre format.
 
-Ce guide couvre les bases, puis les composants MDX supplémentaires que ce site
-ajoute.
+Sa force tient à une contrainte : **le fichier source reste du texte brut**.
+Vous pouvez l'ouvrir dans n'importe quel éditeur, le relire sans outil
+spécialisé, et le versionner dans un dépôt Git sans conflit de mise en forme.
 
-## Les bases du formatage
+Ce guide part des bases et progresse vers les syntaxes avancées.
 
-### Titres
+## Paragraphes et retours à la ligne
 
-Le nombre de `#` détermine le niveau. Utilisez un seul `#` pour le titre
-principal, et ne descendez pas au-delà de `###` sans raison.
-
-```
-# Titre de niveau 1
-## Titre de niveau 2
-### Titre de niveau 3
-```
-
-### Gras, italique et barré
+Un paragraphe est une suite de lignes séparées par une ligne vide. C'est la
+seule séparation qui compte :
 
 ```
-**Gras**
-*Italique*
+Ceci est un paragraphe.
+Même avec un retour à la ligne,
+le texte reste dans le même paragraphe.
+
+Ceci est un second paragraphe.
+```
+
+Une ligne vide au milieu d'un paragraphe le coupe en deux. C'est le mécanisme le
+plus simple et le plus important.
+
+Pour forcer un retour à la ligne à l'intérieur d'un paragraphe, terminez la
+ligne par deux espaces, ou par une barre oblique inverse. La seconde solution
+est préférable : les espaces en fin de ligne sont invisibles et disparaissent
+souvent lors d'un copier-coller.
+
+## Titres
+
+Le nombre de dièses détermine le niveau du titre.
+
+```
+# Niveau 1
+## Niveau 2
+### Niveau 3
+#### Niveau 4
+```
+
+Deux règles à respecter :
+
+- Un seul titre de niveau 1 par document, celui qui nomme la page.
+- Ne sautez pas de niveau : passez de `##` à `####` est une erreur, car les
+  lecteurs d'écran utilisent cette hiérarchie pour construire la table des
+  matières.
+
+Vous pouvez fermer un titre avec des dièses en fin de ligne. C'est facultatif,
+et cela sert surtout à rendre la source plus lisible :
+
+```
+## Un titre bien visible ##
+```
+
+## Texte en emphase
+
+Quatre notations, dont une n'appartient pas au Markdown de base.
+
+```
+*Italique* ou _Italique_
+**Gras** ou __Gras__
+***Gras italique***
 ~~Barré~~
 ```
 
-Le GFM (GitHub Flavored Markdown) ajoute le barré. Dans les autres formes, vous
-pouvez aussi écrire `__Gras__` et `_Italique_`.
+Les deuxièmes formes existent pour rester compatibles avec des syntaxes
+historiques. Préférez les premières, plus faciles à repérer.
 
-### Listes
+Le barré, obtenu avec deux tildes, fait partie des extensions GFM, détaillées
+plus bas.
 
-Trois types, très utiles à connaître.
+## Listes
 
-```
-- Liste à puces
-- Deuxième élément
-  - Imbriqué
-
-1. Liste numérotée
-2. Deuxième étape
-
-- [x] Tâche faite
-- [ ] Tâche à faire
-```
-
-Le dernier format produit des cases à cocher, pratique pour une liste de
-vérification.
-
-### Citations
+Trois types, distingués par leur marqueur.
 
 ```
-> Une citation se marque avec un chevron.
-> Elle peut s'étendre sur plusieurs lignes.
+- Puce niveau 1
+- Puce niveau 1, suite
+  - Imbriquée niveau 2
+    - Imbriquée niveau 3
+
+1. Étape 1
+2. Étape 2
+   1. Sous-étape
 ```
 
-### Liens et images
+Deux listes doivent être séparées par une ligne vide, faute de quoi Markdown
+absorbe la première puce de la seconde liste dans la liste précédente.
+
+Les listes à puces acceptent `-`, `*` ou `+`. Choisissez-en une et gardez-la.
+Pour les listes numérotées, tous les items peuvent porter le chiffre `1.` : le
+rendu les renumérote automatiquement, ce qui évite les décalages après un ajout
+ou une suppression.
+
+### Listes de tâches
 
 ```
-[Texte affiché](https://example.com)
-![Texte alternatif](/photos/image.jpg)
+- [x] Rédiger le texte
+- [ ] Relire
+- [ ] Publier
 ```
 
-Le texte alternatif est important : il s'affiche si l'image ne charge pas, et
-c'est ce que lisent les lecteurs d'écran.
+Le rendu produit des cases à cocher, visuellement interactives, mais sans
+effet réel : cocher une case ne modifie pas le fichier. Cette syntaxe vient
+également de GFM.
 
-### Filets horizontaux
+## Liens
 
-Trois tirets sur une ligne isolée :
+La forme de base associe un texte affiché à une destination :
+
+```
+[Next.js](https://nextjs.org)
+```
+
+Le titre au survol s'écrit entre guillemets, après l'URL :
+
+```
+[Next.js](https://nextjs.org "Le framework Next.js")
+```
+
+Une adresse seule devient automatiquement un lien, ainsi qu'une adresse
+entourée d'angles :
+
+```
+https://example.com
+
+<https://example.com>
+```
+
+La deuxième forme est préférable : elle échappe correctement les caractères qui
+casseraient le rendu, comme les parenthèses.
+
+Les liens de référence séparent la destination du texte, ce qui évite de répéter
+la même URL :
+
+```
+Consulter [la documentation][docs].
+
+[docs]: https://example.com/documentation
+```
+
+## Images
+
+La syntaxe reprend celle des liens, avec un point d'exclamation devant.
+
+```
+![Un pont au-dessus d'une rivière](/images/pont.jpg)
+```
+
+Le texte entre crochets est le texte alternatif. Il s'affiche si l'image ne
+charge pas, et c'est ce que lisent les lecteurs d'écran. Rédigez-le comme une
+description, pas comme un nom de fichier. Un `pont.jpg` n'apprend rien ; un
+"Pont suspendu au-dessus d'une rivière, au coucher du soleil" est utile.
+
+Pour contrôler la taille, certains dialectes acceptent une syntaxe étendue,
+avec une accolade après le chemin :
+
+```
+![Description](/images/pont.jpg{width=640})
+```
+
+## Citations
+
+Un chevron marque le début du bloc cité.
+
+```
+> Le texte cité peut s'étendre
+> sur plusieurs lignes.
+>
+> Les lignes vides deviennent un nouveau paragraphe.
+```
+
+On peut imbriquer une citation dans une liste ou une autre citation, en
+ajoutant un chevron supplémentaire.
+
+## Code
+
+Le code est le point où Markdown se distingue nettement du HTML. Deux formes.
+
+**Sur une ligne**, avec des accents graves :
+
+```
+Utilisez la commande `pnpm install`.
+```
+
+**Sur plusieurs lignes**, avec trois accents graves, en indiquant le langage
+après l'ouverture :
+
+````
+```python
+def slugify(titre: str) -> str:
+    return titre.lower().replace(" ", "-")
+```
+````
+
+Le nom du langage n'est pas décoratif : il détermine la coloration syntaxique.
+Utilisez un identifiant précis (`python`, `typescript`, `bash`, `json`) plutôt
+qu'un terme vague comme `code` ou `text`, sinon vous n'obtiendrez aucune
+coloration.
+
+Pour afficher du texte contenant des accents graves, entourez le bloc de
+**quatre** accents graves.
+
+Le code indenté de quatre espaces est aussi reconnu comme bloc de code par le
+Markdown de base, mais cette écriture est fragile : une tabulation ou un espace
+en trop change la signification. Préférez les accents graves.
+
+## Filets horizontaux
+
+Trois caractères sur une ligne isolée insèrent un séparation visuelle :
 
 ```
 ---
 ```
 
-Attention : cette syntaxe entre en conflit avec le début du frontmatter.
-N'en mettez pas juste sous le bloc de métadonnées.
+Le même effet avec trois astérisques ou trois traits bas. Dans la plupart des
+dialectes, une ligne de cette forme tout en haut du document est interprétée
+comme un bloc de métadonnées, et non comme un filet.
 
-### Échappement
+## Tableaux
 
-Certains caractères ont une signification spéciale. Pour les afficher
-tels quels, precede-les d'une barre oblique inverse.
-
-```
-\*Pas d'italique ici\*
-```
-
-## Les blocs de code
-
-Utilisez trois accents graves pour ouvrir et fermer un bloc. Indiquez le langage
-après les accents pour activer la coloration syntaxique.
-
-````
-```python
-def hello(name: str) -> str:
-    return f"Bonjour {name}"
-```
-````
-
-Pour afficher du texte contenant des accents graves, encadrez le bloc avec
-**quatre** accents graves, comme ci-dessus.
-
-## Les composants de ce blog
-
-Ce site utilise MDX, une extension de Markdown qui permet d'inclure des
-composants React. Les composants suivants sont disponibles dans vos articles.
-
-### Encadrés
+Les tableaux sont une extension GFM, absente du Markdown de base. La syntaxe
+emploie des barres verticales et une ligne de séparation :
 
 ```
-<Callout emoji="💡">
-  Un encadré pour attirer l'attention sur une information importante.
-</Callout>
+| Colonne A | Colonne B |
+| --------- | --------- |
+| Cellule 1 | Cellule 2 |
+| Cellule 3 | Cellule 4 |
 ```
 
-### Légendes
+Les deux caractères de chaque bord de ligne sont facultatifs :
 
 ```
-<Caption>
-  Une légende sous une image, dont le texte s'équilibre automatiquement.
-</Caption>
+Colonne A | Colonne B
+--------- | ---------
+Cellule 1 | Cellule 2
 ```
 
-### Tableaux
-
-Passez les en-têtes et les lignes via la prop `data`.
+L'alignement se règle sur la ligne de séparation :
 
 ```
-<Table
-  data={{
-    headers: ["Syntaxe", "Rendu"],
-    rows: [
-      ["**Gras**", "Gras"],
-      ["*Italique*", "Italique"],
-    ],
-  }}
-/>
+| Gauche | Centre | Droite |
+| :----- | :----: | -----: |
 ```
 
-### Grilles d'images
+Si vous utilisez des tableaux dans un contexte où GFM n'est pas disponible,
+vérifiez le rendu. Une solution de repli consiste à écrire une liste, qui reste
+lisible partout.
+
+## Échappement
+
+Certains caractères déclenchent une interprétation. Pour en afficher un
+literallyement, precede-le d'une barre oblique inverse.
 
 ```
-<ImageGrid
-  columns={3}
-  images={[
-    { src: "/photos/1.jpg", alt: "Première image" },
-    { src: "/photos/2.jpg", alt: "Deuxième image" },
-  ]}
-/>
+\*Ce texte n'est pas en italique\*
+\# Ce symbole n'est pas un titre
 ```
 
-Le champ `href` est facultatif : ajoutez-le pour rendre l'image cliquable.
+Les caractères à échapper le plus souvent sont : `*`, `_`, `` ` ``, `#`, `[`,
+`]`, `>`, ainsi que les barres verticales dans un tableau.
+
+L'échappement est surtout nécessaire dans les zones où la syntaxe est
+interprétée à tort : à l'intérieur d'un paragraphe qui parle de Markdown.
+
+## Dialectes : la nuance importante
+
+Markdown n'est pas une norme unique, mais un socle plus une collection
+d'extensions. Deux implémentations peuvent donc se comporter différemment sur le
+même texte.
+
+**CommonMark** est la spécification de référence. Elle définit le noyau :
+titres, emphase, listes, liens, images, citations, code, filets. Tout
+constructeur conforme à cette norme produit le même rendu.
+
+**GFM** (GitHub Flavored Markdown) ajoute les tableaux, le barré, les listes de
+tâches et le lien automatique des adresses. C'est le dialecte le plus répandu,
+car GitHub et la plupart des plateformes d'édition l'utilisent.
+
+**MDX** autorise des composants programmables dans le document. Un élément
+écrit entre chevrons et accolades est rendu par une application plutôt que
+converti en HTML.
+
+La conséquence pratique : avant d'utiliser une syntaxe avancée, vérifiez que le
+moteur qui rendra votre document la supporte. Le graphe ci-dessous est généré
+avec KaTeX, une syntaxe elle aussi propre à une extension :
+
+```
+$$
+e^{i\pi} + 1 = 0
+$$
+```
+
+## Pièges fréquents
+
+**Espaces en fin de ligne.** Invisibles, ils sont supprimés par de nombreux
+outils. Pour un retour à la ligne forcé, utilisez une barre oblique inverse.
+
+**Liste collée à une liste.** Une liste qui suit un paragraphe sans ligne vide est
+absorbée dans ce paragraphe, et ne s'affiche pas comme une liste.
+
+**Chevrons non échappés.** Un chevron suivi d'un mot ressemble à une balise
+HTML et peut disparaître du rendu. Écrivez-le entre accents graves, ou
+échappez-le.
+
+**Accents graves imbriqués.** Impossible d'inclure un accent grave dans du code
+sur une ligne sans utiliser deux accents graves de chaque côté, avec un espace
+intermédiaire.
+
+**Faux titres.** Une ligne finissant par `---` sous un paragraphe produit un
+titre de niveau 2 (la syntaxe Setext), et non un filet.
 
 ## Bonnes pratiques
 
-**Utilisez des phrases courtes.** Le Markdown sert à mettre en forme, pas à
-compenser un texte mal structuré. Si un paragraphe dépasse cinq lignes, il
-appelle probablement à être découpé.
+**Une idée par paragraphe.** Le formatage ne rattrape pas une structure
+défaillante. Si un paragraphe dépasse cinq lignes, scindez-le.
 
-**Ne sautez pas de niveau de titre.** Passez de `##` à `####` est une erreur
-d'accessibilité : les lecteurs d'écran s'en servent pour construire la table des
-matières de la page.
+**Ne mettez pas en valeur tout ce qui peut l'être.** Un document où chaque mot
+est en gras n'a plus d'accent. Réservez le gras aux notions centrales.
 
-**Un diagramme par section longue.** Au-delà de trois ou quatre paragraphes,
-intercalez une liste ou un bloc de code. Cela aère le texte et le rend plus
-rapide à parcourir.
+**Écrivez des liens descriptifs.** Préférez « la documentation de Next.js » à
+« cliquez ici ». Le lecteur comprend la destination avant de cliquer, et le
+texte reste utile hors contexte.
 
-**Reliez vos articles.** Un fil entre deux articles récemment publiés améliore
-le temps de lecture et aide votre lectorat à trouver la suite. Utilisez un lien
-classique vers l'URL de l'article.
+**Décrivez vos images.** Le texte alternatif est une obligation d'accessibilité,
+pas un champ facultatif.
 
-**Soignez vos Alternatives d'image.** Une description honnête vaut mieux que
-`image.png` comme texte alternatif.
+**Reliez vos documents.** Une référence vers un article antérieur prolonge la
+lecture et aide le lecteur à trouver la suite.
 
-## Ce que Markdown ne fait pas
+**Restez lisible dans la source.** La syntaxe doit se comprendre en relisant le
+fichier. Si une construction devient illisible, elle est probablement trop
+compliquée.
 
-Markdown ne gère pas la mise en page. Vous ne pouvez pas créer de colonnes,
-changer la taille d'une police ni gérer l'alignement du texte. Si vous avez
-besoin de mise en page avancée, il faut passer par du HTML ou un composant
-spécifique.
+## Pour aller plus loin
 
-C'est une limitation volontaire : le format reste lisible dans un éditeur de
-texte, sans logiciel particulier, et converti en HTML de façon fiable.
+La spécification CommonMark fournit une description exhaustive de chaque
+construction et de ses cas limites. Les guides de syntaxe de GitHub et de
+Pandoc couvrent les extensions propres à chaque dialecte et leurs interactions.
+
+Un test simple, si vous écrivez dans un format dérivé : collez votre texte dans un
+éditeur qui propose un aperçu du rendu, et comparez avec ce que vous attendez.
