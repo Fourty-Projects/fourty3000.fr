@@ -136,21 +136,19 @@ qui vous envoie le message, et l'adresse affichée le confirme. C'est
 précisément ce qui rend la redirection déloyale : elle exploite la confiance
 accordée au message.
 
-Le lien de votre exemple présente la même structure :
+Le lien analysé plus haut présente la même structure :
 
 ```
 https://bbjbdaair.bh.d.sendibt3.com/tr/cl/Vf0-Ak3_syxSZFd…
 ```
 
-Reconnaissons le motif :
+Reconnaissons le motif, segment par segment :
 
-| Fragment | Signification |
-| -------- | ------------- |
-| `bbjbdaair` | identifiant aléatoire du compte d'envoi |
-| `.bh` | sous-domaine de région ou de nœud |
-| `.d.sendibt3.com` | domaine de redirection de Brevo |
-| `/tr/cl/` | *track/click* : suivi des clics |
-| `Vf0-…` | identifiant unique du lien et de la campagne |
+- `bbjbdaair` : identifiant aléatoire du compte d'envoi ;
+- `.bh` : sous-domaine de région ou de nœud ;
+- `.d.sendibt3.com` : domaine de redirection de Brevo ;
+- `/tr/cl/` : *track/click*, la signature du suivi des clics ;
+- `Vf0-…` : identifiant unique du lien et de la campagne.
 
 Le chemin `/tr/cl/` est la signature du mécanisme. Si vous le voyez apparaître
 dans un courriel, vous savez que le clic sera mesuré.
@@ -239,12 +237,12 @@ consentement.
 
 ## Quand désactiver le tracking
 
-Si vous utilisez un outil qui réécrit les liens de votre site, deux solutions
-existent.
+Si vous utilisez un outil qui réécrit les liens que vous publiez, deux
+solutions existent.
 
 La première consiste à désactiver le tracking dans les paramètres de la
-plateforme. Dans le cas d'iode, l'éditeur explique que la désactivation n'était
-pas disponible depuis le tableau de bord, et qu'il a fallu intervenir
+plateforme. Dans l'exemple d'iode, l'éditeur explique que la désactivation
+n'était pas disponible depuis le tableau de bord, et qu'il a fallu intervenir
 auprès du support pour que les liens de ses newsletters et activations
 deviennent directs. Autrement dit, **ce n'est pas toujours possible depuis les
 réglages exposés.**
@@ -255,32 +253,54 @@ tracking domain » : l'URL affiche alors une marque proche de votre site, tout
 en conservant la mesure. Vous gardez la statistique et vous rendez le lien
 audible.
 
-Si votre activité ne justifie pas ce compromis, un lien direct reste l'option
-la plus simple et la plus respectueuse de vos destinataires.
+Si l'activité ne justifie pas ce compromis, un lien direct reste l'option la
+plus simple et la plus respectueuse des destinataires.
 
-## Note de transparence
+## Faire la différence entre pistage et hameçage
 
-Cet article décrit des pratiques que j'applique moi-même. Pour être cohérent,
-voici ce que fait ce site.
+Le tracking des clics et l'hameçage reposent sur le même mécanisme : une adresse
+interposée devant la destination. L'un est annoncé et licite, l'autre non. Les
+distinguer demande un peu de méthode.
 
-J'utilise **Brevo Conversations** pour la discussion instantanée, c'est-à-dire
-exactement le type d'outil décrit plus haut. Le script est chargé depuis
-`conversations-widget.brevo.com`, un domaine de suivi du même groupe que
-`sendibt3.com`.
+**L'émetteur est identifiable.** Une plateforme d'envoi sérieuse utilise un
+domaine stable, une société identifiable, une politique de confidentialité
+publiée et un lien de désinscription. Une campagne d'hameçage n'a aucun intérêt
+à être identifiable, et n'offre aucun de ces éléments.
 
-Deux différences avec le cas d'iode :
+**Le service a une réputation établie.** Les domaines de redirection employés
+massivement par de grandes plateformes sont connus, documentés et surveillés.
+Un domaine créé récemment ne l'est pas.
 
-**Le chargement est différé.** Le widget s'injecte après le chargement complet
-de la page, jamais pendant. Il ne retarde donc ni l'affichage ni l'interaction.
+**Le contexte prime sur tout le reste.** Une inscription à laquelle vous n'avez
+pas demandé ne mérite pas d'être cliquée, quel que soit le domaine. À l'inverse,
+un lien court inséré dans un échange attendu reste anodin.
 
-**Rien n'est mesuré sur vos liens.** Les liens de cet article pointent vers
-leur destination finale. Je n'utilise aucun domaine de redirection intermédiaire,
-donc aucune donnée de navigation ne transite par un tiers.
+**Le poids du contexte** Le nombre de sauts, la longueur de l'adresse et la
+présence de caractères inhabituels sont des indices faibles. Ils ne constituent
+jamais une preuve : un service de partage légitime peut produire une adresse
+aussi brouilleuse.
 
-Si vous préférez discuter sans laisser de trace technique, écrivez-moi
-directement par courriel : `fourty3000@gmail.com`. Les données exposées par le
-widget sont décrites dans la [politique de
-confidentialité](/politique-confidentialite).
+## Choisir un service de son côté
+
+Pour ses propres communications, la question se pose : quel compromis accepter ?
+
+**Les liens directs** ne laissent transiter aucune donnée vers un tiers et
+restent lisibles. Le prix : vous perdez la mesure du clic.
+
+**Les domaines de redirection personnalisés** (*custom tracking domain*)
+permettent d'afficher une marque qui vous ressemble tout en conservant la
+statistique. C'est ce que proposent plusieurs services de mailing. Le coût :
+le domaine n'identifie plus l'intermédiaire.
+
+**Le suivi des ouvertures** — un pixel invisible dans le message — pose un
+problème spécifique : plusieurs clients de messagerie chargent les images
+distantes automatiquement, avant même l'ouverture du courriel. La donnée « qui a
+lu » est alors fausse. C'est le principal reproche adressé à cette pratique,
+davantage que la vie privée elle-même.
+
+Si un simple retour global d'activité suffit, une mesure d'audience sur le site,
+réalisée par un outil qui n'implémente aucun suivi dans les messages, évite
+l'ensemble du problème.
 
 ## Ce qu'il faut retenir
 
