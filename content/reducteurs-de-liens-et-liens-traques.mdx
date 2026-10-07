@@ -80,8 +80,8 @@ message, et s'il l'a lu ou seulement cliqué.
 ### Un troisième intermédiaire
 
 Le tracking peut se combiner à des paramètres de campagne, les fameux *UTM
-tags*, qui encodent la source du trafic. Alone, ils restent inoffensifs : le
-marketer cherche à savoir d'où viennent ses visiteurs.
+tags*, qui encodent la source du trafic. Pris seuls, ils restent inoffensifs :
+l'expéditeur cherche à savoir d'où viennent ses visiteurs.
 
 Combinés à un réducteur, vos données aboutissent chez **deux** acteurs au lieu
 d'un seul. Vous ne savez plus qui détient votre historique de navigation.
@@ -103,7 +103,9 @@ savoir où il vous mène qu'après avoir cliqué. »
 Le second risque, plus pervers, est que la cible est **modifiable après coup**.
 
 Un attaquant envoie des milliers de faux messages d'hameçage pointant vers un
-service de redirection. Sa page de phishing est bientôt signalée et bloquée. Plutôt que de renvoyer des milliers de courriels, il modifie la destination du lien de redirection : la nouvelle cible sert à la même campagne.
+service de redirection. Sa page de phishing est bientôt signalée et bloquée.
+Plutôt que de renvoyer des milliers de courriels, il modifie la destination du
+lien de redirection : la nouvelle cible sert à la même campagne.
 
 Les courriels déjà distribués restent valides, et la campagne continue avec une
 page neuve. C'est ce que Kaspersky décrit comme des redirections dynamiques, un
@@ -120,9 +122,9 @@ qui constitue une attaque par l'homme du milieu.
 ### Le phishing personnalisé
 
 Un lien reçu en message privé, dans un courriel nominatif, permet à l'attaquant
-de informations déjà connues sur votre profil : adresse électronique, banque,
-numéro de
-téléphone. Le lien peut mener vers une copie de votre banque affichant votre
+d'exploiter des informations déjà connues sur votre profil : adresse
+électronique, banque, numéro de téléphone. Le lien peut mener vers une copie
+de votre banque affichant votre
 identifiant pré-rempli, ne demandant que le mot de passe. La crédibilité de la
 page augmente parce que les informations sont vraies.
 
@@ -155,14 +157,12 @@ Reconnaissons le motif :
 Le chemin `/tr/cl/` est la signature du mécanisme. Si vous le voyez apparaître
 dans un courriel, vous savez que le clic sera mesuré.
 
-Ce qui rend ces domaines _
-sensibles_ : leur réputation. Le domaine `sendibt3.com` a fait l'objet de
-plaintes pour abus de réseau, notamment via le formulaire de signalement
-d'Abuse.net. Les logicielles de messagerie et les solutions de sécurité
-classent
-progressivement ce type de domaine dans leurs listes de blocage. Conséquence
-pratique : **un courriel légitime peut finir en spam** à cause du domaine de
-redirection de l'expéditeur.
+Ce qui rend ces domaines sensibles : leur réputation. Le domaine
+`sendibt3.com` a fait l'objet de plaintes pour abus de réseau, notamment via le
+formulaire de signalement d'Abuse.net. Les logicielles de messagerie et les
+solutions de sécurité classent progressivement ce type de domaine dans leurs
+listes de blocage. Conséquence pratique : **un courriel légitime peut finir en
+spam** à cause du domaine de redirection de l'expéditeur.
 
 C'est le paradoxe du tracking : la mesure d'audience dégrade la délivrabilité.
 
@@ -170,7 +170,7 @@ C'est le paradoxe du tracking : la mesure d'audience dégrade la délivrabilité
 
 ### La méthode la plus simple : ne pas cliquer
 
- Survolez le lien sans cliquer et lisez la barre d'état en bas de la fenêtre,
+Survolez le lien sans cliquer et lisez la barre d'état en bas de la fenêtre,
 qui affiche la vraie destination. La plupart des lecteurs de courriels font de
 même. Si l'adresse affichée ne correspond pas au site attendu, n'insistez pas.
 
@@ -185,8 +185,8 @@ forum iode.
 ### Développer un lien court
 
 Les services comme unshorten.it ou getlinkinfo.com affichent la destination
-d'une URL raccourcie sans la visiter. Pratique pour un lien received dans un
-SMS, où le survol est impossible.
+d'une URL raccourcie sans la visiter. Pratique pour un lien reçu dans un SMS,
+où le survol est impossible.
 
 ### Analyser l'adresse sans la ouvrir
 
@@ -196,7 +196,7 @@ La structure d'une URL raconte son histoire. Les éléments à examiner :
   début. `google.com.tracking.example.net` est un site `example.net` avec un
   sous-domaine qui imite Google ;
 - **la présence d'une IP brute** à la place d'un nom de domaine ;
-- **le nombre de segments** séparés par des `/`. Un path profond et incoherent
+- **le nombre de segments** séparés par des `/`. Un chemin profond et incohérent
   est un signal d'alerte ;
 - **les tirets bas** ou les caractères inhabituels dans le domaine ;
 - **une extension inhabituelle** pour le contenu annoncé.
@@ -220,15 +220,15 @@ suspect, quel que soit le service.
 **La présence d'une alternative.** Un expéditeur sérieux propose généralement
 une URL directe en plus du lien court.
 
-Notez que la réduction d'URL est aussi utilisée pour des raisons de bon
-usage : contourner une limite de longueur, simplifier un lien Parameters à
-partager de vive voix, ou chaque mot-clé proche. Le problème n'est pas le
+Notez que la réduction d'URL est aussi utilisée pour des raisons légitimes :
+contourner une limite de longueur, raccourcir un lien destiné à être dicté au
+téléphone, ou remplacer un mot-clé proche. Le problème n'est pas le
 raccourcissement, c'est l'opacité qu'il ajoute et le tiers qu'il introduit.
 
 ## Le cadre légal
 
 Le tracking des clics est un traitement de données personnelles au sens du
-RGPD, dès lors qu'il permet d'identifier ou de followre une personne.
+RGPD, dès lors qu'il permet d'identifier ou de suivre une personne.
 
 La CNIL distingue les traceurs soumis à consentement de ceux qui en sont
 exemptés. Les traceurs de mesure d'audience peuvent bénéficier d'une exemption,
@@ -236,20 +236,20 @@ exemptés. Les traceurs de mesure d'audience peuvent bénéficier d'une exemptio
 recoupement avec d'autres données et la limitation à la durée de la session.
 
 Un clic tracé dans un courriel nominatif sort de ce cadre : il vise une
-personne identifiée, potentially sur une durée longue. Il relève alors du
+personne identifiée, potentiellement sur une durée longue. Il relève alors du
 consentement.
 
 ## Quand désactiver le tracking
 
-Si vous constrainez un outil qui réécrit les liens de votre site, deux
-solutions existent.
+Si vous utilisez un outil qui réécrit les liens de votre site, deux solutions
+existent.
 
 La première consiste à désactiver le tracking dans les paramètres de la
 plateforme. Dans le cas d'iode, l'éditeur explique que la désactivation n'était
-pas disponible depuis le tableau de bord, et qu'il a fallu intervenir
-auprès du support pour que les liens de ses newsletters et activations
-deviennent directs. Autrement dit, **ce n'est pas toujours possible depuis les
-réglages exposés.
+pas disponible depuis le tableau de bord, et qu'il a fallu intervenir auprès du
+support pour que les liens de ses newsletters et activations deviennent
+directs. Autrement dit, **ce n'est pas toujours possible depuis les réglages
+exposés.**
 
 La seconde consiste à utiliser un domaine de redirection qui vous appartient,
 plutôt que celui du prestataire. C'est ce que font les services de « custom
@@ -273,7 +273,8 @@ exactement le type d'outil décrit plus haut. Le script est chargé depuis
 Deux différences avec le cas d'iode :
 
 **Le chargement est différé.** Le widget s'injecte après le chargement complet
-de la page, jamais pendant. Il ne retarde donc ni l'affichage ni linteraction.
+de la page, jamais pendant. Il ne retarde donc ni l'affichage ni
+l'interaction.
 
 **Rien n'est mesuré sur vos liens.** Les liens de cet article pointent vers
 leur destination finale. Je n'utilise aucun domaine de redirection intermédiaire,
@@ -286,7 +287,7 @@ confidentialité](/politique-confidentialite).
 
 ## Ce qu'il faut retenir
 
-**La redirection est partout.** Les emails transactionnels, les newsletters et
+**La redirection est partout.** Les courriels transactionnels, les newsletters et
 les campagnes marketing passent fréquemment par des domaines de suivi, sans que
 vous en soyez informé.
 
