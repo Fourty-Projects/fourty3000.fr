@@ -3,8 +3,6 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Inter } from "next/font/google";
 import { Navbar } from "../components/nav";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import Footer from "../components/footer";
 import { ThemeProvider } from "../components/theme-switch";
 import { metaData } from "../lib/config";
@@ -122,8 +120,6 @@ export default async function RootLayout({
             <Navbar locale={activeLocale} />
             {children}
             <Footer locale={activeLocale} />
-            <Analytics />
-            <SpeedInsights />
             {/* Widget de discussion Brevo Conversations.
                 lazyOnload : injecte le script apres le chargement de la page,
                 sans bloquer ni ralentir le rendu initial. */}
