@@ -12,7 +12,6 @@ interface CarouselLabels {
   previous: string;
   next: string;
   goTo: string;
-  empty: string;
   title: string;
 }
 
