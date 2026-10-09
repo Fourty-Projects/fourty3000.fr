@@ -13,10 +13,10 @@ const nextConfig: NextConfig = {
   // Les source maps consomment beaucoup de RAM et de disque au build
   productionBrowserSourceMaps: false,
 
-  // L analyse TypeScript est la phase la plus gourmande : desactivee ici car
-  // le typecheck est deja fait en local/CI via `tsc --noEmit`.
+  // L analyse TypeScript est la phase la plus gourmande. Le build Vercel
+  // dispose de suffisamment de memoire pour la lancer.
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   eslint: {
     ignoreDuringBuilds: true,

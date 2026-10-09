@@ -2,66 +2,46 @@ import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, isLocale, locales } from "./app/lib/i18n";
 
 /**
- * Redirige la racine vers /fr (ou vers la langue du navigateur) et laisse
- * passer les requêtes qui portent déjà un préfixe de langue.
+ * Ajoute un prefixe de langue a toute URL qui n'en a pas.
+ * Exemple : /blog -> /fr/blog
+ *
+ * Les fichiers statiques et les routes techniques sont exclus par le matcher
+ * ci-dessous, donc aucune URL publique n'est redirigee.
  */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const hasLocalePrefix = locales.some(
-    (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`)
-  );
+  // Retire le slash final pour uniformiser la comparaison (/fr/ -> /fr).
+  const normalised =
+    pathname !== "/" ? pathname.replace(/\/+$/, "") || "/" : "/";
 
-  if (hasLocalePrefix) {
-    // Retire un éventuel préfixe de langue double (/fr/en/...).
-    const segments = pathname.split("/").filter(Boolean);
-    const seen = new Set<string>();
-    const deduped = segments.filter((segment) => {
-      if (isLocale(segment)) {
-        if (seen.has(segment)) return false;
-        seen.add(segment);
-      }
-      return true;
-    });
-    if (deduped.length !== segments.length) {
-      const url = request.nextUrl.clone();
-      url.pathname = deduped.length ? `/${deduped.join("/")}` : "/";
-      return NextResponse.redirect(url);
-    }
+  const firstSegment = normalised.split("/")[1];
+
+  // L'URL porte deja une langue : on laisse passer.
+  if (firstSegment && isLocale(firstSegment)) {
     return NextResponse.next();
   }
 
-  // Ignorer les fichiers statiques et les routes techniques.
-  if (
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/api") ||
-    pathname.startsWith("/images") ||
-    pathname.startsWith("/logo") ||
-    pathname.startsWith("/profile") ||
-    pathname.startsWith("/markdown-guide-cover") ||
-    pathname.startsWith("/og") ||
-    pathname.startsWith("/feed") ||
-    /\.(ico|png|jpg|jpeg|svg|webp|avif|txt|xml|json|woff2?|css|js|map)$/.test(
-      pathname
-    )
-  ) {
-    return NextResponse.next();
-  }
-
+  // Preference enregistree precedemment par le visiteur.
   const preferred = request.cookies.get("locale")?.value;
-  const locale =
-    preferred && isLocale(preferred)
-      ? preferred
-      : defaultLocale;
+  const locale = preferred && isLocale(preferred) ? preferred : defaultLocale;
 
   const url = request.nextUrl.clone();
-  url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
+  url.pathname =
+    normalised === "/" ? `/${locale}` : `/${locale}${normalised}`;
+
   return NextResponse.redirect(url);
 }
 
 export const config = {
   matcher: [
-    // Tout sauf les fichiers publics et les images servies par next/image.
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|svg|webp|avif|ico|txt|xml|json|css|js|woff|woff2)$).*)",
+    /*
+     * Exclut :
+     * - les fichiers de Next.js (statique, image, data)
+     * - les assets publics (toutes extensions possibles)
+     * - les routes techniques deja servies a la racine (og, feed, sitemap, robots)
+     * - le widget et les domaines tiers
+     */
+    "/((?!_next/|favicon\\.ico|robots\\.txt|sitemap\\.xml|og$|og/|feed|.*\\.[a-zA-Z0-9]+$).*)",
   ],
 };

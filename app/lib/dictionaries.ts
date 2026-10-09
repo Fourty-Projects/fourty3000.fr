@@ -392,7 +392,7 @@ const dictionaries = {
       frenchOnly: "Esta página só está disponível em francês.",
     },
   },
-} satisfies Record<Locale, { [key: string]: any }>;
+} satisfies Record<Locale, Record<string, unknown>>;
 
 export type Dictionary = (typeof dictionaries)[Locale];
 
