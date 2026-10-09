@@ -3,7 +3,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "prod": "next build && next start",
+    "prod": "next build && next start && vercel --prod",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit"
