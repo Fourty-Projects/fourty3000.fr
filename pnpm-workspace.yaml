@@ -1,9 +1,9 @@
 # pnpm >= 10 exige un champ "packages" non vide dans ce fichier,
-# meme pour un projet unique. Cloudflare Workers le verifie a l'installation.
+# meme pour un projet unique. Sans lui, `pnpm install` echoue.
 packages:
   - "."
 
-# Paquets nécessitant un script de build (pnpm >= 10 bloque les scripts par défaut).
+# Paquets necessitant un script de build (pnpm >= 10 bloque les scripts par defaut).
 onlyBuiltDependencies:
   - "@tailwindcss/oxide"
   - "@vercel/speed-insights"

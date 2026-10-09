@@ -3,16 +3,12 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
+    "prod": "next build && next start && vercel --prod",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@opennextjs/cloudflare": "^1.20.8",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "feed": "^5.1.0",
@@ -38,7 +34,6 @@
     "@types/react-dom": "^19.1.6",
     "autoprefixer": "^10.4.21",
     "tailwindcss": "^4.1.11",
-    "typescript": "^5.8.3",
-    "wrangler": "^4.125.0"
+    "typescript": "^5.8.3"
   }
 }
