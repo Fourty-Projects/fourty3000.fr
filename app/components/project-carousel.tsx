@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Project } from "../projects/project-data";
+import type { Project } from "../[locale]/projects/project-data";
 
 const AUTO_SCROLL_MS = 5000;
 

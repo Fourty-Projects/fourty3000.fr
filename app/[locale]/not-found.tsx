@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getDictionary } from "../../lib/dictionaries";
-import { defaultLocale } from "../../lib/i18n";
+import { getDictionary } from "../lib/dictionaries";
+import { defaultLocale } from "../lib/i18n";
 
 export const metadata: Metadata = {
   title: "404",

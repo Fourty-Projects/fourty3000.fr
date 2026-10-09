@@ -4,7 +4,7 @@ import { metaData, socialLinks } from "../lib/config";
 import { formatDate, getBlogPosts } from "../lib/posts";
 import { getDictionary } from "../lib/dictionaries";
 import { isLocale, type Locale } from "../lib/i18n";
-import { projects } from "../projects/project-data";
+import { projects } from "./projects/project-data";
 
 export const dynamic = "force-static";
 

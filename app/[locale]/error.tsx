@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { getDictionary } from "../../lib/dictionaries";
-import { defaultLocale } from "../../lib/i18n";
+import { getDictionary } from "../lib/dictionaries";
+import { defaultLocale } from "../lib/i18n";
 
 export default function Error({
   error,
