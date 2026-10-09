@@ -17,7 +17,7 @@ export default async function Page({
   const activeLocale: Locale = isLocale(locale) ? locale : "fr";
   const dictionary = getDictionary(activeLocale);
 
-  const posts = getBlogPosts()
+  const posts = getBlogPosts(activeLocale)
     .sort(
       (a, b) =>
         new Date(b.metadata.publishedAt).getTime() -
