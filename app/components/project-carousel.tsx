@@ -117,7 +117,7 @@ export function ProjectCarousel({
                     </p>
                   </div>
                   <p className="text-neutral-600 dark:text-neutral-400">
-                    {project.description[locale] ?? project.description.fr}
+                    {project.description[locale]}
                   </p>
                 </div>
                 <Link

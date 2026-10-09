@@ -47,7 +47,7 @@ export default async function Page({
       </div>
 
       <div className="prose prose-neutral dark:prose-invert mt-8">
-        <p>{metaData.description[activeLocale] ?? metaData.description.fr}</p>
+        <p>{metaData.description[activeLocale]}</p>
         <p>
           {dictionary.home.introStart}{" "}
           <Link href={`/${activeLocale}/projects`}>
@@ -90,8 +90,7 @@ export default async function Page({
                   </p>
                 </div>
                 <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-                  {project.description[activeLocale] ??
-                    project.description.fr}
+                  {project.description[activeLocale]}
                 </p>
               </Link>
             ))}

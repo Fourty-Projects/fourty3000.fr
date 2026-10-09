@@ -1,7 +1,10 @@
+import type { Locale } from "../../lib/i18n";
+
 export interface Project {
   title: string;
   year: number;
-  description: string;
+  /** Description traduite, une entrée par langue. */
+  description: Record<Locale, string>;
   url: string;
 }
 
