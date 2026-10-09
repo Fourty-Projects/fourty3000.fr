@@ -1,35 +1,43 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CustomMDX } from "app/components/mdx";
-import { formatDate, getBlogPosts } from "app/lib/posts";
-import { metaData } from "app/lib/config";
+import { CustomMDX } from "../../../components/mdx";
+import { FrenchOnlyNotice } from "../../../components/french-only-notice";
+import { formatDate, getBlogPosts } from "../../../lib/posts";
+import { metaData } from "../../../lib/config";
+import { isLocale, locales, type Locale } from "../../../lib/i18n";
 
 export const dynamic = "force-static";
 
+/** Chaque article existe dans chaque version linguistique du site. */
 export async function generateStaticParams() {
-  let posts = getBlogPosts();
+  const posts = getBlogPosts();
 
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  return locales.flatMap((locale) =>
+    posts.map((post) => ({
+      locale,
+      slug: post.slug,
+    }))
+  );
 }
 
 export async function generateMetadata({
   params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata | undefined> {
-  const { slug } = await params;
-  let post = getBlogPosts().find((post) => post.slug === slug);
+  const { locale, slug } = await params;
+  const post = getBlogPosts().find((item) => item.slug === slug);
   if (!post) {
     return;
   }
 
-  let {
+  const {
     title,
     publishedAt: publishedTime,
     summary: description,
     image,
   } = post.metadata;
-  let ogImage = image
+  const ogImage = image
     ? image
     : `${metaData.baseUrl}/og?title=${encodeURIComponent(title)}`;
 
@@ -41,12 +49,8 @@ export async function generateMetadata({
       description,
       type: "article",
       publishedTime,
-      url: `${metaData.baseUrl}/blog/${post.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
+      url: `${metaData.baseUrl}${locale}/blog/${post.slug}`,
+      images: [{ url: ogImage }],
     },
     twitter: {
       card: "summary_large_image",
@@ -57,16 +61,20 @@ export async function generateMetadata({
   };
 }
 
-export default async function Blog({ params }) {
-  const { slug } = await params;
-  let post = getBlogPosts().find((post) => post.slug === slug);
+export default async function Blog({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
+  const { locale, slug } = await params;
+  const post = getBlogPosts().find((item) => item.slug === slug);
 
   if (!post) {
     notFound();
   }
 
   return (
-    <section>
+    <section lang={locale}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -78,10 +86,11 @@ export default async function Blog({ params }) {
             datePublished: post.metadata.publishedAt,
             dateModified: post.metadata.publishedAt,
             description: post.metadata.summary,
+            inLanguage: locale,
             image: post.metadata.image
               ? `${metaData.baseUrl}${post.metadata.image}`
               : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-            url: `${metaData.baseUrl}/blog/${post.slug}`,
+            url: `${metaData.baseUrl}${locale}/blog/${post.slug}`,
             author: {
               "@type": "Person",
               name: metaData.name,
@@ -89,7 +98,10 @@ export default async function Blog({ params }) {
           }),
         }}
       />
-      <h1 className="title mb-3 font-medium text-2xl">{post.metadata.title}</h1>
+      <h1 className="title mb-3 font-medium text-2xl">
+        {post.metadata.title}
+      </h1>
+      <FrenchOnlyNotice locale={isLocale(locale) ? locale : "fr"} />
       <div className="flex justify-between items-center mt-2 mb-8 text-medium">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {formatDate(post.metadata.publishedAt)}

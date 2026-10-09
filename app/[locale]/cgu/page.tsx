@@ -1,19 +1,39 @@
 import type { Metadata } from "next";
+import { FrenchOnlyNotice } from "../../components/french-only-notice";
+import { getDictionary } from "../../lib/dictionaries";
+import { isLocale, type Locale } from "../../lib/i18n";
 
 export const dynamic = "force-static";
 
-export const metadata: Metadata = {
-  title: "Conditions générales d'utilisation",
-  description:
-    "Conditions générales d'utilisation du site : accès, usage, propriété intellectuelle et responsabilité.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const activeLocale: Locale = isLocale(locale) ? locale : "fr";
+  const dictionary = getDictionary(activeLocale);
 
-export default function TermsOfService() {
+  return {
+    title: dictionary.meta.termsTitle,
+    description: dictionary.meta.termsDescription,
+  };
+}
+
+export default async function TermsOfService({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const activeLocale: Locale = isLocale(locale) ? locale : "fr";
+
   return (
-    <section>
+    <section lang={activeLocale}>
       <h1 className="mb-8 text-2xl font-medium">
         Conditions générales d&apos;utilisation
       </h1>
+      <FrenchOnlyNotice locale={activeLocale} />
       <div className="prose prose-neutral dark:prose-invert">
         <p>
           Les présentes conditions générales d&apos;utilisation (ci-après « CGU »)

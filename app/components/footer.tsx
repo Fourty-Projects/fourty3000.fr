@@ -12,15 +12,17 @@ import {
   FaDiscord,
 } from "react-icons/fa6";
 import { TbMailFilled } from "react-icons/tb";
-import { metaData, socialLinks } from "app/lib/config";
+import { metaData, socialLinks } from "../lib/config";
+import { getDictionary } from "../lib/dictionaries";
+import type { Locale } from "../lib/i18n";
 
 const YEAR = new Date().getFullYear();
 
-const legalLinks = [
-  { href: "/mentions-legales", name: "Mentions légales" },
-  { href: "/cgu", name: "CGU" },
-  { href: "/politique-confidentialite", name: "Politique de confidentialité" },
-];
+const legalPaths = [
+  { path: "/mentions-legales", labelKey: "legalTitle" },
+  { path: "/cgu", labelKey: "termsTitle" },
+  { path: "/politique-confidentialite", labelKey: "privacyTitle" },
+] as const;
 
 function SocialLink({ href, icon: Icon }) {
   return (
@@ -47,7 +49,9 @@ function SocialLinks() {
   );
 }
 
-export default function Footer() {
+export default function Footer({ locale }: { locale: Locale }) {
+  const dictionary = getDictionary(locale);
+
   return (
     <footer className="block lg:mt-24 mt-16 text-[#1C1C1C] dark:text-[#D4D4D4]">
       <small>
@@ -58,7 +62,10 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {metaData.title} | Fait avec ❤️ par <span className="font-bold">Fourty3000</span> grâce à <span className="font-bold">Next.js</span> et <span className="font-bold">TailwindCSS</span>.
+          {metaData.title} | Fait avec ❤️ par{" "}
+          <span className="font-bold">Fourty3000</span> grâce à{" "}
+          <span className="font-bold">Next.js</span> et{" "}
+          <span className="font-bold">TailwindCSS</span>.
         </a>
         <style jsx>{`
           @media screen and (max-width: 480px) {
@@ -72,16 +79,16 @@ export default function Footer() {
       </small>
 
       <nav
-        aria-label="Liens légaux"
+        aria-label={dictionary.footer.legalLinks}
         className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs"
       >
-        {legalLinks.map((link) => (
+        {legalPaths.map(({ path, labelKey }) => (
           <Link
-            key={link.href}
-            href={link.href}
+            key={path}
+            href={`/${locale}${path}`}
             className="no-underline hover:underline"
           >
-            {link.name}
+            {dictionary.meta[labelKey]}
           </Link>
         ))}
       </nav>

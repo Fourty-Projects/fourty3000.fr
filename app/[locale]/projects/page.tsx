@@ -1,36 +1,41 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import { ProjectCarousel } from "../../components/project-carousel";
+import { getDictionary } from "../../lib/dictionaries";
+import { isLocale, type Locale } from "../../lib/i18n";
 import { projects } from "./project-data";
 
 export const dynamic = "force-static";
 
-export const metadata: Metadata = {
-  title: "Projects",
-  description: "Nextfolio Projects",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const activeLocale: Locale = isLocale(locale) ? locale : "fr";
+  const dictionary = getDictionary(activeLocale);
 
-export default function Projects() {
+  return {
+    title: dictionary.meta.projectsTitle,
+    description: dictionary.meta.projectsDescription,
+  };
+}
+
+export default async function Projects({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const activeLocale: Locale = isLocale(locale) ? locale : "fr";
+  const dictionary = getDictionary(activeLocale);
+
   return (
     <section>
-      <h1 className="mb-8 text-2xl font-medium">Projects</h1>
-      <div>
-        {projects.map((project, index) => (
-          <Link
-            key={index}
-            href={project.url}
-            className="flex flex-col space-y-1 mb-5 transition-opacity duration-200 hover:opacity-80"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
-              <h2 className="text-black dark:text-white">{project.title}</h2>
-              <p className="text-neutral-600 dark:text-neutral-400">
-                {project.description}
-              </p>
-            </div>
-          </Link>
-        ))}
-      </div>
+      <h1 className="mb-8 text-2xl font-medium">
+        {dictionary.projects.title}
+      </h1>
+      <ProjectCarousel projects={projects} labels={dictionary.projects} />
     </section>
   );
 }

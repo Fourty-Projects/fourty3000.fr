@@ -1,28 +1,45 @@
 import { MetadataRoute } from "next";
 import { getBlogPosts } from "./lib/posts";
 import { metaData } from "./lib/config";
+import { locales } from "./lib/i18n";
 
 const BaseUrl = metaData.baseUrl.endsWith("/")
   ? metaData.baseUrl
   : `${metaData.baseUrl}/`;
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let blogs = getBlogPosts().map((post) => ({
-    url: `${BaseUrl}blog/${post.slug}`,
-    lastModified: post.metadata.publishedAt,
-  }));
-
-  let routes = [
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticRoutes = [
     "",
     "blog",
     "projects",
     "mentions-legales",
     "cgu",
     "politique-confidentialite",
-  ].map((route) => ({
-    url: `${BaseUrl}${route}`,
-    lastModified: new Date().toISOString().split("T")[0],
-  }));
+  ];
+
+  const today = new Date().toISOString().split("T")[0];
+
+  // Chaque route existe dans chaque langue : le bon sitemap exige
+  // des URL distinctes par version.
+  const routes = locales.flatMap((locale) =>
+    staticRoutes.map((route) => ({
+      url: `${BaseUrl}${locale}${route ? `/${route}` : ""}`,
+      lastModified: today,
+      changeFrequency: (route === "" ? "weekly" : "monthly") as
+        | "weekly"
+        | "monthly",
+      priority: route === "" ? 1 : 0.7,
+    }))
+  );
+
+  const blogs = locales.flatMap((locale) =>
+    getBlogPosts().map((post) => ({
+      url: `${BaseUrl}${locale}/blog/${post.slug}`,
+      lastModified: post.metadata.publishedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    }))
+  );
 
   return [...routes, ...blogs];
 }

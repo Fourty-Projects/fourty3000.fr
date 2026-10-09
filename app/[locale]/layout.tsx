@@ -1,67 +1,96 @@
-import "./globals.css";
+import "../globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Inter } from "next/font/google";
-import { Navbar } from "./components/nav";
+import { Navbar } from "../components/nav";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Footer from "./components/footer";
-import { ThemeProvider } from "./components/theme-switch";
-import { metaData } from "./lib/config";
+import Footer from "../components/footer";
+import { ThemeProvider } from "../components/theme-switch";
+import { metaData } from "../lib/config";
+import { getDictionary } from "../lib/dictionaries";
+import { isLocale, locales, type Locale } from "../lib/i18n";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(metaData.baseUrl),
-  title: {
-    default: metaData.title,
-    template: `%s | ${metaData.title}`,
-  },
-  description: metaData.description,
-  openGraph: {
-    images: metaData.ogImage,
-    title: metaData.title,
+/** Les deux versions linguistiques du site, pour le SEO. */
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const activeLocale: Locale = isLocale(locale) ? locale : "fr";
+
+  const languageAlternates = Object.fromEntries(
+    locales.map((code) => [code, `${metaData.baseUrl}${code}`])
+  );
+
+  return {
+    metadataBase: new URL(metaData.baseUrl),
+    title: {
+      default: metaData.title,
+      template: `%s | ${metaData.title}`,
+    },
     description: metaData.description,
-    url: metaData.baseUrl,
-    siteName: metaData.name,
-    locale: "en_US",
-    type: "website",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    alternates: {
+      canonical: `${metaData.baseUrl}${activeLocale}`,
+      languages: languageAlternates,
+    },
+    openGraph: {
+      images: metaData.ogImage,
+      title: metaData.title,
+      description: metaData.description,
+      url: `${metaData.baseUrl}${activeLocale}`,
+      siteName: metaData.name,
+      locale: activeLocale === "fr" ? "fr_FR" : "en_GB",
+      type: "website",
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  twitter: {
-    title: metaData.name,
-    card: "summary_large_image",
-  },
-  icons: {
-    // Les fichiers du template sont en realite des PNG (signature 89 50 4E 47)
-    // mal renommes en .ico. On pointe vers l'extension reelle, sinon le
-    // navigateur rejette le favicon et affiche son icone par defaut.
-    icon: [
-      { url: "/logo.png", type: "image/png", sizes: "256x256" },
-      { url: "/logo.png", type: "image/png", sizes: "32x32" },
-      { url: "/logo.png", type: "image/png", sizes: "16x16" },
-    ],
-    apple: { url: "/logo.png", type: "image/png", sizes: "180x180" },
-  },
-};
+    twitter: {
+      title: metaData.name,
+      card: "summary_large_image",
+    },
+    icons: {
+      // Les fichiers du template sont en realite des PNG (signature 89 50 4E 47)
+      // mal renommes en .ico. On pointe vers l'extension reelle, sinon le
+      // navigateur rejette le favicon et affiche son icone par defaut.
+      icon: [
+        { url: "/logo.png", type: "image/png", sizes: "256x256" },
+        { url: "/logo.png", type: "image/png", sizes: "32x32" },
+        { url: "/logo.png", type: "image/png", sizes: "16x16" },
+      ],
+      apple: { url: "/logo.png", type: "image/png", sizes: "180x180" },
+    },
+  };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
+  const activeLocale: Locale = isLocale(locale) ? locale : "fr";
+
   return (
-    <html lang="en" className={`${inter.className}`}>
+    <html lang={activeLocale} className={`${inter.className}`}>
       <head>
         <link
           rel="alternate"
@@ -90,9 +119,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="flex-auto min-w-0 mt-2 md:mt-6 flex flex-col px-6 sm:px-4 md:px-0 max-w-[624px] w-full">
-            <Navbar />
+            <Navbar locale={activeLocale} />
             {children}
-            <Footer />
+            <Footer locale={activeLocale} />
             <Analytics />
             <SpeedInsights />
             {/* Widget de discussion Brevo Conversations.

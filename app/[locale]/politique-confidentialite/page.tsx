@@ -1,19 +1,39 @@
 import type { Metadata } from "next";
+import { FrenchOnlyNotice } from "../../components/french-only-notice";
+import { getDictionary } from "../../lib/dictionaries";
+import { isLocale, type Locale } from "../../lib/i18n";
 
 export const dynamic = "force-static";
 
-export const metadata: Metadata = {
-  title: "Politique de confidentialité",
-  description:
-    "Politique de confidentialité et traitement des données personnelles (RGPD) du site.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const activeLocale: Locale = isLocale(locale) ? locale : "fr";
+  const dictionary = getDictionary(activeLocale);
 
-export default function PrivacyPolicy() {
+  return {
+    title: dictionary.meta.privacyTitle,
+    description: dictionary.meta.privacyDescription,
+  };
+}
+
+export default async function PrivacyPolicy({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const activeLocale: Locale = isLocale(locale) ? locale : "fr";
+
   return (
-    <section>
+    <section lang={activeLocale}>
       <h1 className="mb-8 text-2xl font-medium">
         Politique de confidentialité
       </h1>
+      <FrenchOnlyNotice locale={activeLocale} />
       <div className="prose prose-neutral dark:prose-invert">
         <p>
           La présente politique décrit la manière dont les données personnelles

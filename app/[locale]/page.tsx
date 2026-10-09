@@ -1,12 +1,22 @@
 import Link from "next/link";
 import Image from "next/image";
-import { metaData, socialLinks } from "./lib/config";
-import { formatDate, getBlogPosts } from "./lib/posts";
-import { projects } from "./projects/project-data";
+import { metaData, socialLinks } from "../lib/config";
+import { formatDate, getBlogPosts } from "../lib/posts";
+import { getDictionary } from "../lib/dictionaries";
+import { isLocale, type Locale } from "../lib/i18n";
+import { projects } from "../projects/project-data";
 
 export const dynamic = "force-static";
 
-export default function Page() {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const activeLocale: Locale = isLocale(locale) ? locale : "fr";
+  const dictionary = getDictionary(activeLocale);
+
   const posts = getBlogPosts()
     .sort(
       (a, b) =>
@@ -27,9 +37,11 @@ export default function Page() {
           priority
         />
         <div className="min-w-0">
-          <h1 className="text-2xl font-medium leading-tight">{metaData.name}</h1>
+          <h1 className="text-2xl font-medium leading-tight">
+            {metaData.name}
+          </h1>
           <p className="mt-1 text-neutral-600 dark:text-neutral-400">
-            Développeur &amp; passionné par l&apos;IA
+            {dictionary.home.tagline}
           </p>
         </div>
       </div>
@@ -37,12 +49,19 @@ export default function Page() {
       <div className="prose prose-neutral dark:prose-invert mt-8">
         <p>{metaData.description}</p>
         <p>
-          Je partage ici mes{" "}
-          <Link href="/projects">projets open source</Link> et mes{" "}
-          <Link href="/blog">réflexions sur le développement</Link>. Le code de
-          ce site est{" "}
-          <a href={socialLinks.github} target="_blank" rel="noopener noreferrer">
-            open source
+          {dictionary.home.introStart}{" "}
+          <Link href={`/${activeLocale}/projects`}>
+            {dictionary.home.projectsLink}
+          </Link>{" "}
+          {dictionary.home.introMiddle}{" "}
+          <Link href={`/${activeLocale}/blog`}>{dictionary.home.blogLink}</Link>
+          . {dictionary.home.introEnd}{" "}
+          <a
+            href={socialLinks.github}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {dictionary.home.openSource}
           </a>
           .
         </p>
@@ -50,7 +69,9 @@ export default function Page() {
 
       {projects.length > 0 && (
         <>
-          <h2 className="mb-4 mt-10 text-xl font-medium">Projets</h2>
+          <h2 className="mb-4 mt-10 text-xl font-medium">
+            {dictionary.home.projects}
+          </h2>
           <div className="flex flex-col">
             {projects.map((project) => (
               <Link
@@ -61,7 +82,9 @@ export default function Page() {
                 rel="noopener noreferrer"
               >
                 <div className="flex flex-row justify-between items-start sm:items-center">
-                  <h3 className="text-black dark:text-white">{project.title}</h3>
+                  <h3 className="text-black dark:text-white">
+                    {project.title}
+                  </h3>
                   <p className="text-neutral-600 dark:text-neutral-400 tabular-nums text-sm">
                     {project.year}
                   </p>
@@ -74,10 +97,10 @@ export default function Page() {
           </div>
           <div className="mt-2">
             <Link
-              href="/projects"
+              href={`/${activeLocale}/projects`}
               className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors"
             >
-              Tous les projets →
+              {dictionary.home.allProjects} →
             </Link>
           </div>
         </>
@@ -85,12 +108,14 @@ export default function Page() {
 
       {posts.length > 0 && (
         <>
-          <h2 className="mb-4 mt-10 text-xl font-medium">Derniers articles</h2>
+          <h2 className="mb-4 mt-10 text-xl font-medium">
+            {dictionary.home.latestPosts}
+          </h2>
           <div className="flex flex-col">
             {posts.map((post) => (
               <Link
                 key={post.slug}
-                href={`/blog/${post.slug}`}
+                href={`/${activeLocale}/blog/${post.slug}`}
                 className="flex flex-col space-y-1 mb-4 transition-opacity duration-200 hover:opacity-80"
               >
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center sm:space-y-0 sm:space-x-2">
@@ -109,55 +134,36 @@ export default function Page() {
           </div>
           <div className="mt-2">
             <Link
-              href="/blog"
+              href={`/${activeLocale}/blog`}
               className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors"
             >
-              Tous les articles →
+              {dictionary.home.allPosts} →
             </Link>
           </div>
         </>
       )}
 
-      <h2 className="mb-4 mt-10 text-xl font-medium">Me retrouver</h2>
+      <h2 className="mb-4 mt-10 text-xl font-medium">
+        {dictionary.home.findMe}
+      </h2>
       <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
-        <a
-          href={socialLinks.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors"
-        >
-          GitHub
-        </a>
-        <a
-          href={socialLinks.youtube}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors"
-        >
-          YouTube
-        </a>
-        <a
-          href={socialLinks.tiktok}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors"
-        >
-          TikTok
-        </a>
-        <a
-          href={socialLinks.discord}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors"
-        >
-          Discord
-        </a>
-        <a
-          href={socialLinks.email}
-          className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors"
-        >
-          Email
-        </a>
+        {[
+          { href: socialLinks.github, label: "GitHub" },
+          { href: socialLinks.youtube, label: "YouTube" },
+          { href: socialLinks.tiktok, label: "TikTok" },
+          { href: socialLinks.discord, label: "Discord" },
+          { href: socialLinks.email, label: "Email" },
+        ].map(({ href, label }) => (
+          <a
+            key={label}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors"
+          >
+            {label}
+          </a>
+        ))}
       </div>
     </section>
   );
