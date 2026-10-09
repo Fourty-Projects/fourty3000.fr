@@ -1,4 +1,10 @@
-allowBuilds:
-  '@tailwindcss/oxide': true
-  '@vercel/speed-insights': true
-  sharp: true
+# pnpm >= 10 exige un champ "packages" non vide dans ce fichier,
+# meme pour un projet unique. Cloudflare Workers le verifie a l'installation.
+packages:
+  - "."
+
+# Paquets nécessitant un script de build (pnpm >= 10 bloque les scripts par défaut).
+onlyBuiltDependencies:
+  - "@tailwindcss/oxide"
+  - "@vercel/speed-insights"
+  - sharp

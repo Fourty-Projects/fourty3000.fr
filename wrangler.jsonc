@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "fourty3000",
+  "compatibility_date": "2024-12-30",
+  "compatibility_flags": [
+    // API Node.js dans le runtime Workers.
+    "nodejs_compat",
+    // Autorise le fetch d'URL depuis l'application.
+    "global_fetch_strictly_public",
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "fourty3000",
+    },
+  ],
+  "images": {
+    // Active l'optimisation d'images de Next.js via le service Cloudflare Images.
+    "binding": "IMAGES",
+  },
+}

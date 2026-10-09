@@ -1,0 +1,14 @@
+/_next/static/*
+  Cache-Control: public,max-age=31536000,immutable
+
+/logo.png
+  Cache-Control: public,max-age=31536000,immutable
+
+/profile.png
+  Cache-Control: public,max-age=31536000,immutable
+
+/markdown-guide-cover.png
+  Cache-Control: public,max-age=31536000,immutable
+
+/favicon.ico
+  Cache-Control: public,max-age=31536000,immutable

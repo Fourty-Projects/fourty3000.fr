@@ -86,3 +86,14 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+/**
+ * Active les bindings Cloudflare (Workers) pendant le developpement local.
+ * Sans cet appel, `next dev` ne connait pas les ressources declarees
+ * dans wrangler.jsonc.
+ * https://opennext.js.org/cloudflare/get-started
+ */
+if (process.env.NODE_ENV !== "production") {
+  const { initOpenNextCloudflareForDev } = await import("@opennextjs/cloudflare");
+  initOpenNextCloudflareForDev();
+}
