@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { defaultLocale, isLocale, locales } from "./lib/i18n";
+import { defaultLocale, isLocale, locales } from "./app/lib/i18n";
 
 /**
  * Redirige la racine vers /fr (ou vers la langue du navigateur) et laisse
