@@ -1,0 +1,317 @@
+---
+title: "Link shorteners and tracked links: what you need to know before clicking"
+publishedAt: "2026-10-07"
+summary: "An account activation link does not always point to the expected domain. An explanation of link shorteners, click tracking, and ways to check a URL before clicking."
+tags: "Security, Privacy, Web"
+---
+
+An ordinary piece of news: you receive an account activation email. The link text
+names a site you know. You click. The site is the right one.
+
+Except it isn't. Had you inspected the actual address before clicking, you would
+have found it was not the domain it claimed to be.
+
+That is exactly what happened to a member of the iode forum, a French operating
+system focused on privacy. In a discussion thread from May 2023, he reported
+being warned by Thunderbird that his account activation link did not lead to the
+expected domain:
+
+```
+Displayed text: https://community.iode.tech/u/activate-account/abcdefg…
+Actual URL    : https://debadcg.r.bh.d.sendibt3.com/tr/cl/hijklmnopqrs…
+```
+
+He highlights the paradox: "I did not expect this from a privacy-focused
+operating system."
+
+## What a link shortener is
+
+A link shortener (*URL shortener*) turns a long address into a much shorter one:
+
+```
+https://example.com/a/very/long/page/with/many/parameters?utm_source=x
+        ↓
+https://ex.co/aB3xYz
+```
+
+The reason is practical: a short link takes up less room on a phone screen and
+uses fewer characters in a post whose length the platform limits.
+
+Shortening is only a detour. When you click, the shortening service receives the
+request, records information, then redirects you to the destination. That trip
+through an intermediary is the heart of the problem, and Kaspersky puts it this
+way in its analysis of short links: "your data ends up in the hands not only of
+the person who created the short link, but also of the owner of the shortener."
+
+## Why links are tracked
+
+Click tracking answers a simple question for a newsletter sender: *which link
+generated the most clicks?*
+
+To answer it, the sender interposes its own address in front of the destination.
+The iode forum member had received an entirely legitimate email, sent by the
+Discourse software itself. The forum's maintainer later confirmed the mechanism:
+
+> "we use sendinblue as our email service, which by default redirects all links."
+
+In other words, this behaviour was neither a bug nor malicious intent, but a
+default setting of the email platform used.
+
+The domain `sendibt3.com` belongs to **Brevo** (formerly Sendinblue), a French
+email marketing company. Their official documentation confirms the principle:
+
+> "Brevo uses link redirection to track clicks. Tracking allows you to access the
+> number of clicks per link, a list of contacts who clicked each link, and the
+> heat map. This does not affect the link's destination: your contacts are always
+> redirected to the pages you have selected."
+
+What the user does not see: **when** they clicked, **from which IP address**,
+with which **user agent**, and **how many times**. That last figure is what
+allows you to infer whether the message was opened, and whether it was read or
+merely clicked.
+
+### A third intermediary
+
+Tracking can be combined with campaign parameters, the famous *UTM tags*, which
+encode the traffic source. On their own they remain harmless: the sender wants
+to know where visitors come from.
+
+Combined with a shortener, your data ends up with **two** actors instead of one.
+You no longer know who holds your browsing history.
+
+## The concrete risks
+
+### The destination becomes invisible
+
+The usual advice when faced with a suspicious link is to check the destination
+before clicking. With a shortener, that advice is useless: the real destination
+is only known after the click.
+
+This is the point Kaspersky makes: "if cybercriminals use short links, the
+advice to check them becomes meaningless: you can only find out where it takes
+you after clicking."
+
+### The destination can change
+
+The second risk, more insidious, is that the target is **changeable after the
+fact**.
+
+An attacker sends thousands of fake phishing messages pointing to a redirection
+service. Their phishing page is soon reported and blocked. Rather than resend
+thousands of emails, they change the destination of the redirect link: the new
+target serves the same campaign.
+
+The emails already sent remain valid, and the campaign continues with a fresh
+page. This is what Kaspersky describes as dynamic redirection, a mechanism that
+"blurs the trail."
+
+### An intermediary in the spy position
+
+Some tools do more than redirect. They also offer to **track what you do after
+clicking**: your IP address, the time spent on the page, and in some cases the
+data you enter there. Your traffic then passes through an intermediary server
+that observes the whole exchange, which amounts to a man-in-the-middle attack.
+
+### Targeted phishing
+
+A link received by private message, in a personalised email, lets the attacker
+exploit information already known about you: email address, bank, phone number.
+The link can lead to a copy of your bank showing your pre-filled username,
+asking only for the password. The page gains credibility because the information
+is real.
+
+## The particular case of activation emails
+
+The iode example deserves separate examination, because it shows the problem is
+not limited to spam.
+
+An activation link is the most reliable one there is: it is supposed to lead to
+the site that sent you the message, and the displayed address confirms it. That
+is precisely what makes the redirection unfair: it exploits the trust attached
+to the message.
+
+The link analysed above has the same structure:
+
+```
+https://bbjbdaair.bh.d.sendibt3.com/tr/cl/Vf0-Ak3_syxSZFd…
+```
+
+Let us recognise the pattern, segment by segment:
+
+- `bbjbdaair`: random identifier for the sending account;
+- `.bh`: region or node subdomain;
+- `.d.sendibt3.com`: Brevo's redirection domain;
+- `/tr/cl/`: *track/click*, the signature of click tracking;
+- `Vf0-…`: unique identifier for the link and the campaign.
+
+The `/tr/cl/` path is the signature of the mechanism. If you see it appear in an
+email, you know the click will be measured.
+
+What makes these domains sensitive is their reputation. The `sendibt3.com`
+domain has been the subject of network abuse complaints, notably through
+Abuse.net's reporting form. Mail software and security solutions progressively
+classify this kind of domain on their block lists. The practical consequence:
+**a legitimate email may end up in spam** because of the sender's redirection
+domain.
+
+That is the paradox of tracking: audience measurement degrades deliverability.
+
+## How to check a link
+
+### The simplest method: do not click
+
+Hover over the link without clicking and read the status bar at the bottom of
+the window, which shows the real destination. Most email clients do the same.
+If the displayed address does not match the expected site, do not push on.
+
+### Check the message's HTML
+
+If the link looks normal, view the message source (`Ctrl+U` in a browser, or the
+"view raw message" function) and look for the `href` attribute. You will see the
+real link, including when the displayed text does not match — this is how
+Thunderbird alerted the iode forum member.
+
+### Expand a short link
+
+Services like unshorten.it or getlinkinfo.com display the destination of a
+shortened URL without visiting it. Useful for a link received by SMS, where
+hovering is impossible.
+
+### Analyse the address without opening it
+
+The structure of a URL tells its own story. Elements to examine:
+
+- **the top-level domain**, the most important thing. Read the end, not the
+  beginning. `google.com.tracking.example.net` is an `example.net` site with a
+  subdomain imitating Google;
+- **the presence of a raw IP address** instead of a domain name;
+- **the number of segments** separated by `/`. A deep, inconsistent path is a
+  warning sign;
+- **underscores** or unusual characters in the domain;
+- **an unusual extension** for the announced content.
+
+### Be wary of context
+
+None of these indicators is sufficient on its own. An activation link that
+arrives uninvited deserves caution, even with the right domain.
+
+## Checking a shortener that looks legitimate
+
+Conversely, a service like `t.co` (used by Twitter) or `amzn.to` may be entirely
+legitimate. The difference comes down to three factors:
+
+**The service's reputation.** Shorteners used at scale by large platforms are
+better monitored.
+
+**The context of the message.** A short link in an unexpected email remains
+suspicious, whatever the service.
+
+**The presence of an alternative.** A serious sender usually offers a direct URL
+in addition to the short link.
+
+Note that URL shortening is also used for legitimate reasons: working around a
+length limit, shortening a link meant to be dictated over the phone, or replacing
+a similar keyword. The problem is not the shortening itself, but the opacity it
+adds and the third party it introduces.
+
+## The legal framework
+
+Click tracking is a processing of personal data within the meaning of the GDPR,
+as soon as it allows identifying or following a person.
+
+The CNIL distinguishes trackers subject to consent from those exempt from it.
+Audience measurement trackers may benefit from an exemption, provided they meet
+a strict set of requirements, notably the absence of matching with other data and
+limitation to the duration of the session.
+
+A click tracked in a personalised email falls outside that framework: it targets
+an identified person, potentially over a long period. It then falls under
+consent.
+
+## When to disable tracking
+
+If you use a tool that rewrites the links you publish, two options exist.
+
+The first is to disable tracking in the platform settings. In the iode example,
+the maintainer explains that disabling was not available from the dashboard, and
+that they had to contact support for the newsletter and activation links to
+become direct. In other words, **it is not always possible from the exposed
+settings.**
+
+The second is to use a redirection domain you own, rather than the provider's.
+This is what "custom tracking domain" services do: the URL then shows a brand
+close to your own, while keeping the measurement. You keep the statistic and
+make the link readable.
+
+If the activity does not justify this compromise, a direct link remains the
+simplest and most respectful option for recipients.
+
+## Telling tracking apart from phishing
+
+Click tracking and phishing rely on the same mechanism: an address interposed in
+front of the destination. One is declared and legitimate, the other is not.
+Distinguishing them takes a little method.
+
+**The sender is identifiable.** A serious sending platform uses a stable domain,
+an identifiable company, a published privacy policy and an unsubscribe link. A
+phishing campaign has no interest in being identifiable, and offers none of
+these.
+
+**The service has an established reputation.** Redirection domains used at scale
+by large platforms are known, documented and monitored. A domain created recently
+is not.
+
+**Context outweighs everything else.** A sign-up you did not request is not worth
+clicking, whatever the domain. Conversely, a short link in an expected exchange
+is harmless.
+
+**Context weight.** The number of redirects, the length of the address and the
+presence of unusual characters are weak signals. They are never proof: a
+legitimate sharing service can produce an equally obscure address.
+
+## Choosing a service on your own side
+
+For your own communications, the question arises: what compromise to accept?
+
+**Direct links** let no data through to a third party and stay readable. The
+price: you lose the click measurement.
+
+**Custom redirection domains** (*custom tracking domain*) let you show a brand
+that looks like your own while keeping the statistic. Several mailing services
+offer this. The cost: the domain no longer identifies the intermediary.
+
+**Open tracking** — an invisible pixel in the message — poses a specific
+problem: several email clients load remote images automatically, before the
+email is even opened. The "who read it" data is then false. This is the main
+objection to the practice, more than privacy itself.
+
+If a simple overall activity readout is enough, audience measurement on the site,
+done with a tool that implements no tracking in your emails, avoids the problem
+entirely.
+
+## What to remember
+
+**Redirection is everywhere.** Transactional emails, newsletters and marketing
+campaigns frequently pass through tracking domains, without you being informed.
+
+**The top-level domain does not lie.** It tells you who controls the page. The
+question is never "does the name look like the right brand?" but "who owns this
+domain?"
+
+**Checking costs nothing.** Hovering over a link, reading its source, or
+expanding it in a dedicated service takes seconds and avoids a lot of problems.
+
+**Tracking has a cost.** For the sender, it degrades the deliverability of their
+messages. For the recipient, it adds an intermediary that knows more about your
+habits than you do.
+
+## Sources
+
+- Kaspersky — [The perils of short links](https://www.kaspersky.com/blog/link-shorteners-privacy-security/48856/) — How a shortener works, click tracking, dynamic redirection and man-in-the-middle attacks.
+- iode forum — ["Account activation link is a tracker!"](https://community.iode.tech/t/account-activation-link-is-a-tracker/1507) — Real case of an activation link redirected via `sendibt3.com`, and the forum maintainer's explanation (May 2023).
+- Brevo — [Why is the URL of my links different from what I have chosen?](https://help.brevo.com/hc/en-us/articles/209421325) — Official documentation of the redirection and click tracking mechanism.
+- CNIL — [Cookies: solutions for audience measurement tools](https://www.cnil.fr/fr/cookies-solutions-pour-les-outils-de-mesure-daudience) — Conditions for the consent exemption for audience measurement trackers.
+- CNIL — [Cookies and trackers: what does the law say?](https://www.cnil.fr/fr/cookies-et-autres-traceurs/que-dit-la-loi) — The prior consent principle.
+- Menlo Security — [URL shortening allows threats to evade URL filtering](https://www.menlosecurity.com/blog/url-shortening-allows-threats-to-evade-url-filtering-and-categorization-tools) — Shorteners used to bypass security filters.
+- Cofense — [The URL Shorteners You Didn't Know Were Helping Hackers](https://cofense.com/blog/the-6-url-shorteners-you-didn-t-know-were-helping-hackers) — Distribution of malicious campaigns per shortening service.
+- APWG — [Using URL Shorteners to Compare Phishing and Malware Campaigns](https://docs.apwg.org/ecrimeresearch/2018/5351273.pdf) — Academic research on the use of shorteners in phishing campaigns.

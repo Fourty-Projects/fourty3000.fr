@@ -1,0 +1,134 @@
+---
+title: "PiperHub: der Katalog, der Piper-Modellen eine Stimme gibt"
+publishedAt: "2026-10-07"
+summary: "PiperHub ist ein freier, quelloffener Katalog der Sprachmodelle für die Piper-TTS-Engine: 493 Modelle, 3.663 Sprecher, 70 Sprachen, mit Herkunft und Lizenz jeder Ressource."
+tags: "Open Source, KI, Piper TTS"
+---
+
+Eine Sprachsynthese-Engine zu installieren ist einfach. Eine Stimme zu finden,
+die einem gefällt, ist es nicht.
+
+Die Sprachmodelle für Piper TTS sind auf Hugging Face, Kaggle und
+verschiedenen anderen Repositories verstreut. Jedes Repository hat seine eigene
+Namenskonventionen, nirgends steht, woher ein Modell stammt, und die Lizenzen
+unterscheiden sich von Ressource zu Ressource. Wer sich sicher entscheiden will,
+muss alles von Hand prüfen.
+
+[PiperHub](https://piperhub.org/de/) ist das Projekt von **Fox3000foxy**, das
+dieses Problem löst. Ein freier, quelloffener Katalog ohne Server, der
+zusammenführt, was verstreut war.
+
+## Was der Katalog umfasst
+
+Die aktuellen Zahlen:
+
+- **493 Modelle**
+- **3.663 Sprecher**
+- **70 Sprachen**
+
+Der Katalog unterscheidet die offiziellen Piper-Modelle von denen aus der
+Community. Eine nützliche Unterscheidung: Die ersteren werden vom
+Wartungsteam veröffentlicht, die letzteren stammen von Beitragenden, deren
+Vorgehen und Daten unterschiedlich sind.
+
+## Eine Audiodatei pro Eintrag
+
+Jedes Modell hat eine Hörprobe. Man hört zu, bevor man herunterlädt.
+
+Das ist praktisch der nützlichste Punkt. Ein Modell wiegt mehrere Dutzend
+Megabyte, und es herunterzuladen, um dann festzustellen, dass die Stimme nicht
+passt — Alter, Timbre, Sprechtempo — kostet Zeit und Speicherplatz für nichts.
+
+Der Katalog erlaubt zudem, eine Probe direkt im Browser zu erzeugen. Die
+Synthese läuft auf dem eigenen Rechner, ohne Installation.
+
+## Die Herkunft, und darum geht es eigentlich
+
+Jede Modellseite verweist auf ihren Ausgangsdatensatz, sofern dieser bekannt ist.
+Der Katalog unterscheidet zwei Fälle:
+
+- **Datensatz verknüpft**: Beim Modell ist bereits auf den Datensatz verwiesen.
+- **noch zu trainieren**: Der Datensatz ist dokumentiert, das entsprechende
+  Modell steht aber noch aus.
+
+Diese Verknüpfung von Modell und Datensatz ist kein Dekorativum. Eine
+synthetische Stimme beruht auf echten Aufnahmen: Sie erbt den Rechtsstatus der
+Person, deren Stimme verwendet wurde. Zu wissen, woher die Aufnahmen stammen,
+bestimmt, was mit dem Modell erlaubt ist.
+
+Der Katalog hat daher einen eigenen Bereich für die **130 verzeichneten
+Datensätze**, jeder mit den Modellen verknüpft, die ihn verwenden.
+
+## Filter statt einer endlosen Liste
+
+Bei 493 Modellen zählt Navigation genauso wie Inhalt. Der Katalog bietet
+Filterung nach Sprache, nach Qualität (hoch, mittel, niedrig), nach Anzahl der
+Sprecher und nach Aktualisierungsdatum. Sortieren lässt sich nach Name, Datum
+oder Sprecherzahl. Ein RSS-Feed meldet neue Stimmen, sobald sie hinzukommen.
+
+## Der Katalog ist nur ein Teil des Projekts
+
+PiperHub enthält einen Leitfaden, der den gesamten Weg abdeckt, von den
+Rohdaten bis zur nutzbaren Stimme:
+
+- **Einen Datensatz vorbereiten** im LJSpeech-Format, das Piper erwartet: eine
+  WAV-Datei pro Satz und eine `metadata.csv`, die jede Datei mit ihrer
+  Transkription verknüpft.
+- **Eine Stimme trainieren**, mit Angaben zu Ressourcen und Kontingenten.
+- **Eine Stimme benutzen** im Alltag, über die Kommandozeile, aus Python oder in
+  Home Assistant.
+
+Die README dokumentiert außerdem, wie der Katalog aufgebaut ist: Die Daten
+stammen aus einem gespiegelten Scraping-Repository (`models_mapping.csv`,
+`datasets_mapping.csv`), die Stimmen werden von Hugging Face gespiegelt, und
+`npm run data` erzeugt die JSON-Dateien neu, die die Website verwendet.
+
+Beiträge erfolgen über Pull Requests wie in jedem GitHub-Repository.
+
+## Wie es gebaut ist
+
+Die Website entsteht mit [Astro](https://astro.build) und läuft als
+**statische Website, ohne Server**. Englisch ist die Wurzel, die übrigen Fassungen
+liegen unter ihrem eigenen Sprachcode. Die Oberfläche ist in sechzehn Sprachen
+übersetzt, und das Repository nimmt Beiträge von Muttersprachlern für noch nicht
+übersetzte Texte an.
+
+Das Hosting übernimmt GitHub Pages bei GitHub Inc.
+
+Diese Wahl einer statischen Website ist für einen Katalog nicht nebensächlich:
+Es gibt keine Datenbank zu warten, keine Abfrage zu bearbeiten und keinen Server
+abzusichern. Der Katalog wird von einem Skript neu erzeugt und liefert Dateien aus.
+
+## Lizenzen, die rote Linie des Projekts
+
+PiperHub trifft eine Unterscheidung, die viele Kataloge übergehen:
+
+- **der Website-Code** steht unter der MIT-Lizenz;
+- **die Modelle, Hörproben und Datensätze** bleiben unter der Lizenz ihrer
+  jeweiligen Autoren.
+
+Mit anderen Worten: Der Katalog beansprucht nichts an den Ressourcen, die er
+verzeichnet. Er dokumentiert, er lizenziert nicht neu. Jede Seite verweist auf
+die Originalressource und auf die zugehörigen Lizenzangaben.
+
+So lässt sich der Katalog ohne Mehrdeutigkeit nutzen: Zu wissen, dass eine Seite im
+Index erscheint, begründet kein Nutzungsrecht an der Stimme, auf die sie
+verweist.
+
+## Für wen
+
+Der Katalog ist nützlich, sobald man den trivialen Fall verlässt.
+
+Wer nur eine französische Stimme für seinen Assistenten braucht, ist mit
+wenigen Klicks bedient. PiperHub macht Sinn, wenn die Frage ernster wird: Jemand,
+der eine Anwendung lokalisiert, der Charakterstimmen für ein Fan-Projekt
+einsetzt oder der eigene Stimmen aus Aufnahmen baut, deren Rechte er hält.
+
+Der Katalog dient dann als Einstieg, um zu verstehen, was es gibt, was
+dokumentiert ist und was verwendet werden darf.
+
+## Quellen
+
+- Fox3000foxy — [piperhub.org](https://piperhub.org/de/) · [Quellcode](https://github.com/fox3000foxy/piper-bank) — Katalog, Stimmen- und Datensatzindex, Anleitungen.
+- Fox3000foxy — [README des Repositories](https://github.com/fox3000foxy/piper-bank#readme) — Aufbau der Website, Daten-Pipeline, Lizenzen und Übersetzungen.
+- Fox3000foxy — [Impressum](https://piperhub.org/de/legal/) — Betreiber, Hosting und Umgang mit Lizenzen.

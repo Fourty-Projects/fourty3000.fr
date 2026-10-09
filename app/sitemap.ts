@@ -32,13 +32,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
+  // Pour les articles, on n'annonce que les langues reellement traduites.
   const blogs = locales.flatMap((locale) =>
-    getBlogPosts().map((post) => ({
-      url: `${BaseUrl}${locale}/blog/${post.slug}`,
-      lastModified: post.metadata.publishedAt,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    }))
+    getBlogPosts(locale)
+      .filter((post) => post.lang === locale)
+      .map((post) => ({
+        url: `${BaseUrl}${locale}/blog/${post.slug}`,
+        lastModified: post.metadata.publishedAt,
+        changeFrequency: "monthly" as const,
+        priority: 0.8,
+      }))
   );
 
   return [...routes, ...blogs];

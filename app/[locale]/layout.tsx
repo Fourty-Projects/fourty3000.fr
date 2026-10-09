@@ -36,7 +36,7 @@ export async function generateMetadata({
       default: metaData.title,
       template: `%s | ${metaData.title}`,
     },
-    description: metaData.description,
+    description: metaData.description[activeLocale] ?? metaData.description.fr,
     alternates: {
       canonical: `${metaData.baseUrl}${activeLocale}`,
       languages: languageAlternates,
@@ -44,7 +44,7 @@ export async function generateMetadata({
     openGraph: {
       images: metaData.ogImage,
       title: metaData.title,
-      description: metaData.description,
+      description: metaData.description[activeLocale] ?? metaData.description.fr,
       url: `${metaData.baseUrl}${activeLocale}`,
       siteName: metaData.name,
       locale: activeLocale === "fr" ? "fr_FR" : "en_GB",

@@ -1,0 +1,335 @@
+---
+title: "Link-Kürzer und nachverfolgte Links: Was Sie vor dem Klick wissen sollten"
+publishedAt: "2026-10-07"
+summary: "Ein Kontoaktivierungs-Link zeigt nicht immer auf die erwartete Domain. Eine Erklärung zu Link-Kürzern, Klick-Tracking und Möglichkeiten, eine URL vor dem Klick zu überprüfen."
+tags: "Sicherheit, Datenschutz, Web"
+---
+
+Eine ganz alltägliche Begebenheit: Sie erhalten eine E-Mail zur Kontoaktivierung.
+Der Linktext nennt eine Site, die Sie kennen. Sie klicken. Die Seite ist die
+richtige.
+
+Nur eben nicht. Hätten Sie die tatsächliche Adresse vor dem Klick untersucht,
+hätten Sie gesehen, dass es nicht die angekündigte Domain war.
+
+Genau das ist einem Mitglied des iode-Forums passiert, einem auf Privatsphäre
+ausgerichteten französischen Betriebssystem. In einem Diskussionsthread vom Mai
+2023 berichtet er, dass Thunderbird ihn darauf hingewiesen habe, der
+Aktivierungslink seines Kontos führe nicht zur erwarteten Domain:
+
+```
+Angezeigter Text: https://community.iode.tech/u/activate-account/abcdefg…
+Tatsächliche URL: https://debadcg.r.bh.d.sendibt3.com/tr/cl/hijklmnopqrs…
+```
+
+Er betont das Paradox: „Ich hätte das von einem auf Privatsphäre ausgerichteten
+Betriebssystem nicht erwartet."
+
+## Was ein Link-Kürzer ist
+
+Ein Link-Kürzer (*URL shortener*) macht aus einer langen Adresse eine deutlich
+kürzere:
+
+```
+https://example.com/eine/sehr/lange/seite/mit/vielen/parametern?utm_source=x
+        ↓
+https://ex.co/aB3xYz
+```
+
+Der Grund ist praktisch: Ein kurzer Link nimmt auf einem Telefonbildschirm
+weniger Platz ein und verbraucht in einem Beitrag, dessen Länge die Plattform
+begrenzt, weniger Zeichen.
+
+Die Kürzung ist nur ein Umweg. Wenn Sie klicken, empfängt der Kürzer-Dienst die
+Anfrage, speichert Informationen und leitet Sie dann zum Ziel weiter. Dieser
+Umweg über einen Vermittler ist der Kern des Problems, und Kaspersky formuliert
+es in seiner Analyse so: „Ihre Daten landen nicht nur in den Händen dessen, der
+den kurzen Link erstellt hat, sondern auch in denen des Betreibers des Kürzers."
+
+## Warum Links nachverfolgt werden
+
+Das Klick-Tracking beantwortet eine einfache Frage für den Newsletter-Versand:
+*Welcher Link hat die meisten Klicks erzeugt?*
+
+Um sie zu beantworten, schiebt der Absender seine eigene Adresse vor das Ziel.
+Das Mitglied des iode-Forums hatte eine völlig legitime E-Mail erhalten, die vom
+Discourse-Programm selbst verschickt wurde. Der Betreiber des Forums bestätigte
+später den Mechanismus:
+
+> „wir verwenden sendinblue als E-Mail-Dienst, der standardmäßig alle Links
+> umleitet."
+
+Mit anderen Worten: Dieses Verhalten war weder ein Fehler noch eine
+Missachtung, sondern eine Voreinstellung der verwendeten E-Mail-Plattform.
+
+Die Domain `sendibt3.com` gehört zu **Brevo** (früher Sendinblue), einem
+französischen Unternehmen für E-Mail-Marketing. Deren offizielle Dokumentation
+bestätigt das Prinzip:
+
+> „Brevo verwendet Link-Weiterleitung, um Klicks zu verfolgen. Das Tracking
+> ermöglicht Ihnen den Zugriff auf die Anzahl der Klicks pro Link, eine Liste
+> der Kontakte, die auf den jeweiligen Link geklickt haben, sowie die Heatmap.
+> Dies beeinflusst nicht das Ziel des Links: Ihre Kontakte werden immer auf die
+> von Ihnen ausgewählten Seiten weitergeleitet."
+
+Was der Nutzer nicht sieht: **wann** er geklickt hat, **von welcher
+IP-Adresse**, mit welchem **User-Agent** und **wie oft**. Letztere Zahl erlaubt
+den Rückschluss, ob die Nachricht geöffnet wurde — und ob sie gelesen oder nur
+angeklickt wurde.
+
+### Ein dritter Vermittler
+
+Tracking lässt sich mit Kampagnenparametern kombinieren, den berühmten *UTM-Tags*,
+die die Traffic-Quelle kodieren. Für sich genommen bleiben sie harmlos: Der
+Absender möchte wissen, woher seine Besucher kommen.
+
+In Kombination mit einem Kürzer landen Ihre Daten bei **zwei** Akteuren statt
+bei einem. Sie wissen dann nicht mehr, wer Ihr Browserverlauf aufbewahrt.
+
+## Die konkreten Risiken
+
+### Das Ziel wird unsichtbar
+
+Der übliche Rat bei einem verdächtigen Link lautet, das Ziel vor dem Klick zu
+prüfen. Bei einem Kürzer ist dieser Rat wertlos: Das tatsächliche Ziel kennt man
+erst nach dem Klick.
+
+Genau darauf weist Kaspersky hin: „Wenn Kriminelle kurze Links verwenden, wird
+der Rat, sie zu überprüfen, sinnlos: Sie können erst nach dem Klick herausfinden,
+wohin er führt."
+
+### Das Ziel kann sich ändern
+
+Das zweite Risiko, heimtückischer, ist dass das Ziel **nachträglich geändert
+werden kann**.
+
+Ein Angreifer verschickt Tausende gefälschter Phishing-Nachrichten, die auf
+einen Weiterleitungsdienst zeigen. Seine Phishing-Seite wird bald gemeldet und
+gesperrt. Statt Tausende E-Mails erneut zu verschicken, ändert er das Ziel des
+Weiterleitungslinks: Das neue Ziel bedient dieselbe Kampagne.
+
+Die bereits versendeten E-Mails bleiben gültig, und die Kampagne läuft mit einer
+neuen Seite weiter. Kaspersky bezeichnet dies als dynamische Weiterleitungen,
+einen Mechanismus, der „die Spur verwischt".
+
+### Ein Vermittler in der Rolle des Spions
+
+Manche Werkzeuge beschränken sich nicht auf das Weiterleiten. Sie bieten
+zudem an, **zu verfolgen, was Sie nach dem Klick tun**: Ihre IP-Adresse, die auf
+der Seite verbrachte Zeit und in manchen Fällen die dort eingegebenen Daten.
+Ihr Datenverkehr läuft dann über einen Zwischenserver, der den gesamten Austausch
+mitbeobachtet — das ist ein Man-in-the-Middle-Angriff.
+
+### Gezieltes Phishing
+
+Ein Link aus einer privaten Nachricht, in einer personalisierten E-Mail, erlaubt
+dem Angreifer, bereits bekannte Informationen über Sie zu nutzen: E-Mail-Adresse,
+Bank, Telefonnummer. Der Link kann auf eine Kopie Ihrer Bank führen, die Ihren
+Benutzernamen bereits ausgefüllt anzeigt und nur noch das Passwort abfragt. Die
+Glaubwürdigkeit der Seite steigt, weil die Informationen stimmen.
+
+## Der Sonderfall der Aktivierungs-E-Mails
+
+Das iode-Beispiel verdient eine eigene Betrachtung, zeigt es doch, dass das
+Problem nicht auf Spam beschränkt ist.
+
+Ein Aktivierungslink ist der verlässlichste überhaupt: Er soll zu der Seite
+führen, die Ihnen die Nachricht geschickt hat, und die angezeigte Adresse
+bestätigt das. Gerade das macht die Umleitung unfair: Sie nutzt das Vertrauen,
+das der Nachricht entgegengebracht wird.
+
+Der weiter oben analysierte Link hat dieselbe Struktur:
+
+```
+https://bbjbdaair.bh.d.sendibt3.com/tr/cl/Vf0-Ak3_syxSZFd…
+```
+
+Erkennen wir das Muster, Segment für Segment:
+
+- `bbjbdaair`: zufällige Kennung des sendenden Kontos;
+- `.bh`: Regions- oder Knoten-Subdomain;
+- `.d.sendibt3.com`: Brevos Weiterleitungsdomain;
+- `/tr/cl/`: *track/click*, die Signatur des Klick-Trackings;
+- `Vf0-…`: eindeutige Kennung des Links und der Kampagne.
+
+Der Pfad `/tr/cl/` ist die Signatur des Mechanismus. Wenn er Ihnen in einer
+E-Mail begegnet, wissen Sie, dass der Klick gemessen wird.
+
+Was diese Domains empfindlich macht, ist ihr Ruf. Die Domain `sendibt3.com` war
+Gegenstand von Beschwerden wegen Netzmissbrauchs, unter anderem über das
+Meldeformular von Abuse.net. E-Mail-Programme und Sicherheitslösungen nehmen
+diese Art von Domain nach und nach in ihre Sperrlisten auf. Praktische Folge:
+**eine legitime E-Mail kann im Spam landen**, und zwar wegen der
+Weiterleitungsdomain des Absenders.
+
+Das ist der Widerspruch des Trackings: Die Reichweitenmessung verschlechtert die
+Zustellbarkeit.
+
+## Wie Sie einen Link überprüfen
+
+### Die einfachste Methode: nicht klicken
+
+Fahren Sie mit der Maus über den Link, ohne zu klicken, und lesen Sie die
+Statusleiste am unteren Fensterrand, die das echte Ziel anzeigt. Die meisten
+E-Mail-Programme verhalten sich ebenso. Entspricht die angezeigte Adresse nicht
+der erwarteten Seite, bestehen Sie nicht darauf.
+
+### Das HTML der Nachricht prüfen
+
+Wirkt der Link normal, sehen Sie sich den Quelltext der Nachricht an (`Strg+U`
+im Browser oder die Funktion „Originalnachricht anzeigen“) und suchen das
+Attribut `href`. Sie sehen den echten Link, auch wenn der angezeigte Text nicht
+übereinstimmt — so hat Thunderbird das Forumsmitglied gewarnt.
+
+### Einen kurzen Link auflösen
+
+Dienste wie unshorten.it oder getlinkinfo.com zeigen das Ziel einer gekürzten
+URL an, ohne sie aufzurufen. Praktisch bei einem per SMS erhaltenen Link, wo
+Überfahren nicht möglich ist.
+
+### Die Adresse analysieren, ohne sie zu öffnen
+
+Die Struktur einer URL erzählt ihre eigene Geschichte. Zu prüfende Elemente:
+
+- **die Top-Level-Domain**, das Wichtigste. Lesen Sie das Ende, nicht den
+  Anfang. `google.com.tracking.example.net` ist eine `example.net`-Seite mit
+  einer Subdomain, die Google nachahmt;
+- **das Vorhandensein einer reinen IP-Adresse** anstelle eines Domainnamens;
+- **die Anzahl der Segmente**, getrennt durch `/`. Ein tiefer, unstimmiger Pfad
+  ist ein Warnsignal;
+- **Unterstriche** oder ungewöhnliche Zeichen in der Domain;
+- **eine ungewöhnliche Endung** für den angekündigten Inhalt.
+
+### Auf den Kontext achten
+
+Keines dieser Indizien für sich genommen genügt. Ein Aktivierungslink, der ohne
+Bitte eintrifft, verdient Zurückhaltung, auch bei richtiger Domain.
+
+## Einen scheinbar legitimen Kürzer prüfen
+
+Umgekehrt kann ein Dienst wie `t.co` (von Twitter genutzt) oder `amzn.to`
+vollkommen legitim sein. Der Unterschied liegt in drei Faktoren:
+
+**Der Ruf des Dienstes.** Kürzer, die große Plattformen in großem Umfang nutzen,
+werden genauer beobachtet.
+
+**Der Kontext der Nachricht.** Ein kurzer Link in einer unerwarteten E-Mail
+bleibt verdächtig, gleichgültig welcher Dienst es ist.
+
+**Das Vorhandensein einer Alternative.** Ein seriöser Absender bietet in der
+Regel zusätzlich zur Kurz-URL eine direkte Adresse an.
+
+Beachten Sie, dass URL-Kürzung auch aus legitimen Gründen genutzt wird: um ein
+Längenlimit zu umgehen, um einen zum Diktieren am Telefon bestimmten Link zu
+verkürzen oder um ein ähnliches Stichwort zu ersetzen. Das Problem ist nicht die
+Kürzung, sondern die Undurchsichtigkeit, die sie hinzufügt, und der Dritte, den
+sie einführt.
+
+## Der rechtliche Rahmen
+
+Klick-Tracking ist eine Verarbeitung personenbezogener Daten im Sinne der DSGVO,
+sobald es ermöglicht, eine Person zu identifizieren oder zu verfolgen.
+
+Die CNIL unterscheidet Tracker, die der Einwilligung unterliegen, von solchen,
+die davon ausgenommen sind. Tracker zur Reichweitenmessung können eine Ausnahme
+in Anspruch nehmen, sofern sie einen strengen Katalog an Auflagen erfüllen,
+insbesondere keine Verknüpfung mit anderen Daten und eine Beschränkung auf die
+Sitzungsdauer.
+
+Ein in einer personalisierten E-Mail nachverfolgter Klick fällt aus diesem
+Rahmen: Er zielt auf eine identifizierte Person, möglicherweise über einen langen
+Zeitraum. Er unterliegt dann der Einwilligung.
+
+## Wann Tracking abschalten
+
+Wenn Sie ein Werkzeug nutzen, das die von Ihnen veröffentlichten Links
+umschreibt, gibt es zwei Möglichkeiten.
+
+Die erste besteht darin, das Tracking in den Plattformeinstellungen zu
+deaktivieren. Im iode-Beispiel erklärt der Betreiber, dass die Abschaltung über
+das Dashboard nicht möglich gewesen sei und dass der Support eingeschaltet
+werden musste, damit die Links aus Newslettern und Aktivierungen direkt wurden.
+Mit anderen Worten: **es ist nicht immer über die sichtbaren Einstellungen
+möglich**.
+
+Die zweite besteht darin, eine Weiterleitungsdomain zu verwenden, die Ihnen
+gehört, statt der des Anbieters. Genau das bieten Dienste mit „custom tracking
+domain“ an: Die URL zeigt dann eine Ihrer eigenen Marke ähnliche Kennung, während
+die Messung erhalten bleibt. Sie behalten die Statistik und machen den Link
+lesbar.
+
+Rechtfertigt die Aktivität diesen Kompromiss nicht, bleibt ein direkter Link die
+einfachste und respektvollste Option für die Empfänger.
+
+## Tracking und Phishing unterscheiden
+
+Klick-Tracking und Phishing beruhen auf demselben Mechanismus: einer Adresse vor
+dem Ziel. Das eine ist angekündigt und legitim, das andere nicht. Sie zu
+unterscheiden verlangt etwas Methode.
+
+**Der Absender ist identifizierbar.** Eine seriöse Versandplattform nutzt eine
+stabile Domain, ein identifizierbares Unternehmen, eine veröffentlichte
+Datenschutzerklärung und einen Abmeldelink. Eine Phishing-Kampagne hat kein
+Interesse daran, identifizierbar zu sein, und bietet keines dieser Elemente.
+
+**Der Dienst hat einen etablierten Ruf.** Weiterleitungsdomains, die große
+Plattformen in großem Umfang nutzen, sind bekannt, dokumentiert und überwacht. Eine
+vor Kurzem erst angelegte Domain ist das nicht.
+
+**Der Kontext wiegt schwerer als alles andere.** Eine Anmeldung, um die Sie nicht
+gebeten haben, verdient keinen Klick, gleichgültig der Domain. Umgekehrt bleibt
+ein kurzer Link in einem erwarteten Austausch harmlos.
+
+**Das Gewicht des Kontexts.** Die Anzahl der Sprünge, die Länge der Adresse und
+ungewöhnliche Zeichen sind schwache Indizien. Sie sind nie ein Beweis: Ein
+seriöser Freigabedienst kann eine ebenso verschleierte Adresse erzeugen.
+
+## Auf Ihrer Seite einen Dienst wählen
+
+Für die eigene Kommunikation stellt sich die Frage: welchen Kompromiss akzeptieren?
+
+**Direkte Links** lassen keine Daten an Dritte fließen und bleiben lesbar. Der
+Preis: Sie verlieren die Klickmessung.
+
+**Personalisierte Weiterleitungsdomains** (*custom tracking domain*) erlauben
+eine Ihrer eigenen Marke ähnelnde Kennung bei erhaltener Statistik. Mehrere
+Mailing-Dienste bieten das an. Der Preis: Die Domain benennt den Vermittler
+nicht mehr.
+
+**Öffnungstracking** — ein unsichtbares Pixel in der Nachricht — hat ein
+spezifisches Problem: Mehrere E-Mail-Programme laden entfernte Bilder
+automatisch, noch bevor die E-Mail geöffnet wird. Die Angabe „wer hat gelesen“
+ist dann falsch. Das ist der Hauptvorwurf gegen die Praxis, mehr noch als der
+Datenschutz selbst.
+
+Genügt ein einfacher Gesamtwert der Aktivität, kommt eine Reichweitenmessung auf
+der Website aus, die mit einem Werkzeug ohne Tracking in Ihren E-Mails den
+gesamten Problembereich vermeidet.
+
+## Was Sie sich merken sollten
+
+**Weiterleitung ist überall.** Transaktionale E-Mails, Newsletter und
+Marketingkampagnen laufen häufig über Tracking-Domains, ohne dass Sie es erfahren.
+
+**Die Top-Level-Domain lügt nicht.** Sie sagt, wer die Seite kontrolliert. Die
+Frage ist nie „sieht der Name aus wie die richtige Marke aus?“, sondern „wem
+gehört diese Domain?“
+
+**Prüfen kostet nichts.** Über einen Link fahren, seinen Quelltext lesen oder
+ihn in einem speziellen Dienst auflösen dauert Sekunden und erspart viele
+Probleme.
+
+**Tracking hat seinen Preis.** Für den Absender verschlechtert es die
+Zustellbarkeit seiner Nachrichten. Für den Empfänger fügt es einen Vermittler
+hinzu, der mehr über Ihre Gewohnheiten weiß als Sie selbst.
+
+## Quellen
+
+- Kaspersky — [Die Gefahren kurzer Links](https://www.kaspersky.com/blog/link-shorteners-privacy-security/48856/) — Funktionsweise eines Kürzers, Klick-Tracking, dynamische Weiterleitungen und Man-in-the-Middle-Angriffe.
+- iode-Forum — [„Account activation link is a tracker!“](https://community.iode.tech/t/account-activation-link-is-a-tracker/1507) — Realer Fall eines über `sendibt3.com` umgeleiteten Aktivierungslinks und Erklärung des Betreibers (Mai 2023).
+- Brevo — [Why is the URL of my links different from what I have chosen?](https://help.brevo.com/hc/en-us/articles/209421325) — Offizielle Dokumentation des Umleitungs- und Klick-Tracking-Mechanismus.
+- CNIL — [Cookies: Lösungen für Reichweitenmesswerkzeuge](https://www.cnil.fr/fr/cookies-solutions-pour-les-outils-de-mesure-daudience) — Bedingungen für die Einwilligungsausnahme bei Reichweitenmess-Trackern.
+- CNIL — [Cookies und andere Tracker: Was sagt das Gesetz?](https://www.cnil.fr/fr/cookies-et-autres-traceurs/que-dit-la-loi) — Grundsatz der vorherigen Einwilligung.
+- Menlo Security — [URL shortening allows threats to evade URL filtering](https://www.menlosecurity.com/blog/url-shortening-allows-threats-to-evade-url-filtering-and-categorization-tools) — Kürzer zur Umgehung von Sicherheitsfiltern.
+- Cofense — [The URL Shorteners You Didn't Know Were Helping Hackers](https://cofense.com/blog/the-6-url-shorteners-you-didn-t-know-were-helping-hackers) — Verteilung bösartiger Kampagnen nach Kürzer-Dienst.
+- APWG — [Using URL Shorteners to Compare Phishing and Malware Campaigns](https://docs.apwg.org/ecrimeresearch/2018/5351273.pdf) — Wissenschaftliche Untersuchung zum Einsatz von Kürzern in Phishing-Kampagnen.

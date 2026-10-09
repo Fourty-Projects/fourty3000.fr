@@ -1,0 +1,134 @@
+---
+title: "PiperHub: el catálogo que da voz a los modelos de Piper"
+publishedAt: "2026-10-07"
+summary: "PiperHub es un catálogo libre y de código abierto que reúne los modelos de voz del motor Piper TTS: 493 modelos, 3.663 locutores, 70 idiomas, con la procedencia y la licencia de cada recurso."
+tags: "Código abierto, IA, Piper TTS"
+---
+
+Instalar un motor de síntesis de voz es fácil. Encontrar una voz que te guste
+no lo es.
+
+Los modelos de voz para Piper TTS están repartidos entre Hugging Face, Kaggle y
+diversos repositorios. Cada repositorio impone sus propias convenciones de
+nomenclatura, nada indica de dónde viene un modelo y las licencias varían de un
+recurso a otro. Para elegir con confianza, hay que comprobarlo todo a mano.
+
+[PiperHub](https://piperhub.org/es/) es el proyecto de **Fox3000foxy** que
+resuelve ese problema. Un catálogo libre y de código abierto, sin servidor, que
+reúne lo que estaba disperso.
+
+## Qué reúne el catálogo
+
+Las cifras, a fecha de hoy:
+
+- **493 modelos**
+- **3.663 locutores**
+- **70 idiomas**
+
+El catálogo distingue los modelos oficiales de Piper de los procedentes de la
+comunidad. Una distinción útil: los primeros los publica el equipo de
+mantenimiento, los segundos provienen de colaboradores cuyo método y cuyos
+datos varían.
+
+## Una muestra de audio por referencia
+
+Cada modelo dispone de una muestra de audio. Se escucha antes de descargar.
+
+Este es el punto más útil en la práctica. Un modelo pesa varias decenas de
+megas, y descargarlo para descubrir que la voz no te encaja —la edad, el timbre,
+el ritmo— cuesta tiempo y disco a cambio de nada.
+
+El catálogo también permite generar una muestra directamente en el navegador.
+La síntesis se ejecuta en tu equipo, sin instalar nada.
+
+## La procedencia, que es el verdadero asunto
+
+Cada ficha de modelo enlaza con su conjunto de datos de origen cuando se
+conoce. El catálogo distingue dos casos:
+
+- **conjunto de datos vinculado**: el modelo ya tiene su dataset referenciado.
+- **por entrenar**: el dataset está documentado, pero el modelo correspondiente
+  está por producir.
+
+Ese vínculo entre modelo y dataset no es un detalle decorativo. Una voz sintética
+se apoya en grabaciones reales: hereda el estatuto jurídico de la persona cuya
+voz se utilizó. Saber de dónde provienen las grabaciones determina qué se puede
+hacer con el modelo.
+
+Por eso el catálogo dedica una sección entera a los **130 conjuntos de datos**
+referenciados, cada uno enlazado con los modelos que lo utilizan.
+
+## Filtros, no una lista interminable
+
+Con 493 modelos, la navegación importa tanto como el contenido. El catálogo
+ofrece filtrado por idioma, por calidad (alta, media, baja), por número de
+locutores y por fecha de actualización. Se puede ordenar por nombre, por fecha o
+por número de locutores. Un feed RSS anuncia las nuevas voces a medida que se
+incorporan.
+
+## El catálogo es solo una parte del proyecto
+
+PiperHub incluye una sección de guías que cubre el camino completo, desde los
+datos en bruto hasta una voz utilizable:
+
+- **Preparar un conjunto de datos** en el formato LJSpeech que espera Piper: un
+  archivo WAV por frase y un `metadata.csv` que asocia cada archivo con su
+  transcripción.
+- **Entrenar una voz**, con indicaciones sobre recursos y cuotas.
+- **Usar una voz** en el día a día, desde la línea de comandos, desde Python o
+  en Home Assistant.
+
+El README documenta además cómo se construye el catálogo: los datos proceden de
+un repositorio espejo de rastreo (`models_mapping.csv`, `datasets_mapping.csv`),
+las voces se replican desde Hugging Face y `npm run data` regenera los archivos
+JSON que consume el sitio.
+
+Las contribuciones se hacen mediante pull requests, como en cualquier repositorio
+de GitHub.
+
+## Cómo está hecho
+
+El sitio está construido con [Astro](https://astro.build) y funciona como un
+**sitio estático, sin servidor**. El inglés es la raíz; las demás versiones se
+sitúan bajo su propio código de idioma. La interfaz está traducida a dieciséis
+idiomas y el repositorio admite aportaciones de hablantes nativos para las
+cadenas aún sin traducir.
+
+El alojamiento corre a cargo de GitHub Pages, de GitHub Inc.
+
+Esta elección de sitio estático no es baladí para un catálogo: no hay base de
+datos que mantener, ni consultas que procesar, ni servidor que asegurar. El
+catálogo se regenera con un script y sirve archivos.
+
+## Las licencias, la línea roja del proyecto
+
+PiperHub opera una distinción que muchos catálogos pasan por alto:
+
+- **el código del sitio** está bajo licencia MIT;
+- **los modelos, las muestras y los conjuntos de datos** permanecen bajo la
+  licencia de sus respectivos autores.
+
+Dicho de otro modo, el catálogo no reclama nada sobre los recursos que indexa.
+Documenta; no relicencia. Cada ficha remite al recurso de origen y a la
+información de licencia que le corresponde.
+
+Eso es lo que permite usar el catálogo sin ambigüedad: saber que una página
+aparece en el índice no conlleva permiso de uso sobre la voz que referencia.
+
+## Para quién es
+
+El catálogo resulta útil en cuanto se sale del caso de uso trivial.
+
+Si solo quieres una voz francesa para tu asistente, unos pocos clics bastan.
+PiperHub cobra sentido cuando la pregunta se vuelve seria: alguien que
+localiza una aplicación, que usa voces de personajes para un proyecto de fans o
+que fabrica sus propias voces a partir de grabaciones cuyos derechos posee.
+
+El catálogo sirve entonces de punto de entrada para entender qué existe, qué está
+documentado y qué se puede usar.
+
+## Fuentes
+
+- Fox3000foxy — [piperhub.org](https://piperhub.org/es/) · [Código fuente](https://github.com/fox3000foxy/piper-bank) — Catálogo, índices de voces y conjuntos de datos, guías.
+- Fox3000foxy — [README del repositorio](https://github.com/fox3000foxy/piper-bank#readme) — Arquitectura del sitio, cadena de producción de datos, licencias y traducciones.
+- Fox3000foxy — [Aviso legal](https://piperhub.org/es/legal/) — Editor, alojamiento y tratamiento de las licencias.

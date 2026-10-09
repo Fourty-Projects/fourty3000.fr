@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { defaultLocale, isLocale, type Locale } from "./i18n";
 
 type Metadata = {
   title: string;
@@ -8,6 +9,31 @@ type Metadata = {
   tags: string;
   image?: string;
 };
+
+type Post = {
+  metadata: Metadata;
+  slug: string;
+  lang: Locale;
+  /** false quand aucune traduction n'existe et que le francais est renvoyé. */
+  translated: boolean;
+  content: string;
+};
+
+/** Nom de fichier attendu : slug.mdx (francais) ou slug.en.mdx, slug.es.mdx... */
+const LOCALIZED_EXTENSION = /\.([a-z]{2})\.mdx$/i;
+
+function parseFileName(fileName: string): { slug: string; lang: Locale } {
+  const localized = fileName.match(LOCALIZED_EXTENSION);
+
+  if (localized && isLocale(localized[1])) {
+    return {
+      slug: fileName.replace(LOCALIZED_EXTENSION, ""),
+      lang: localized[1],
+    };
+  }
+
+  return { slug: fileName.replace(/\.mdx$/, ""), lang: defaultLocale };
+}
 
 function parseFrontmatter(fileContent: string) {
   let frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
@@ -20,7 +46,7 @@ function parseFrontmatter(fileContent: string) {
   frontMatterLines.forEach((line) => {
     let [key, ...valueArr] = line.split(": ");
     let value = valueArr.join(": ").trim();
-    value = value.replace(/^['"](.*)['"]$/, "$1"); 
+    value = value.replace(/^['"](.*)['"]$/, "$1");
     metadata[key.trim() as keyof Metadata] = value;
   });
 
@@ -28,7 +54,9 @@ function parseFrontmatter(fileContent: string) {
 }
 
 function getMDXFiles(dir: string) {
-  return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
+  return fs
+    .readdirSync(dir)
+    .filter((file) => path.extname(file) === ".mdx");
 }
 
 function readMDXFile(filePath: string) {
@@ -36,22 +64,50 @@ function readMDXFile(filePath: string) {
   return parseFrontmatter(rawContent);
 }
 
-function getMDXData(dir: string) {
+function getMDXData(dir: string): Post[] {
   let mdxFiles = getMDXFiles(dir);
   return mdxFiles.map((file) => {
     let { metadata, content } = readMDXFile(path.join(dir, file));
-    let slug = path.basename(file, path.extname(file));
-
-    return {
-      metadata,
-      slug,
-      content,
-    };
+    let { slug, lang } = parseFileName(file);
+    return { metadata, slug, lang, translated: true, content };
   });
 }
 
-export function getBlogPosts() {
-  return getMDXData(path.join(process.cwd(), "content"));
+/**
+ * Articles disponibles dans la langue demandee. Si aucun article n'existe
+ * dans cette langue, la version francaise est renvoyee avec translated=false,
+ * afin de ne jamais afficher une page vide.
+ */
+export function getBlogPosts(locale: Locale = defaultLocale): Post[] {
+  const posts = getMDXData(path.join(process.cwd(), "content"));
+  const localized = posts.filter((post) => post.lang === locale);
+
+  if (localized.length > 0) {
+    return localized;
+  }
+
+  return posts
+    .filter((post) => post.lang === defaultLocale)
+    .map((post) => ({ ...post, translated: false }));
+}
+
+export function getBlogPost(
+  slug: string,
+  locale: Locale = defaultLocale
+): Post | undefined {
+  const posts = getMDXData(path.join(process.cwd(), "content"));
+  return (
+    posts.find((post) => post.slug === slug && post.lang === locale) ??
+    posts.find((post) => post.slug === slug && post.lang === defaultLocale)
+  );
+}
+
+/** Tous les couples (langue, slug) existants, pour la generation statique. */
+export function getAllPostSlugs(): { slug: string; lang: Locale }[] {
+  return getMDXData(path.join(process.cwd(), "content")).map((post) => ({
+    slug: post.slug,
+    lang: post.lang,
+  }));
 }
 
 export function formatDate(date: string, includeRelative = false) {

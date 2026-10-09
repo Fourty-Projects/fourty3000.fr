@@ -65,6 +65,9 @@ const dictionaries = {
     },
     footer: {
       legalLinks: "Liens légaux",
+      madeWith: "Fait avec ❤️ par",
+      thanksTo: "grâce à",
+      and: "et",
     },
     notice: {
       frenchOnly: "Cette page n'est disponible qu'en français.",
@@ -124,6 +127,9 @@ const dictionaries = {
     },
     footer: {
       legalLinks: "Legal links",
+      madeWith: "Made with ❤️ by",
+      thanksTo: "thanks to",
+      and: "and",
     },
     notice: {
       frenchOnly: "This page is only available in French.",
@@ -185,6 +191,9 @@ const dictionaries = {
     },
     footer: {
       legalLinks: "Enlaces legales",
+      madeWith: "Hecho con ❤️ por",
+      thanksTo: "gracias a",
+      and: "y",
     },
     notice: {
       frenchOnly: "Esta página solo está disponible en francés.",
@@ -247,6 +256,9 @@ const dictionaries = {
     },
     footer: {
       legalLinks: "Rechtliche Links",
+      madeWith: "Mit ❤️ erstellt von",
+      thanksTo: "dank",
+      and: "und",
     },
     notice: {
       frenchOnly: "Diese Seite ist nur auf Französisch verfügbar.",
@@ -308,6 +320,9 @@ const dictionaries = {
     },
     footer: {
       legalLinks: "Link legali",
+      madeWith: "Realizzato con ❤️ da",
+      thanksTo: "grazie a",
+      and: "e",
     },
     notice: {
       frenchOnly: "Questa pagina è disponibile solo in francese.",
@@ -369,6 +384,9 @@ const dictionaries = {
     },
     footer: {
       legalLinks: "Ligações legais",
+      madeWith: "Feito com ❤️ por",
+      thanksTo: "graças a",
+      and: "e",
     },
     notice: {
       frenchOnly: "Esta página só está disponível em francês.",

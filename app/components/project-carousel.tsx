@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Project } from "../[locale]/projects/project-data";
+import type { Locale } from "../lib/i18n";
 
 const AUTO_SCROLL_MS = 5000;
 
@@ -22,9 +23,11 @@ interface CarouselLabels {
 export function ProjectCarousel({
   projects,
   labels,
+  locale,
 }: {
   projects: Project[];
   labels: CarouselLabels;
+  locale: Locale;
 }) {
   const trackRef = useRef<HTMLUListElement>(null);
   const [index, setIndex] = useState(0);
@@ -103,7 +106,7 @@ export function ProjectCarousel({
               className="w-full shrink-0 snap-center"
               aria-hidden={position !== index}
             >
-              <div className="flex h-full flex-col justify-between gap-4 p-6 sm:p-8">
+              <div className="flex h-full flex-col justify-between gap-4 px-12 py-6 sm:px-14 sm:py-8">
                 <div>
                   <div className="mb-3 flex items-baseline justify-between gap-3">
                     <h2 className="text-lg font-medium text-black dark:text-white">
@@ -114,7 +117,7 @@ export function ProjectCarousel({
                     </p>
                   </div>
                   <p className="text-neutral-600 dark:text-neutral-400">
-                    {project.description}
+                    {project.description[locale] ?? project.description.fr}
                   </p>
                 </div>
                 <Link
@@ -137,7 +140,7 @@ export function ProjectCarousel({
               type="button"
               onClick={() => goTo(index - 1)}
               aria-label={labels.previous}
-              className="absolute top-1/2 left-2 -translate-y-1/2 rounded-full border border-neutral-200 bg-white/90 p-2 text-neutral-700 shadow-sm transition hover:bg-white hover:text-black dark:border-neutral-700 dark:bg-neutral-900/90 dark:text-neutral-200 dark:hover:bg-neutral-900 dark:hover:text-white"
+              className="absolute top-1/2 left-1.5 -translate-y-1/2 rounded-full border border-neutral-200 bg-white/90 p-1.5 text-neutral-700 shadow-sm transition hover:bg-white hover:text-black dark:border-neutral-700 dark:bg-neutral-900/90 dark:text-neutral-200 dark:hover:bg-neutral-900 dark:hover:text-white"
             >
               <svg
                 width="16"
@@ -157,7 +160,7 @@ export function ProjectCarousel({
               type="button"
               onClick={() => goTo(index + 1)}
               aria-label={labels.next}
-              className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full border border-neutral-200 bg-white/90 p-2 text-neutral-700 shadow-sm transition hover:bg-white hover:text-black dark:border-neutral-700 dark:bg-neutral-900/90 dark:text-neutral-200 dark:hover:bg-neutral-900 dark:hover:text-white"
+              className="absolute top-1/2 right-1.5 -translate-y-1/2 rounded-full border border-neutral-200 bg-white/90 p-1.5 text-neutral-700 shadow-sm transition hover:bg-white hover:text-black dark:border-neutral-700 dark:bg-neutral-900/90 dark:text-neutral-200 dark:hover:bg-neutral-900 dark:hover:text-white"
             >
               <svg
                 width="16"

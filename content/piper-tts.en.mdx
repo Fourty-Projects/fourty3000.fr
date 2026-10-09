@@ -1,0 +1,130 @@
+---
+title: "PiperHub: the catalogue that gives a voice to Piper models"
+publishedAt: "2026-10-07"
+summary: "PiperHub is a free, open-source catalogue listing the voice models of the Piper TTS engine: 493 models, 3,663 speakers, 70 languages, with the provenance and licence of every resource."
+tags: "Open source, AI, Piper TTS"
+---
+
+Installing a text-to-speech engine is easy. Finding a voice you like is not.
+
+Voice models for Piper TTS are scattered across Hugging Face, Kaggle and
+various other repositories. Each repository has its own naming conventions,
+nothing indicates where a model comes from, and licences vary from one resource
+to another. To choose with confidence, you have to check everything by hand.
+
+[PiperHub](https://piperhub.org/) is **Fox3000foxy**'s project that addresses this
+problem. A free, open-source catalogue, with no server, that gathers together
+what was scattered.
+
+## What the catalogue lists
+
+The current figures:
+
+- **493 models**
+- **3,663 speakers**
+- **70 languages**
+
+The catalogue distinguishes the official Piper models from those coming from the
+community. A useful distinction: the former are published by the maintenance
+team, the latter come from contributors whose method and data vary.
+
+## An audio sample for every entry
+
+Every model has an audio sample. You listen before you download.
+
+This is the most useful feature in practice. A model weighs several dozen
+megabytes, and downloading it only to discover the voice does not suit you —
+age, timbre, delivery — wastes time and disk space for nothing.
+
+The catalogue also lets you generate a sample directly in the browser. The
+synthesis runs on your machine, with nothing to install.
+
+## Provenance, which is the real issue
+
+Every model page links back to its original dataset when that is known. The
+catalogue distinguishes two cases:
+
+- **dataset linked**: the model already has its dataset referenced.
+- **to be trained**: the dataset is documented, but the corresponding model is
+  still to be produced.
+
+This link between model and dataset is not a decorative detail. A synthetic
+voice relies on real recordings: it inherits the legal status of the person
+whose voice was used. Knowing where the recordings come from determines what
+you are allowed to do with the model.
+
+The catalogue therefore has an entire section devoted to the **130 referenced
+datasets**, each linked to the models that use it.
+
+## Filters rather than an endless list
+
+With 493 models, navigation matters as much as content. The catalogue offers
+filtering by language, by quality (high, medium, low), by number of speakers,
+and by update date. You can sort by name, by date or by speaker count. An RSS
+feed announces new voices as they are added.
+
+## The catalogue is only part of the project
+
+PiperHub includes a section of guides covering the whole path, from raw data to
+a usable voice:
+
+- **Preparing a dataset** in the LJSpeech format expected by Piper: one WAV
+  file per sentence, plus a `metadata.csv` linking each file to its
+  transcription.
+- **Training a voice**, with guidance on resources and quotas.
+- **Using a voice** day to day, from the command line, from Python, or in Home
+  Assistant.
+
+The README also documents how the catalogue is built: the data comes from a
+mirrored scraping repository (`models_mapping.csv`, `datasets_mapping.csv`),
+the voices are mirrored from Hugging Face, and `npm run data` regenerates the
+JSON files the site consumes.
+
+Contributions are made through pull requests, like on any GitHub repository.
+
+## How it is built
+
+The site is built with [Astro](https://astro.build) and runs as a **static
+site, with no server**. English is the root; the other versions live under their
+own language code. The interface is translated into sixteen languages, and the
+repository welcomes contributions from native speakers for strings that have not
+been translated yet.
+
+Hosting is handled by GitHub Pages, at GitHub Inc.
+
+This choice of a static site matters for a catalogue: there is no database to
+maintain, no query to handle, no server to secure. The catalogue is regenerated
+by a script and serves files.
+
+## Licences, the project's red line
+
+PiperHub makes a distinction that many catalogues neglect:
+
+- **the site code** is under the MIT licence;
+- **the models, samples and datasets** remain under their authors' respective
+  licences.
+
+In other words, the catalogue claims nothing over the resources it indexes. It
+documents; it does not relicense. Every page links to the original resource and
+to the licence information that belongs to it.
+
+That is what makes the catalogue usable without ambiguity: knowing that a page
+appears in the index grants no usage rights over the voice it references.
+
+## Who it is for
+
+The catalogue is useful as soon as you step outside the trivial case.
+
+If you simply want a French voice for your assistant, a few clicks will do.
+PiperHub makes real sense when the question becomes serious: someone
+localising an application, using character voices for a fan project, or
+building their own voices from recordings whose rights they hold.
+
+The catalogue then serves as an entry point to understand what exists, what is
+documented, and what can be used.
+
+## Sources
+
+- Fox3000foxy — [piperhub.org](https://piperhub.org/) · [Source code](https://github.com/fox3000foxy/piper-bank) — Catalogue, voice and dataset indexes, guides.
+- Fox3000foxy — [Repository README](https://github.com/fox3000foxy/piper-bank#readme) — Site architecture, data pipeline, licences and translations.
+- Fox3000foxy — [Legal notice](https://piperhub.org/legal/) — Publisher, hosting and licence handling.

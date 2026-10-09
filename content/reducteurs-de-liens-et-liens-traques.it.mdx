@@ -1,0 +1,331 @@
+---
+title: "Accorciatori di link e link tracciati: cosa sapere prima di cliccare"
+publishedAt: "2026-10-07"
+summary: "Un link di attivazione dell'account non punta sempre al dominio atteso. Spiegazione degli accorciatori di link, del tracciamento dei clic e dei modi per verificare un URL prima di cliccare."
+tags: "Sicurezza, Privacy, Web"
+---
+
+Una notizia come tante: ricevi un'email di attivazione dell'account. Il testo
+del link annuncia un sito che conosci. Clicchi. Il sito è quello giusto.
+
+Solo che no. Se avessi ispezionato l'indirizzo reale prima di cliccare, avresti
+scoperto che non si trattava del dominio annunciato.
+
+È esattamente ciò che è accaduto a un membro del forum iode, un sistema operativo
+francese orientato alla privacy. In un filo di discussione del maggio 2023,
+racconta che Thunderbird lo aveva avvertito che il link di attivazione del suo
+account non portava al dominio atteso:
+
+```
+Testo mostrato : https://community.iode.tech/u/activate-account/abcdefg…
+URL reale       : https://debadcg.r.bh.d.sendibt3.com/tr/cl/hijklmnopqrs…
+```
+
+Sottolinea il paradosso: « Non me lo aspettavo da un sistema operativo orientato
+alla privacy. »
+
+## Che cos'è un accorciatore di link
+
+Un accorciatore di link (*URL shortener*) trasforma un indirizzo lungo in uno
+molto più corto:
+
+```
+https://example.com/una/pagina/molto/lunga/con/molti/parametri?utm_source=x
+        ↓
+https://ex.co/aB3xYz
+```
+
+La ragione è pratica: un link corto occupa meno spazio sullo schermo di un
+telefono e consuma meno caratteri in un post la cui lunghezza la piattaforma
+limita.
+
+L'accorciamento è solo una deviazione. Quando clicchi, il servizio riceve la
+richiesta, registra informazioni e poi ti reindirizza alla destinazione. Questo
+passaggio attraverso un intermediario è il cuore del problema, e Kaspersky lo
+formula così nella sua analisi dei link brevi: « i tuoi dati finiscono nelle
+mani non solo di chi ha creato il link breve, ma anche del proprietario
+dell'accorciatore ».
+
+## Perché i link vengono tracciati
+
+Il tracciamento dei clic risponde a una domanda semplice per chi spedisce una
+newsletter: *quale link ha generato più clic?*
+
+Per rispondere, il mittente interpone il proprio indirizzo davanti alla
+destinazione. Il membro del forum iode aveva ricevuto un'email del tutto
+legittima, inviata dal software Discourse stesso. Il gestore del forum ha poi
+confermato il meccanismo:
+
+> « usiamo sendinblue come servizio email, che per impostazione predefinita
+> reindirizza tutti i link ».
+
+In altre parole, quel comportamento non era né un bug né una cattiva intenzione,
+ma un'impostazione predefinita della piattaforma email utilizzata.
+
+Il dominio `sendibt3.com` appartiene a **Brevo** (in passato Sendinblue), un'azienda
+francesa di marketing via email. La loro documentazione ufficiale conferma il
+principio:
+
+> « Brevo utilizza la reindirizzamento dei link per tracciare i clic. Il
+> tracciamento consente di accedere al numero di clic per link, all'elenco dei
+> contatti che hanno cliccato su ciascun link e alla heat map. Questo non
+> influisce sulla destinazione del link: i contatti vengono sempre reindirizzati
+> alle pagine che hai selezionato. »
+
+Quello che l'utente non vede: **quando** ha cliccato, **da quale indirizzo IP**,
+con quale **user agent** e **quante volte**. Quest'ultimo dato è quello che
+permette di dedurre se il messaggio è stato aperto, e se è stato letto o solo
+cliccato.
+
+### Un terzo intermediario
+
+Il tracciamento può essere combinato con i parametri di campagna, i famosi *UTM
+tag*, che codificano la fonte del traffico. Presi da soli restano innocui: il
+mittente vuole sapere da dove arrivano i visitatori.
+
+Combinati con un accorciatore, i tuoi dati finiscono da **due** attori invece
+di uno. Non sai più chi conserva la tua cronologia di navigazione.
+
+## I rischi concreti
+
+### La destinazione diventa invisibile
+
+Il consiglio abituale davanti a un link sospetto è verificare la destinazione
+prima di cliccare. Con un accorciatore quel consiglio non serve a nulla: la
+destinazione reale si conosce solo dopo il clic.
+
+È il punto che Kaspersky evidenzia: « se i criminali informatici usano link
+brevi, il consiglio di controllarli diventa privo di senso: puoi scoprire dove
+ti porta solo dopo aver cliccato ».
+
+### La destinazione può cambiare
+
+Il secondo rischio, più subdolo, è che il bersaglio è **modificabile in
+seguito**.
+
+Un aggressore invia migliaia di falsi messaggi di phishing che puntano a un
+servizio di reindirizzamento. La sua pagina di phishing viene presto segnalata e
+bloccata. Invece di rispedire migliaia di email, modifica la destinazione del
+link di reindirizzamento: il nuovo bersaglio serve la stessa campagna.
+
+Le email già distribuite restano valide, e la campagna continua con una pagina
+nuova. È ciò che Kaspersky descrive come reindirizzamenti dinamici, un meccanismo
+che « sfuma la pista ».
+
+### Un intermediario nella posizione della spia
+
+Alcuni strumenti non si limitano a reindirizzare. Offrono anche di **tracciare
+cosa fai dopo aver cliccato**: il tuo indirizzo IP, il tempo trascorso sulla
+pagina e in alcuni casi i dati che vi inserisci. Il tuo traffico passa allora
+attraverso un server intermedio che osserva l'intero scambio, il che costituisce
+un attacco man-in-the-middle.
+
+### Phishing personalizzato
+
+Un link ricevuto in un messaggio privato, in un'email nominativa, permette
+all'aggressore di sfruttare informazioni che già conosce su di te: indirizzo
+email, banca, numero di telefono. Il link può portare a una copia della tua
+banca che mostra il nome utente già compilato e chiede solo la password. La
+credibilità della pagina aumenta perché le informazioni sono vere.
+
+## Il caso particolare delle email di attivazione
+
+L'esempio di iode merita un esame a parte, perché mostra che il problema non si
+limita allo spam.
+
+Un link di attivazione è il più affidabile in assoluto: dovrebbe portare al
+sito che ti ha inviato il messaggio, e l'indirizzo mostrato lo conferma. È
+proprio questo a rendere il reindirizzamento disonesto: sfrutta la fiducia
+accordata al messaggio.
+
+Il link analizzato sopra ha la stessa struttura:
+
+```
+https://bbjbdaair.bh.d.sendibt3.com/tr/cl/Vf0-Ak3_syxSZFd…
+```
+
+Riconosciamo lo schema, segmento per segmento:
+
+- `bbjbdaair`: identificatore casuale dell'account mittente;
+- `.bh`: sottodominio di regione o di nodo;
+- `.d.sendibt3.com`: dominio di reindirizzamento di Brevo;
+- `/tr/cl/`: *track/click*, la firma del tracciamento dei clic;
+- `Vf0-…`: identificativo univoco del link e della campagna.
+
+Il percorso `/tr/cl/` è la firma del meccanismo. Se lo vedi comparire in
+un'email, sai che il clic sarà misurato.
+
+Ciò che rende questi domini delicati è la loro reputazione. Il dominio
+`sendibt3.com` è stato oggetto di denunce per abuso di rete, in particolare
+tramite il modulo di segnalazione di Abuse.net. Client di posta e soluzioni di
+sicurezza classificano progressivamente questo tipo di dominio nelle loro liste
+di blocco. Conseguenza pratica: **un'email legittima può finire nello spam** a
+causa del dominio di reindirizzamento del mittente.
+
+Questo è il paradosso del tracciamento: misurare il pubblico peggiora la
+consegnabilità.
+
+## Come verificare un link
+
+### Il metodo più semplice: non cliccare
+
+Passa il puntatore sul link senza cliccare e leggi la barra di stato in basso
+alla finestra, che mostra la destinazione reale. La maggior parte dei client di
+posta fa lo stesso. Se l'indirizzo mostrato non corrisponde al sito atteso, non
+insistere.
+
+### Verificare l'HTML del messaggio
+
+Se il link ti sembra normale, consulta il sorgente del messaggio (`Ctrl+U` in un
+browser, oppure la funzione «mostra messaggio originale») e cerca l'attributo
+`href`. Vedrai il link reale, anche quando il testo mostrato non corrisponde: è
+così che Thunderbird ha avvertito il membro del forum iode.
+
+### Sviluppare un link breve
+
+Servizi come unshorten.it o getlinkinfo.com mostrano la destinazione di un URL
+accorciato senza visitarlo. Utile per un link ricevuto via SMS, dove il
+passaggio del puntatore è impossibile.
+
+### Analizzare l'indirizzo senza aprirlo
+
+La struttura di un URL racconta la propria storia. Elementi da esaminare:
+
+- **il dominio di primo livello**, la cosa più importante. Leggi la fine, non
+  l'inizio. `google.com.tracking.example.net` è un sito `example.net` con un
+  sottodominio che imita Google;
+- **la presenza di un IP grezzo** al posto di un nome di dominio;
+- **il numero di segmenti** separati da `/`. Un percorso profondo e incoerente è
+  un segnale d'allerta;
+- **i trattini bassi** o caratteri insoliti nel dominio;
+- **un'estensione insolita** per il contenuto annunciato.
+
+### Diffidare dal contesto
+
+Nessuno di questi indicatori basta da solo. Un link di attivazione che arriva
+senza che tu lo abbia richiesto merita prudenza, anche con il dominio giusto.
+
+## Verificare un accorciatore che sembra legittimo
+
+Viceversa, un servizio come `t.co` (usato da Twitter) o `amzn.to` può essere
+del tutto legittimo. La differenza sta in tre fattori:
+
+**La reputazione del servizio.** Gli accorciatori usati su larga scala da grandi
+piattaforme sono più monitorati.
+
+**Il contesto del messaggio.** Un link breve in un'email inattesa resta
+sospetto, qualunque sia il servizio.
+
+**La presenza di un'alternativa.** Un mittente serio offre di solito un URL
+diretto oltre al link breve.
+
+Nota che la riduzione degli URL è usata anche per motivi legittimi: aggirare un
+limite di lunghezza, accorciare un link da dettare al telefono o sostituire una
+parola chiave simile. Il problema non è l'accorciamento, ma l'opacità che
+aggiunge e il terzo che introduce.
+
+## Il quadro legale
+
+Il tracciamento dei clic è un trattamento di dati personali ai sensi del GDPR,
+non appena consente di identificare o seguire una persona.
+
+Il CNIL distingue i tracciatori soggetti al consenso da quelli esentati. I
+tracciatori per la misurazione del pubblico possono beneficiare di un'esenzione,
+purché rispettino un insieme di requisiti rigorosi, in particolare l'assenza di
+riconoscimento con altri dati e la limitazione alla durata della sessione.
+
+Un clic tracciato in un'email nominativa esce da questo quadro: punta a una
+persona identificata, potenzialmente per un periodo lungo. Rientra allora nel
+consenso.
+
+## Quando disattivare il tracciamento
+
+Se usi uno strumento che riscrive i link che pubblichi, ci sono due opzioni.
+
+La prima consiste nel disattivare il tracciamento nelle impostazioni della
+piattaforma. Nell'esempio di iode, il gestore spiega che la disattivazione non
+era disponibile dalla dashboard, e che fu necessario rivolgersi all'assistenza
+perché i link delle newsletter e delle attivazioni diventassero diretti. In
+altre parole, **non è sempre possibile dalle impostazioni esposte**.
+
+La seconda è usare un dominio di reindirizzamento che ti appartiene, invece di
+quello del fornitore. È ciò che fanno i servizi a «dominio di tracciamento
+personalizzato»: l'URL mostra allora un marchio vicino al tuo, mantenendo la
+misurazione. Tieni la statistica e rendi il link leggibile.
+
+Se l'attività non giustifica questo compromesso, un link diretto resta
+l'opzione più semplice e più rispettosa nei confronti dei destinatari.
+
+## Distinguere il tracciamento dal phishing
+
+Il tracciamento dei clic e il phishing si basano sullo stesso meccanismo: un
+indirizzo interposto davanti alla destinazione. Uno è dichiarato e lecito, l'altro
+no. Distinguerli richiede un po' di metodo.
+
+**Il mittente è identificabile.** Una piattaforma di invio seria usa un dominio
+stabile, una società identificabile, un'informativa sulla privacy pubblicata e un
+link di disiscrizione. Una campagna di phishing non ha alcun interesse a essere
+identificabile e non offre nulla di tutto questo.
+
+**Il servizio ha una reputazione consolidata.** I domini di reindirizzamento usati
+su larga scala da grandi piattaforme sono noti, documentati e monitorati. Un
+dominio creato di recente non lo è.
+
+**Il contesto conta più di tutto il resto.** Un'iscrizione a cui non hai chiesto
+non merita un clic, qualunque sia il dominio. Viceversa, un link breve inserito
+in uno scambio atteso è innocuo.
+
+**Il peso del contesto.** Il numero di salti, la lunghezza dell'indirizzo e la
+presenza di caratteri insoliti sono indizi deboli. Non costituiscono mai una
+prova: un servizio di condivisione legittimo può produrre un indirizzo altrettanto
+offuscato.
+
+## Scegliere un servizio dalla propria parte
+
+Per le proprie comunicazioni, la domanda è: quale compromesso accettare?
+
+**I link diretti** non fanno transitare dati verso terzi e restano leggibili. Il
+prezzo: perdi la misurazione dei clic.
+
+**I domini di reindirizzamento personalizzati** (*custom tracking domain*)
+consentono di mostrare un marchio simile al proprio conservando la statistica.
+Molti servizi di mailing lo offrono. Il costo: il dominio non identifica più
+l'intermediario.
+
+**Il tracciamento delle aperture** — un pixel invisibile nel messaggio — pone un
+problema specifico: diversi client di posta caricano automaticamente le immagini
+remote, prima ancora che l'email venga aperta. Il dato « chi ha letto » è allora
+falso. È la principale obiezione a questa pratica, più della privacy in sé.
+
+Se basta una semplice misura complessiva dell'attività, una misurazione del
+pubblico sul sito, realizzata con uno strumento che non implementa alcun
+tracciamento nelle email, evita l'intero problema.
+
+## Cosa tenere a mente
+
+**Il reindirizzamento è ovunque.** Email transazionali, newsletter e campagne di
+marketing passano spesso per domini di tracciamento, senza che tu ne sia
+informato.
+
+**Il dominio di primo livello non mente.** Dice chi controlla la pagina. La
+domanda non è mai « il nome assomiglia al marchio giusto? », ma « chi possiede
+questo dominio? ».
+
+**Verificare non costa nulla.** Passare il puntatore su un link, leggerne il
+sorgente o svilupparlo in un servizio dedicato richiede pochi secondi ed evita
+molti problemi.
+
+**Il tracciamento ha un costo.** Per il mittente peggiora la consegnabilità dei
+suoi messaggi. Per il destinatario aggiunge un intermediario che sa più delle
+tue abitudini di quanto ne sappia tu.
+
+## Fonti
+
+- Kaspersky — [I pericoli dei link brevi](https://www.kaspersky.com/blog/link-shorteners-privacy-security/48856/) — Come funziona un accorciatore, il tracciamento dei clic, i reindirizzamenti dinamici e l'attacco man-in-the-middle.
+- Forum iode — [«Un link di attivazione dell'account è un tracciatore!»](https://community.iode.tech/t/account-activation-link-is-a-tracker/1507) — Caso reale di un link di attivazione reindirizzato tramite `sendibt3.com` e spiegazione del gestore del forum (maggio 2023).
+- Brevo — [Why is the URL of my links different from what I have chosen?](https://help.brevo.com/hc/en-us/articles/209421325) — Documentazione ufficiale del meccanismo di reindirizzamento e tracciamento dei clic.
+- CNIL — [Cookies: soluzioni per gli strumenti di misurazione del pubblico](https://www.cnil.fr/fr/cookies-solutions-pour-les-outils-de-mesure-daudience) — Condizioni di esenzione dal consenso per i tracciatori di misurazione del pubblico.
+- CNIL — [Cookie e altri tracciatori: che cosa dice la legge?](https://www.cnil.fr/fr/cookies-et-autres-traceurs/que-dit-la-loi) — Principio del consenso preliminare.
+- Menlo Security — [URL shortening allows threats to evade URL filtering](https://www.menlosecurity.com/blog/url-shortening-allows-threats-to-evade-url-filtering-and-categorization-tools) — Accorciatori usati per eludere i filtri di sicurezza.
+- Cofense — [The URL Shorteners You Didn't Know Were Helping Hackers](https://cofense.com/blog/the-6-url-shorteners-you-didn-t-know-were-helping-hackers) — Distribuzione delle campagne malevole per servizio di accorciamento.
+- APWG — [Using URL Shorteners to Compare Phishing and Malware Campaigns](https://docs.apwg.org/ecrimeresearch/2018/5351273.pdf) — Ricerca accademica sull'uso degli accorciatori nelle campagne di phishing.

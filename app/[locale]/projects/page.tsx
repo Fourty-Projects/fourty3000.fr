@@ -35,7 +35,11 @@ export default async function Projects({
       <h1 className="mb-8 text-2xl font-medium">
         {dictionary.projects.title}
       </h1>
-      <ProjectCarousel projects={projects} labels={dictionary.projects} />
+      <ProjectCarousel
+        projects={projects}
+        labels={dictionary.projects}
+        locale={activeLocale}
+      />
     </section>
   );
 }

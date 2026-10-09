@@ -1,0 +1,358 @@
+---
+title: "Learning Markdown: the complete guide"
+publishedAt: "2026-10-07"
+summary: "A complete, progressive course on Markdown syntax: headings, lists, links, code, tables, dialects and best practices."
+tags: "Markdown, Writing, Guide"
+---
+
+<ImageCredit
+  credit="Markdown logo © Microsoft, reused from the official VS Code documentation, under the MIT licence."
+  source="https://github.com/microsoft/vscode-markdown-tutorials"
+>
+  <Image
+    src="/markdown-guide-cover.png"
+    alt="Markdown logo — an M above a downward arrow, framing a document."
+    title="Markdown logo © Microsoft, MIT licence"
+    width={520}
+    height={260}
+    className="w-full max-w-[520px] h-auto"
+  />
+</ImageCredit>
+
+Markdown is a text format that lets you write structured documents with short,
+readable syntax. Text marked up in Markdown can then be converted to HTML, to
+PDF, or to pretty much any other format.
+
+Its strength rests on one constraint: **the source file stays plain text**. You
+can open it in any editor, read it without specialised tooling, and version it in
+a Git repository with no formatting conflicts.
+
+This guide starts with the basics and moves on to the more advanced syntax.
+
+## Paragraphs and line breaks
+
+A paragraph is a sequence of lines separated by a blank line. That is the only
+separation that matters:
+
+```
+This is a paragraph.
+Even with a line break,
+the text stays in the same paragraph.
+
+This is a second paragraph.
+```
+
+A blank line in the middle of a paragraph splits it in two. This is the simplest
+and most important mechanism there is.
+
+To force a line break inside a paragraph, end the line with two spaces, or with a
+backslash. The second option is better: trailing spaces are invisible and are
+often stripped during a copy-paste.
+
+## Headings
+
+The number of hash signs determines the heading level.
+
+```
+# Level 1
+## Level 2
+### Level 3
+#### Level 4
+```
+
+Two rules to respect:
+
+- A single level 1 heading per document, the one naming the page.
+- Do not skip a level: going from `##` to `####` is an error, because screen
+  readers use that hierarchy to build the page's table of contents.
+
+You can close a heading with hash signs at the end of the line. This is optional,
+and it mainly serves to make the source more readable:
+
+```
+## A clearly visible heading ##
+```
+
+## Emphasis
+
+Four notations, one of which does not belong to core Markdown.
+
+```
+*Italic* or _Italic_
+**Bold** or __Bold__
+***Bold italic***
+~~Strikethrough~~
+```
+
+The second forms exist for compatibility with historical syntaxes. Prefer the
+first ones, which are easier to spot.
+
+Strikethrough, written with two tildes, is part of the GFM extensions,
+described further down.
+
+## Lists
+
+Three types, distinguished by their marker.
+
+```
+- Bullet level 1
+- Bullet level 1, continued
+  - Nested level 2
+    - Nested level 3
+
+1. Step 1
+2. Step 2
+   1. Sub-step
+```
+
+Two lists must be separated by a blank line, otherwise Markdown absorbs the first
+bullet of the second list into the previous list.
+
+Bullet lists accept `-`, `*` or `+`. Pick one and stick to it. For numbered
+lists, every item can carry the digit `1.`: the rendering renumbers them
+automatically, which avoids gaps after an insertion or a deletion.
+
+### Task lists
+
+```
+- [x] Write the text
+- [ ] Proofread
+- [ ] Publish
+```
+
+The rendering produces checkboxes that look interactive, but with no real
+effect: ticking a box does not modify the file. This syntax also comes from GFM.
+
+## Links
+
+The basic form associates displayed text with a destination:
+
+```
+[Next.js](https://nextjs.org)
+```
+
+The hover title goes between quotation marks, after the URL:
+
+```
+[Next.js](https://nextjs.org "The Next.js framework")
+```
+
+A bare address automatically becomes a link, as does an address wrapped in angle
+brackets:
+
+```
+https://example.com
+
+<https://example.com>
+```
+
+The second form is preferable: it correctly escapes characters that would break
+the rendering, such as parentheses.
+
+Reference links separate the destination from the text, which avoids repeating
+the same URL:
+
+```
+See [the documentation][docs].
+
+[docs]: https://example.com/documentation
+```
+
+## Images
+
+The syntax follows that of links, with an exclamation mark in front.
+
+```
+![A bridge over a river](/images/bridge.jpg)
+```
+
+The text between square brackets is the alternative text. It displays if the
+image fails to load, and it is what screen readers read. Write it as a
+description, not as a filename. A `bridge.jpg` tells you nothing; "a suspension
+bridge over a river at sunset" is useful.
+
+To control the size, some dialects accept an extended syntax, with a brace after
+the path:
+
+```
+![Description](/images/bridge.jpg{width=640})
+```
+
+## Quotes
+
+A chevron marks the start of the quoted block.
+
+```
+> The quoted text can span
+> several lines.
+>
+> Blank lines become a new paragraph.
+```
+
+A quote can be nested inside a list or another quote, by adding an extra
+chevron.
+
+## Code
+
+Code is where Markdown clearly differs from HTML. There are two forms.
+
+**On a single line**, with backticks:
+
+```
+Use the `pnpm install` command.
+```
+
+**Over several lines**, with three backticks, indicating the language after the
+opening fence:
+
+````
+```python
+def slugify(title: str) -> str:
+    return title.lower().replace(" ", "-")
+```
+````
+
+The language name is not decorative: it determines the syntax highlighting. Use
+a precise identifier (`python`, `typescript`, `bash`, `json`) rather than a
+vague term like `code` or `text`, otherwise you will get no highlighting at all.
+
+To display text containing backticks, surround the block with **four**
+backticks.
+
+Code indented by four spaces is also recognised as a code block by core Markdown,
+but this style is fragile: a single extra tab or space changes its meaning. Prefer
+backticks.
+
+## Horizontal rules
+
+Three characters on a line of their own insert a visual break:
+
+```
+---
+```
+
+The same effect with three asterisks or three underscores. In most dialects, a
+line of this shape at the very top of a document is interpreted as a metadata
+block rather than as a rule.
+
+## Tables
+
+Tables are a GFM extension, absent from core Markdown. The syntax uses vertical
+bars and a separator line:
+
+```
+| Column A | Column B |
+| --------- | --------- |
+| Cell 1 | Cell 2 |
+| Cell 3 | Cell 4 |
+```
+
+The outer characters on each line are optional:
+
+```
+Column A | Column B
+--------- | ---------
+Cell 1 | Cell 2
+```
+
+Alignment is set on the separator line:
+
+```
+| Left | Centre | Right |
+| :----- | :----: | -----: |
+```
+
+If you use tables in a context where GFM is unavailable, check the rendering. A
+fallback is to write a list, which stays readable everywhere.
+
+## Escaping
+
+Certain characters trigger interpretation. To display one literally, precede it
+with a backslash.
+
+```
+\*This text is not italic\*
+\# This symbol is not a heading
+```
+
+The characters most often needing an escape are: `*`, `_`, `` ` ``, `#`, `[`,
+`]`, `>`, plus vertical bars inside a table.
+
+Escaping matters mostly in places where the syntax is misinterpreted: inside a
+paragraph that talks about Markdown.
+
+## Dialects: the important nuance
+
+Markdown is not a single standard, but a core plus a collection of extensions. Two
+implementations may therefore behave differently on the same text.
+
+**CommonMark** is the reference specification. It defines the core: headings,
+emphasis, lists, links, images, quotes, code, rules. Any builder conforming to
+this standard produces the same rendering.
+
+**GFM** (GitHub Flavored Markdown) adds tables, strikethrough, task lists and
+automatic linking of addresses. It is the most widespread dialect, because GitHub
+and most publishing platforms use it.
+
+**MDX** allows programmable components in the document. An element written
+between angle brackets and braces is rendered by an application rather than
+converted to HTML.
+
+The practical consequence: before using advanced syntax, check that the engine
+which will render your document supports it. The equation below is generated
+with KaTeX, itself a syntax specific to an extension:
+
+```
+$$
+e^{i\pi} + 1 = 0
+$$
+```
+
+## Common pitfalls
+
+**Trailing spaces.** Invisible, they are stripped by many tools. For a forced
+line break, use a backslash.
+
+**A list stuck to a list.** A list following a paragraph with no blank line is
+absorbed into that paragraph, and does not display as a list.
+
+**Unescaped angle brackets.** A chevron followed by a word looks like an HTML tag
+and may vanish from the rendering. Write it between backticks, or escape it.
+
+**Nested backticks.** It is impossible to include a backtick in single-line code
+without using two backticks on each side, with a space in between.
+
+**False headings.** A line ending with `---` below a paragraph produces a level 2
+heading (the Setext syntax), not a rule.
+
+## Best practices
+
+**One idea per paragraph.** Formatting does not compensate for a faulty
+structure. If a paragraph runs past five lines, split it.
+
+**Do not emphasise everything that can be.** A document where every word is bold
+has no emphasis left. Reserve bold for the central points.
+
+**Write descriptive links.** Prefer "the Next.js documentation" to "click here".
+The reader knows the destination before clicking, and the text stays useful out
+of context.
+
+**Describe your images.** The alternative text is an accessibility requirement,
+not an optional field.
+
+**Link your documents.** A reference to an earlier article extends the reading
+and helps the reader find the follow-up.
+
+**Stay readable in the source.** The syntax should be understandable on
+re-reading the file. If a construction becomes unreadable, it is probably too
+complicated.
+
+## Going further
+
+The CommonMark specification provides an exhaustive description of each
+construction and its edge cases. The syntax guides of GitHub and Pandoc cover the
+extensions specific to each dialect and how they interact.
+
+A simple test, if you are writing in a derived format: paste your text into an
+[editor that offers a rendering preview](https://markdownviewer.org), and compare
+it with what you expected.

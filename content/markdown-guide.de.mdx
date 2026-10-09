@@ -1,0 +1,372 @@
+---
+title: "Markdown lernen: der vollständige Leitfaden"
+publishedAt: "2026-10-07"
+summary: "Ein vollständiger, schrittweiser Kurs zur Markdown-Syntax: Überschriften, Listen, Links, Code, Tabellen, Dialekte und bewährte Praktiken."
+tags: "Markdown, Schreiben, Leitfaden"
+---
+
+<ImageCredit
+  credit="Markdown-Logo © Microsoft, aus der offiziellen VS-Code-Dokumentation übernommen, unter der MIT-Lizenz."
+  source="https://github.com/microsoft/vscode-markdown-tutorials"
+>
+  <Image
+    src="/markdown-guide-cover.png"
+    alt="Markdown-Logo — ein M über einem nach unten zeigenden Pfeil, der ein Dokument rahmt."
+    title="Markdown-Logo © Microsoft, MIT-Lizenz"
+    width={520}
+    height={260}
+    className="w-full max-w-[520px] h-auto"
+  />
+</ImageCredit>
+
+Markdown ist ein Textformat, mit dem sich strukturierte Dokumente in kurzer,
+lesbarer Syntax schreiben lassen. Ein in Markdown ausgezeichneter Text lässt
+sich anschließend in HTML, PDF oder praktisch jedes andere Format umwandeln.
+
+Seine Stärke beruht auf einer Einschränkung: **die Quelldatei bleibt reiner
+Text**. Sie können sie in jedem Editor öffnen, ohne Spezialwerkzeug lesen und in
+einem Git-Repository versionieren, ohne Konflikte bei der Formatierung.
+
+Dieser Leitfaden beginnt mit den Grundlagen und führt zu den fortgeschrittenen
+Syntaxformen.
+
+## Absätze und Zeilenumbrüche
+
+Ein Absatz ist eine Folge von Zeilen, getrennt durch eine Leerzeile. Das ist die
+einzige Trennung, auf die es ankommt:
+
+```
+Dies ist ein Absatz.
+Auch mit einem Zeilenumbruch,
+bleibt der Text im selben Absatz.
+
+Dies ist ein zweiter Absatz.
+```
+
+Eine Leerzeile mitten in einem Absatz teilt ihn in zwei. Das ist der einfachste
+und wichtigste Mechanismus überhaupt.
+
+Um einen Zeilenumbruch innerhalb eines Absatzes zu erzwingen, beenden Sie die
+Zeile mit zwei Leerzeichen oder mit einem Backslash. Die zweite Variante ist
+besser: Leerzeichen am Zeilenende sind unsichtbar und verschwinden häufig beim
+Kopieren und Einfügen.
+
+## Überschriften
+
+Die Anzahl der Rauten bestimmt die Ebene der Überschrift.
+
+```
+# Ebene 1
+## Ebene 2
+### Ebene 3
+#### Ebene 4
+```
+
+Zwei Regeln sind einzuhalten:
+
+- Nur eine Überschrift der Ebene 1 pro Dokument, diejenige, die die Seite
+  benennt.
+- Überspringen Sie keine Ebene: von `##` auf `####` zu springen ist ein Fehler,
+  denn Screenreader nutzen diese Hierarchie, um das Inhaltsverzeichnis der Seite
+  aufzubauen.
+
+Sie können eine Überschrift mit Rauten am Zeilenende schließen. Das ist
+optional und dient vor allem dazu, die Quelle lesbarer zu machen:
+
+```
+## Eine gut sichtbare Überschrift ##
+```
+
+## Betonung
+
+Vier Schreibweisen, von denen eine nicht zum Kern von Markdown gehört.
+
+```
+*Kursiv* oder _Kursiv_
+**Fett** oder __Fett__
+***Fett kursiv***
+~~Durchgestrichen~~
+```
+
+Die zweite Formen bestehen zur Kompatibilität mit historischen Syntaxen.
+Bevorzugen Sie die ersten, die leichter zu erkennen sind.
+
+Durchgestrichen, geschrieben mit zwei Tilden, gehört zu den GFM-Erweiterungen,
+die weiter unten beschrieben werden.
+
+## Listen
+
+Drei Typen, unterschieden an ihrem Marker.
+
+```
+- Aufzählung Ebene 1
+- Aufzählung Ebene 1, Fortsetzung
+  - Verschachtelt Ebene 2
+    - Verschachtelt Ebene 3
+
+1. Schritt 1
+2. Schritt 2
+   1. Teilschritt
+```
+
+Zwei Listen müssen durch eine Leerzeile getrennt sein, sonst nimmt Markdown den
+ersten Aufzählungspunkt der zweiten Liste in die vorherige Liste auf.
+
+Aufzählungen akzeptieren `-`, `*` oder `+`. Wählen Sie eine und bleiben Sie
+dabei. Bei nummerierten Listen kann jeder Eintrag die Ziffer `1.` tragen: Die
+Darstellung nummeriert sie automatisch um, was nach dem Einfügen oder Löschen
+Lücken vermeidet.
+
+### Aufgabenlisten
+
+```
+- [x] Text schreiben
+- [ ] Korrektur lesen
+- [ ] Veröffentlichen
+```
+
+Die Darstellung erzeugt Kontrollkästchen, die interaktiv aussehen, aber keine
+echte Wirkung haben: Ein angehaktes Kästchen ändert die Datei nicht. Auch diese
+Syntax stammt aus GFM.
+
+## Links
+
+Die Grundform verbindet einen angezeigten Text mit einem Ziel:
+
+```
+[Next.js](https://nextjs.org)
+```
+
+Der Titel beim Überfahren steht zwischen Anführungszeichen, nach der URL:
+
+```
+[Next.js](https://nextjs.org "Das Next.js-Framework")
+```
+
+Eine bloße Adresse wird automatisch zu einem Link, ebenso eine in spitze
+Klammern gesetzte Adresse:
+
+```
+https://example.com
+
+<https://example.com>
+```
+
+Die zweite Form ist vorzuziehen: Sie maskier korrekt Zeichen, die die Ausgabe
+zerstören würden, etwa Klammern.
+
+Referenzlinks trennen Ziel und Text und vermeiden so die Wiederholung derselben
+URL:
+
+```
+Siehe [die Dokumentation][docs].
+
+[docs]: https://example.com/documentation
+```
+
+## Bilder
+
+Die Syntax folgt der der Links, mit vorangestelltem Ausrufezeichen.
+
+```
+![Eine Brücke über einen Fluss](/images/bruecke.jpg)
+```
+
+Der Text in eckigen Klammern ist der Alternativtext. Er erscheint, wenn das Bild
+nicht geladen werden kann, und er ist das, was Screenreader vorlesen. Schreiben
+Sie ihn als Beschreibung, nicht als Dateinamen. Ein `bruecke.jpg` sagt nichts;
+„eine Hängebrücke über einem Fluss bei Sonnenuntergang" ist nützlich.
+
+Um die Größe zu steuern, akzeptieren manche Dialekte eine erweiterte Syntax mit
+geschweifter Klammer hinter dem Pfad:
+
+```
+![Beschreibung](/images/bruecke.jpg{width=640})
+```
+
+## Zitate
+
+Ein spitzer Winkel markiert den Beginn des Zitatblocks.
+
+```
+> Der zitierte Text kann sich
+> über mehrere Zeilen erstrecken.
+>
+> Leerzeilen eröffnen einen neuen Absatz.
+```
+
+Ein Zitat lässt sich in eine Liste oder ein anderes Zitat einbetten, indem man
+einen weiteren spitzen Winkel hinzufügt.
+
+## Code
+
+Beim Code unterscheidet sich Markdown deutlich von HTML. Es gibt zwei Formen.
+
+**In einer Zeile**, mit Backticks:
+
+```
+Verwenden Sie den Befehl `pnpm install`.
+```
+
+**Über mehrere Zeilen**, mit drei Backticks, wobei hinter dem öffnenden Zaun die
+Sprache angegeben wird:
+
+````
+```python
+def slugify(titel: str) -> str:
+    return titel.lower().replace(" ", "-")
+```
+````
+
+Der Sprachname ist nicht dekorativ: Er bestimmt die Syntaxhervorhebung. Verwenden
+Sie eine präzise Kennung (`python`, `typescript`, `bash`, `json`) statt eines
+vagen Begriffs wie `code` oder `text`, sonst erhalten Sie überhaupt keine
+Hervorhebung.
+
+Um Text anzuzeigen, der Backticks enthält, umschließen Sie den Block mit
+**vier** Backticks.
+
+Mit vier Leerzeichen eingerückter Code wird auch im Kern-Markdown als
+Codeblock erkannt, doch diese Schreibweise ist zerbrechlich: Ein zusätzlicher
+Tabulator oder ein Leerzeichen ändert die Bedeutung. Bevorzugen Sie Backticks.
+
+## Trennlinien
+
+Drei Zeichen in einer eigenen Zeile fügen eine visuelle Trennung ein:
+
+```
+---
+```
+
+Dieselbe Wirkung mit drei Sternchen oder drei Unterstrichen. In den meisten
+Dialekten wird eine solche Zeile ganz oben im Dokument als Metadatenblock
+ausgelegt und nicht als Trennlinie.
+
+## Tabellen
+
+Tabellen sind eine GFM-Erweiterung und im Kern-Markdown nicht vorhanden. Die
+Syntax verwendet senkrechte Striche und eine Trennzeile:
+
+```
+| Spalte A | Spalte B |
+| --------- | --------- |
+| Zelle 1 | Zelle 2 |
+| Zelle 3 | Zelle 4 |
+```
+
+Die äußeren Zeichen jeder Zeile sind optional:
+
+```
+Spalte A | Spalte B
+--------- | ---------
+Zelle 1 | Zelle 2
+```
+
+Die Ausrichtung wird auf der Trennzeile festgelegt:
+
+```
+| Links | Mitte | Rechts |
+| :----- | :----: | -----: |
+```
+
+Wenn Sie Tabellen in einem Kontext verwenden, in dem GFM nicht verfügbar ist,
+prüfen Sie die Ausgabe. Ein Ausweichen ist eine Liste, die überall lesbar
+bleibt.
+
+## Maskieren
+
+Bestimmte Zeichen lösen eine Interpretation aus. Um eines wörtlich anzuzeigen,
+stellen Sie einen Backslash davor.
+
+```
+\*Dieser Text ist nicht kursiv\*
+\# Dieses Zeichen ist keine Überschrift
+```
+
+Am häufigsten maskieren muss man: `*`, `_`, `` ` ``, `#`, `[`, `]`, `>` sowie
+senkrechte Striche innerhalb einer Tabelle.
+
+Maskieren ist vor allem dort wichtig, wo die Syntax falsch interpretiert wird:
+in einem Absatz, der über Markdown spricht.
+
+## Dialekte: der wichtige Unterschied
+
+Markdown ist keine einheitliche Norm, sondern ein Kern plus eine Sammlung von
+Erweiterungen. Zwei Implementierungen können denselben Text daher unterschiedlich
+behandeln.
+
+**CommonMark** ist die Referenzspezifikation. Sie definiert den Kern: Überschriften,
+Betonung, Listen, Links, Bilder, Zitate, Code, Trennlinien. Jedes Werkzeug, das
+dieser Norm entspricht, erzeugt dieselbe Ausgabe.
+
+**GFM** (GitHub Flavored Markdown) ergänzt Tabellen, Durchgestrichen,
+Aufgabenlisten und die automatische Verlinkung von Adressen. Es ist der
+verbreitetste Dialekt, weil GitHub und die meisten Veröffentlichungsplattformen
+ihn verwenden.
+
+**MDX** erlaubt programmierbare Komponenten im Dokument. Ein Element zwischen
+spitzen Klammern und geschweiften Klammern wird von einer Anwendung dargestellt,
+statt in HTML umgewandelt zu werden.
+
+Die praktische Folge: Prüfen Sie vor der Verwendung einer fortgeschrittenen
+Syntax, ob die Engine, die Ihr Dokument darstellen wird, sie unterstützt. Die
+Gleichung unten wird mit KaTeX erzeugt, ebenfalls einer Syntax, die zu einer
+Erweiterung gehört:
+
+```
+$$
+e^{i\pi} + 1 = 0
+$$
+```
+
+## Häufige Fehler
+
+**Leerzeichen am Zeilenende.** Unsichtbar, entfernen sie viele Werkzeuge. Für
+einen erzwungenen Zeilenumbruch verwenden Sie einen Backslash.
+
+**Eine Liste an eine andere geklebt.** Eine Liste, die ohne Leerzeile auf einen
+Absatz folgt, wird in diesen Absatz aufgenommen und erscheint nicht als Liste.
+
+**Nicht maskierte spitze Klammern.** Ein spitzer Winkel vor einem Wort sieht wie
+ein HTML-Tag aus und kann aus der Ausgabe verschwinden. Schreiben Sie ihn in
+Backticks oder maskieren Sie ihn.
+
+**Verschachtelte Backticks.** Es ist nicht möglich, einen Backtick in
+Einzeilen-Code aufzunehmen, ohne ihn auf beiden Seiten zu verdoppeln und einen
+Leerzeichen dazwischenzusetzen.
+
+**Falsche Überschriften.** Eine mit `---` endende Zeile unter einem Absatz
+erzeugt eine Überschrift der Ebene 2 (die Setext-Syntax), keine Trennlinie.
+
+## Bewährte Praktiken
+
+**Eine Idee pro Absatz.** Formatierung ersetzt keine fehlerhafte Struktur. Wenn
+ein Absatz über fünf Zeilen hinausgeht, teilen Sie ihn.
+
+**Hervorheben Sie nicht alles, was sich hervorheben lässt.** Ein Dokument, in dem
+jedes Wort fett ist, hat keine Betonung mehr. Reservieren Sie Fett für die
+zentralen Aussagen.
+
+**Schreiben Sie beschreibende Links.** Bevorzugen Sie „die Next.js-
+Dokumentation" gegenüber „hier klicken". Der Leser kennt das Ziel vor dem Klick,
+und der Text bleibt außerhalb des Kontextes nützlich.
+
+**Beschreiben Sie Ihre Bilder.** Der Alternativtext ist eine
+Zugänglichkeitsanforderung, kein optionales Feld.
+
+**Verlinken Sie Ihre Dokumente.** Ein Verweis auf einen früheren Artikel verlängert
+das Lesen und hilft dem Leser, die Fortsetzung zu finden.
+
+**Bleiben Sie in der Quelle lesbar.** Die Syntax sollte beim erneuten Lesen der
+Datei verständlich sein. Wenn eine Konstruktion unleserlich wird, ist sie
+vermutlich zu kompliziert.
+
+## Weiterführendes
+
+Die CommonMark-Spezifikation liefert eine erschöpfende Beschreibung jeder
+Konstruktion und ihrer Randfälle. Die Syntax-Leitfäden von GitHub und Pandoc
+behandeln die Erweiterungen der einzelnen Dialekte und deren Wechselwirkungen.
+
+Eine einfache Probe, wenn Sie in einem abgeleiteten Format schreiben: Fügen Sie
+Ihren Text in einen [Editor mit Vorschau der Ausgabe](https://markdownviewer.org)
+ein und vergleichen Sie mit dem, was Sie erwartet haben.

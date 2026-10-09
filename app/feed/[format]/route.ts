@@ -33,7 +33,7 @@ export async function GET(
 
   const feed = new Feed({
     title: metaData.title,
-    description: metaData.description,
+    description: metaData.description.fr,
     id: BaseUrl,
     link: BaseUrl,
     copyright: `All rights reserved ${new Date().getFullYear()}, ${

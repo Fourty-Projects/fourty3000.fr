@@ -1,0 +1,362 @@
+---
+title: "Aprender Markdown: la guía completa"
+publishedAt: "2026-10-07"
+summary: "Un curso completo y progresivo sobre la sintaxis Markdown: títulos, listas, enlaces, código, tablas, dialectos y buenas prácticas."
+tags: "Markdown, Redacción, Guía"
+---
+
+<ImageCredit
+  credit="Logotipo de Markdown © Microsoft, reutilizado de la documentación oficial de VS Code, bajo licencia MIT."
+  source="https://github.com/microsoft/vscode-markdown-tutorials"
+>
+  <Image
+    src="/markdown-guide-cover.png"
+    alt="Logotipo de Markdown — una M sobre una flecha hacia abajo, enmarcando un documento."
+    title="Logotipo de Markdown © Microsoft, licencia MIT"
+    width={520}
+    height={260}
+    className="w-full max-w-[520px] h-auto"
+  />
+</ImageCredit>
+
+Markdown es un formato de texto que permite escribir documentos estructurados con
+una sintaxis breve y legible. Un texto marcado en Markdown puede convertirse
+después en HTML, en PDF o en prácticamente cualquier otro formato.
+
+Su fuerza descansa en una restricción: **el archivo fuente sigue siendo texto
+plano**. Puedes abrirlo en cualquier editor, leerlo sin herramientas
+especializadas y versionarlo en un repositorio Git sin conflictos de formato.
+
+Esta guía parte de lo básico y avanza hacia las sintaxis más avanzadas.
+
+## Párrafos y saltos de línea
+
+Un párrafo es una sucesión de líneas separadas por una línea en blanco. Es la
+única separación que importa:
+
+```
+Esto es un párrafo.
+Incluso con un salto de línea,
+el texto sigue en el mismo párrafo.
+
+Esto es un segundo párrafo.
+```
+
+Una línea en blanco en medio de un párrafo lo divide en dos. Este es el mecanismo
+más sencillo y más importante que existe.
+
+Para forzar un salto de línea dentro de un párrafo, termina la línea con dos
+espacios o con una barra invertida. La segunda opción es mejor: los espacios al
+final de la línea son invisibles y suelen desaparecer al copiar y pegar.
+
+## Títulos
+
+El número de almohadillas determina el nivel del título.
+
+```
+# Nivel 1
+## Nivel 2
+### Nivel 3
+#### Nivel 4
+```
+
+Dos reglas a respetar:
+
+- Un solo título de nivel 1 por documento, el que da nombre a la página.
+- No saltes de nivel: pasar de `##` a `####` es un error, porque los lectores de
+  pantalla usan esa jerarquía para construir la tabla de contenidos de la página.
+
+Puedes cerrar un título con almohadillas al final de la línea. Es opcional, y
+sirve sobre todo para hacer el código fuente más legible:
+
+```
+## Un título bien visible ##
+```
+
+## Texto con énfasis
+
+Cuatro notaciones, una de las cuales no pertenece al Markdown básico.
+
+```
+*Cursiva* o _Cursiva_
+**Negrita** o __Negrita__
+***Negrita cursiva***
+~~Tachado~~
+```
+
+Las formas en underscore existen por compatibilidad con sintaxis históricas.
+Prefiere las primeras, que son más fáciles de detectar.
+
+El tachado, escrito con dos virgulillas, forma parte de las extensiones GFM,
+detalladas más abajo.
+
+## Listas
+
+Tres tipos, distinguidos por su marcador.
+
+```
+- Viñeta nivel 1
+- Viñeta nivel 1, continuación
+  - Anidada nivel 2
+    - Anidada nivel 3
+
+1. Paso 1
+2. Paso 2
+   1. Sub-paso
+```
+
+Dos listas deben separarse por una línea en blanco; de lo contrario, Markdown
+absorbe la primera viñeta de la segunda lista dentro de la lista anterior.
+
+Las listas de viñetas aceptan `-`, `*` o `+`. Elige una y mantenla. En las listas
+numeradas, todos los elementos pueden llevar el número `1.`: el resultado los
+renumera automáticamente, lo que evita desajustes tras una inserción o un
+borrado.
+
+### Listas de tareas
+
+```
+- [x] Escribir el texto
+- [ ] Revisar
+- [ ] Publicar
+```
+
+El resultado produce casillas que parecen interactivas, pero sin efecto real:
+marcar una casilla no modifica el archivo. Esta sintaxis también viene de GFM.
+
+## Enlaces
+
+La forma básica asocia un texto mostrado con un destino:
+
+```
+[Next.js](https://nextjs.org)
+```
+
+El título al pasar el cursor se escribe entre comillas, después de la URL:
+
+```
+[Next.js](https://nextjs.org "El framework Next.js")
+```
+
+Una dirección suelta se convierte automáticamente en un enlace, igual que una
+dirección envuelta entre ángulos:
+
+```
+https://example.com
+
+<https://example.com>
+```
+
+La segunda forma es preferible: escapa correctamente los caracteres que
+romperían el resultado, como los paréntesis.
+
+Los enlaces de referencia separan el destino del texto, lo que evita repetir la
+misma URL:
+
+```
+Consulte [la documentación][docs].
+
+[docs]: https://example.com/documentation
+```
+
+## Imágenes
+
+La sintaxis sigue a la de los enlaces, con un signo de exclamación delante.
+
+```
+![Un puente sobre un río](/images/puente.jpg)
+```
+
+El texto entre corchetes es el texto alternativo. Aparece si la imagen no carga,
+y es lo que leen los lectores de pantalla. Redáctalo como una descripción, no
+como un nombre de archivo. Un `puente.jpg` no dice nada; «un puente colgante
+sobre un río al atardecer» sí es útil.
+
+Para controlar el tamaño, algunos dialectos aceptan una sintaxis ampliada, con
+una llave después de la ruta:
+
+```
+![Descripción](/images/puente.jpg{width=640})
+```
+
+## Citas
+
+Un chevrón marca el inicio del bloque citado.
+
+```
+> El texto citado puede ocupar
+> varias líneas.
+>
+> Las líneas en blanco abren un párrafo nuevo.
+```
+
+Una cita puede anidarse dentro de una lista o de otra cita, añadiendo un chevrón
+más.
+
+## Código
+
+El código es donde Markdown se distingue claramente de HTML. Hay dos formas.
+
+**En una sola línea**, con comillas invertidas graves:
+
+```
+Utilice el comando `pnpm install`.
+```
+
+**En varias líneas**, con tres comillas invertidas, indicando el lenguaje después
+de la apertura:
+
+````
+```python
+def slugify(titulo: str) -> str:
+    return titulo.lower().replace(" ", "-")
+```
+````
+
+El nombre del lenguaje no es decorativo: determina el resaltado de sintaxis. Use
+un identificador preciso (`python`, `typescript`, `bash`, `json`) en lugar de un
+término vago como `code` o `text`, o no obtendrá ningún resaltado.
+
+Para mostrar texto que contiene comillas invertidas, rodee el bloque con
+**cuatro** comillas.
+
+El código sangrado con cuatro espacios también se reconoce como bloque de código
+en el Markdown básico, pero esa forma es frágil: una tabulación o un espacio de
+más cambia su significado. Prefiera las comillas invertidas.
+
+## Filetes horizontales
+
+Tres caracteres en una línea aislada insertan una separación visual:
+
+```
+---
+```
+
+El mismo efecto con tres asteriscos o tres guiones bajos. En la mayoría de los
+dialectos, una línea de esta forma al principio del documento se interpreta como
+un bloque de metadatos y no como un filete.
+
+## Tablas
+
+Las tablas son una extensión de GFM, ausente del Markdown básico. La sintaxis
+emplea barras verticales y una línea de separación:
+
+```
+| Columna A | Columna B |
+| --------- | --------- |
+| Celda 1 | Celda 2 |
+| Celda 3 | Celda 4 |
+```
+
+Los caracteres de los extremos de cada línea son opcionales:
+
+```
+Columna A | Columna B
+--------- | ---------
+Celda 1 | Celda 2
+```
+
+La alineación se fija en la línea de separación:
+
+```
+| Izquierda | Centro | Derecha |
+| :----- | :----: | -----: |
+```
+
+Si usa tablas en un contexto donde GFM no esté disponible, compruebe el
+resultado. Una alternativa es escribir una lista, que sigue siendo legible en
+todas partes.
+
+## Escapar caracteres
+
+Algunos caracteres desencadenan una interpretación. Para mostrar uno de forma
+literal, precede a la barra invertida.
+
+```
+\*Este texto no está en cursiva\*
+\# Este símbolo no es un título
+```
+
+Los caracteres que más hay que escapar son: `*`, `_`, `` ` ``, `#`, `[`, `]`,
+`>`, además de las barras verticales dentro de una tabla.
+
+El escapado importa sobre todo en los lugares donde la sintaxis se malinterpreta:
+dentro de un párrafo que habla de Markdown.
+
+## Dialectos: el matiz importante
+
+Markdown no es una norma única, sino un núcleo más un conjunto de extensiones. Dos
+implementaciones pueden por tanto comportarse de forma distinta ante el mismo
+texto.
+
+**CommonMark** es la especificación de referencia. Define el núcleo: títulos,
+énfasis, listas, enlaces, imágenes, citas, código y filetes. Cualquier
+constructor que cumpla esta norma produce el mismo resultado.
+
+**GFM** (GitHub Flavored Markdown) añade las tablas, el tachado, las listas de
+tareas y el enlace automático de direcciones. Es el dialecto más extendido, porque
+GitHub y la mayoría de las plataformas de edición lo utilizan.
+
+**MDX** permite componentes programables dentro del documento. Un elemento
+escrito entre ángulos y llaves lo representa una aplicación en lugar de
+convertirse en HTML.
+
+La consecuencia práctica: antes de usar una sintaxis avanzada, compruebe que la
+herramienta que renderizará su documento la admite. La ecuación que sigue se
+genera con KaTeX, una sintaxis también propia de una extensión:
+
+```
+$$
+e^{i\pi} + 1 = 0
+$$
+```
+
+## Errores frecuentes
+
+**Espacios al final de la línea.** Invisibles, los borran muchas herramientas.
+Para forzar un salto de línea, use una barra invertida.
+
+**Una lista pegada a otra.** Una lista que sigue a un párrafo sin línea en blanco
+queda absorbida por ese párrafo y no se muestra como lista.
+
+**Ángulos sin escapar.** Un chevrón seguido de una palabra parece una etiqueta
+HTML y puede desaparecer del resultado. Escríbalo entre comillas invertidas o
+escápalo.
+
+**Comillas invertidas anidadas.** Es imposible incluir una comilla invertida en
+código de una sola línea sin usar dos a cada lado, con un espacio en medio.
+
+**Títulos falsos.** Una línea terminada en `---` bajo un párrafo produce un
+título de nivel 2 (la sintaxis Setext), no un filete.
+
+## Buenas prácticas
+
+**Una idea por párrafo.** El formato no compensa una estructura defectuosa. Si un
+párrafo pasa de cinco líneas, divídalo.
+
+**No emphasize todo lo que se puede.** Un documento en el que cada palabra está
+en negrita se queda sin énfasis. Reserve la negrita para las ideas centrales.
+
+**Escriba enlaces descriptivos.** Prefiera «la documentación de Next.js» a «pulse
+aquí». El lector conoce el destino antes de pulsar, y el texto sigue siendo útil
+fuera de contexto.
+
+**Describa sus imágenes.** El texto alternativo es una exigencia de
+accesibilidad, no un campo opcional.
+
+**Enlace sus documentos.** Una referencia a un artículo anterior prolonga la
+lectura y ayuda al lector a encontrar la continuación.
+
+**Manténgase legible en el código.** La sintaxis debe entenderse al releer el
+archivo. Si una construcción se vuelve ilegible, probablemente es demasiado
+compleja.
+
+## Para ir más allá
+
+La especificación CommonMark ofrece una descripción exhaustiva de cada
+construcción y de sus casos límite. Las guías de sintaxis de GitHub y de Pandoc
+cubren las extensiones propias de cada dialecto y sus interacciones.
+
+Una prueba sencilla, si escribe en un formato derivado: pegue su texto en un
+[editor que ofrezca una vista previa del resultado](https://markdownviewer.org) y
+compárelo con lo que esperaba.

@@ -1,22 +1,20 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CustomMDX } from "../../../components/mdx";
-import { FrenchOnlyNotice } from "../../../components/french-only-notice";
-import { formatDate, getBlogPosts } from "../../../lib/posts";
+import { formatDate, getAllPostSlugs, getBlogPost } from "../../../lib/posts";
 import { metaData } from "../../../lib/config";
 import { isLocale, locales, type Locale } from "../../../lib/i18n";
 
 export const dynamic = "force-static";
 
-/** Chaque article existe dans chaque version linguistique du site. */
+/** Chaque article est genere pour chaque langue ou il existe. */
 export async function generateStaticParams() {
-  const posts = getBlogPosts();
+  const posts = getAllPostSlugs();
 
   return locales.flatMap((locale) =>
-    posts.map((post) => ({
-      locale,
-      slug: post.slug,
-    }))
+    posts
+      .filter((post) => post.lang === locale)
+      .map((post) => ({ locale, slug: post.slug }))
   );
 }
 
@@ -26,7 +24,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata | undefined> {
   const { locale, slug } = await params;
-  const post = getBlogPosts().find((item) => item.slug === slug);
+  const post = getBlogPost(slug, isLocale(locale) ? locale : "fr");
   if (!post) {
     return;
   }
@@ -67,14 +65,14 @@ export default async function Blog({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const post = getBlogPosts().find((item) => item.slug === slug);
+  const post = getBlogPost(slug, isLocale(locale) ? locale : "fr");
 
   if (!post) {
     notFound();
   }
 
   return (
-    <section lang={locale}>
+    <section lang={post.lang}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -86,7 +84,7 @@ export default async function Blog({
             datePublished: post.metadata.publishedAt,
             dateModified: post.metadata.publishedAt,
             description: post.metadata.summary,
-            inLanguage: locale,
+            inLanguage: post.lang,
             image: post.metadata.image
               ? `${metaData.baseUrl}${post.metadata.image}`
               : `/og?title=${encodeURIComponent(post.metadata.title)}`,
@@ -101,7 +99,6 @@ export default async function Blog({
       <h1 className="title mb-3 font-medium text-2xl">
         {post.metadata.title}
       </h1>
-      <FrenchOnlyNotice locale={isLocale(locale) ? locale : "fr"} />
       <div className="flex justify-between items-center mt-2 mb-8 text-medium">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {formatDate(post.metadata.publishedAt)}

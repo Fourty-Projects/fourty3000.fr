@@ -62,9 +62,10 @@ export default function Footer({ locale }: { locale: Locale }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {metaData.title} | Fait avec ❤️ par{" "}
-          <span className="font-bold">Fourty3000</span> grâce à{" "}
-          <span className="font-bold">Next.js</span> et{" "}
+          {metaData.title} | {dictionary.footer.madeWith}{" "}
+          <span className="font-bold">Fourty3000</span>{" "}
+          {dictionary.footer.thanksTo} <span className="font-bold">Next.js</span>{" "}
+          {dictionary.footer.and}{" "}
           <span className="font-bold">TailwindCSS</span>.
         </a>
         <style jsx>{`

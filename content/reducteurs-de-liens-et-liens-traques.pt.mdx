@@ -1,0 +1,322 @@
+---
+title: "Encurtadores de links e links rastreados: o que é preciso saber antes de clicar"
+publishedAt: "2026-10-07"
+summary: "Um link de ativação de conta nem sempre aponta para o domínio esperado. Explicação dos encurtadores de link, do rastreio de cliques e das formas de verificar um URL antes de clicar."
+tags: "Segurança, Privacidade, Web"
+---
+
+Um facto banal: recebe um email de ativação de conta. O texto do link anuncia um
+site que conhece. Clica. O site é o certo.
+
+Exceto que não. Se tivesse inspecionado o endereço real antes de clicar, teria
+descobberto que não se tratava do domínio anunciado.
+
+Foi exatamente o que aconteceu a um membro do fórum iode, um sistema operativo
+francês orientado à privacidade. Num tópico de discussão de maio de 2023,
+relata ter sido avisado pelo Thunderbird de que o link de ativação da sua conta
+não levava ao domínio esperado:
+
+```
+Texto apresentado: https://community.iode.tech/u/activate-account/abcdefg…
+URL real          : https://debadcg.r.bh.d.sendibt3.com/tr/cl/hijklmnopqrs…
+```
+
+Sublinha o paradoxo: « Não esperava isto de um sistema operativo orientado à
+privacidade. »
+
+## O que é um encurtador de link
+
+Um encurtador de link (*URL shortener*) transforma um endereço longo noutro muito
+mais curto:
+
+```
+https://example.com/uma/pagina/muito/longa/com/muitos/parametros?utm_source=x
+        ↓
+https://ex.co/aB3xYz
+```
+
+A razão é prática: um link curto ocupa menos espaço no ecrã de um telemóvel e
+consome menos caracteres numa publicação cuja extensão a plataforma limita.
+
+O encurtamento é apenas um desvio. Quando clica, o serviço recebe o pedido,
+regista informação e depois redireciona-o para o destino. Essa passagem por um
+intermediário é o centro do problema, e a Kaspersky formula-o assim na sua análise
+dos links curtos: « os seus dados acabam nas mãos não só de quem criou o link
+curto, mas também do proprietário do encurtador ».
+
+## Porque é que os links são rastreados
+
+O rastreio de cliques responde a uma pergunta simples para quem envia
+newsletters: *que link gerou mais cliques?*
+
+Para responder, intercala o seu próprio endereço antes do destino. O membro do
+fórum iode tinha recebido um email perfeitamente legítimo, enviado pelo próprio
+software Discourse. O gestor do fórum confirmou depois o mecanismo:
+
+> « usamos o sendinblue como serviço de email, que por omissão redireciona todos
+> os links ».
+
+Ou seja, esse comportamento não era nem um erro nem má-fé, mas uma opção por
+omissão da plataforma de email utilizada.
+
+O domínio `sendibt3.com` pertence à **Brevo** (antemente Sendinblue), uma empresa
+francesa de marketing por email. A documentação oficial confirma o princípio:
+
+> « A Brevo utiliza o redireccionamento de links para rastrear cliques. O
+> rastreio permite-lhe aceder ao número de cliques por link, à lista de contactos
+> que clicaram em cada link e ao mapa de calor. Isto não afecta o destino do
+> link: os seus contactos são sempre redireccionados para as páginas que
+> seleccionou. »
+
+O que o utilizador não vê: **quando** clicou, **a partir de que endereço IP**,
+com que **agente de utilizador** e **quantas vezes**. Este último dado é o que
+permite deduzir se abriu a mensagem, e se a leu ou se apenas clicou.
+
+### Um terceiro intermediário
+
+O rastreio pode ser combinado com parâmetros de campanha, os famosos *UTM tags*,
+que codificam a origem do tráfego. Isolados, permanecem inofensivos: o remetente
+quer saber de onde vêm os visitantes.
+
+Combinados com um encurtador, os seus dados chegam a **dois** intervenientes em
+vez de um. Já não sabe quem guarda o seu histórico de navegação.
+
+## Os riscos concretos
+
+### O destino torna-se invisível
+
+O conselho habitual perante um link suspeito é verificar o destino antes de
+clicar. Com um encurtador, esse conselho não serve para nada: o destino real só
+se conhece depois do clique.
+
+É este o ponto que a Kaspersky sublinha: « se os cibercriminosos usarem links
+curtos, o conselho de os verificar deixa de fazer sentido: só pode descobrir para
+onde o leva depois de clicar ».
+
+### O destino pode mudar
+
+O segundo risco, mais traiçoeiro, é que o alvo é **modificável a posteriori**.
+
+Um atacante envia milhares de falsas mensagens de phishing que apontam para um
+serviço de redireccionamento. A sua página de phishing é em breve denunciada e
+bloqueada. Em vez de reenviar milhares de emails, altera o destino do link de
+redireccionamento: o novo alvo serve a mesma campanha.
+
+Os emails já distribuídos continuam válidos, e a campanha prossegue com uma
+página nova. É o que a Kaspersky descreve como redireccionamentos dinâmicos, um
+mecanismo que « desfaz o rasto ».
+
+### Um intermediário na posição de espião
+
+Algumas ferramentas não se limitam a redireccionar. Também oferecem
+**rastrear o que faz depois de clicar**: o seu endereço IP, o tempo passado na
+página e, em alguns casos, os dados que aí introduz. O seu tráfego passa então
+por um servidor intermédio que observa toda a troca, o que constitui um ataque
+de homem no meio.
+
+### Phishing personalizado
+
+Um link recebido numa mensagem privada, num email nominal, permite ao atacante
+aproveitar informação que já tem sobre si: endereço de email, banco, número de
+telefone. O link pode levar a uma cópia do seu banco que mostra o nome de
+utilizador já preenchido e pede apenas a palavra-passe. A credibilidade da
+página aumenta porque a informação é verdadeira.
+
+## O caso particular dos emails de activação
+
+O exemplo do iode merece exame à parte, porque mostra que o problema não se
+limita ao spam.
+
+Um link de activação é o mais fiável que existe: deve levar ao site que lhe
+enviou a mensagem, e o endereço apresentado confirma-o. É precisamente isso que
+torna o redireccionamento desonesto: explora a confiança depositada na
+mensagem.
+
+O link analisado acima tem a mesma estrutura:
+
+```
+https://bbjbdaair.bh.d.sendibt3.com/tr/cl/Vf0-Ak3_syxSZFd…
+```
+
+Reconheçamos o padrão, segmento a segmento:
+
+- `bbjbdaair`: identificador aleatório da conta de envio;
+- `.bh`: subdomínio de região ou de nó;
+- `.d.sendibt3.com`: domínio de redireccionamento da Brevo;
+- `/tr/cl/`: *track/click*, a assinatura do rastreio de cliques;
+- `Vf0-…`: identificador único do link e da campanha.
+
+O caminho `/tr/cl/` é a assinatura do mecanismo. Se o vir aparecer num email, sabe
+que o clique será medido.
+
+O que torna estes domínios sensíveis é a sua reputação. O domínio
+`sendibt3.com` foi alvo de queixas por abuso de rede, nomeadamente através do
+formulário de denúncia da Abuse.net. Os clientes de correio e as soluções de
+segurança vão classificando progressivamente este tipo de domínio nas suas
+listas de bloqueio. Consequência prática: **um email legítimo pode acabar em
+spam** por causa do domínio de redireccionamento do remetente.
+
+É o paradoxo do rastreio: medir a audiência degrada a entregabilidade.
+
+## Como verificar um link
+
+### O método mais simples: não clicar
+
+Passe o cursor sobre o link sem clicar e leia a barra de estado na parte inferior
+da janela, que mostra o destino real. A maioria dos clientes de correio faz o
+mesmo. Se o endereço apresentado não corresponder ao site esperado, não insista.
+
+### Verificar o HTML da mensagem
+
+Se o link lhe parece normal, consulte o código-fonte da mensagem (`Ctrl+U` num
+navegador, ou a função «mostrar mensagem original») e procure o atributo `href`.
+Vê o link real, mesmo quando o texto apresentado não corresponde — foi assim que
+o Thunderbird avisou o membro do fórum iode.
+
+### Desenvolver um link curto
+
+Serviços como unshorten.it ou getlinkinfo.com mostram o destino de um URL
+encurtado sem o visitar. Útil para um link recebido por SMS, onde passar o cursor
+é impossível.
+
+### Analisar o endereço sem o abrir
+
+A estrutura de um URL conta a sua própria história. Elementos a examinar:
+
+- **o domínio de primeiro nível**, o mais importante. Leia o fim, não o início.
+  `google.com.tracking.example.net` é um site `example.net` com um subdomínio que
+  imita a Google;
+- **a presença de um IP puro** em vez de um nome de domínio;
+- **o número de segmentos** separados por `/`. Um caminho profundo e incoerente é
+  um sinal de alerta;
+- **os sublinhados** ou caracteres incomuns no domínio;
+- **uma extensão incomum** para o conteúdo anunciado.
+
+### Desconfie do contexto
+
+Nenhum destes indicadores chega por si só. Um link de activação que chega sem
+que o tenha pedido merece cautela, mesmo com o domínio correcto.
+
+## Verificar um encurtador que parece legítimo
+
+Pelo contrário, um serviço como `t.co` (usado pelo Twitter) ou `amzn.to` pode
+ser perfeitamente legítimo. A diferença está em três factores:
+
+**A reputação do serviço.** Os encurtadores usados em grande escala por grandes
+plataformas são mais vigiados.
+
+**O contexto da mensagem.** Um link curto num email inesperado continua
+suspeito, seja qual for o serviço.
+
+**A presença de uma alternativa.** Um remetente sério costuma oferecer um URL
+directo para além do link curto.
+
+Note que a redução de URL também é usada por motivos legítimos: contornar um
+limite de tamanho, encurtar um link destinado a ser ditado por telefone ou
+substituir uma palavra-chave semelhante. O problema não é o encurtamento, mas a
+opacidade que acrescenta e o terceiro que introduz.
+
+## O quadro legal
+
+O rastreio de cliques é um tratamento de dados pessoais para efeitos do RGPD,
+assim que permita identificar ou seguir uma pessoa.
+
+A CNIL distingue os rastreadores sujeitos a consentimento daqueles que estão
+dispensados. Os rastreadores de medição de audiência podem beneficiar de uma
+dispensa, desde que cumpram um caderno de encargos estrito, nomeadamente a
+ausência de cruzamento com outros dados e a limitação à duração da sessão.
+
+Um clique rastreado num email nominal sai desse quadro: visa uma pessoa
+identificada, potencialmente durante um período longo. Passa então a depender do
+consentimento.
+
+## Quando desactivar o rastreio
+
+Se usa uma ferramenta que reescreve os links que publica, existem duas opções.
+
+A primeira consiste em desactivar o rastreio nas definições da plataforma. No
+exemplo do iode, o gestor explica que a desactivação não estava disponível no
+painel, e que foi necessário contactar o suporte para que os links das suas
+newsletters e activações se tornassem directos. Por outras palavras, **nem
+sempre é possível a partir das definições expostas**.
+
+A segunda é usar um domínio de redireccionamento que lhe pertença, em vez do do
+fornecedor. É o que fazem os serviços de «domínio de rastreio personalizado»: o
+URL mostra então uma marca próxima da sua, mantendo a medição. Fica com a
+estatística e torna o link legível.
+
+Se a actividade não justificar este compromisso, um link directo continua a ser a
+opção mais simples e mais respeitosa para os destinatários.
+
+## Distinguir o rastreio do phishing
+
+O rastreio de cliques e o phishing apoiam-se no mesmo mecanismo: um endereço
+intercalado antes do destino. Um é declarado e lícito, o outro não. Distingui-los
+exige algum método.
+
+**O emissor é identificável.** Uma plataforma de envio séria usa um domínio
+estável, uma sociedade identificável, uma política de privacidade publicada e
+uma ligação de cancelamento. Uma campanha de phishing não tem qualquer
+interesse em ser identificável, e não oferece nada disso.
+
+**O serviço tem uma reputação estabelecida.** Os domínios de redireccionamento
+usados em grande escala por grandes plataformas são conhecidos, documentados e
+vigiados. Um domínio criado recentemente não o é.
+
+**O contexto prevalece sobre tudo o resto.** Uma inscrição que não pediu não
+merece ser clicada, seja qual for o domínio. Inversamente, um link curto dentro de
+uma troca esperada é inofensivo.
+
+**O peso do contexto.** O número de saltos, o comprimento do endereço e a
+presença de caracteres incomuns são indícios fracos. Nunca constituem prova: um
+serviço de partilha legítimo pode produzir um endereço igualmente confuso.
+
+## Escolher um serviço do seu lado
+
+Para as suas próprias comunicações, a questão é: que compromisso aceitar?
+
+**Links directos** não deixam passar dados para terceiros e continuam legíveis.
+O preço: perde a medição do clique.
+
+**Domínios de redireccionamento personalizados** (*custom tracking domain*)
+permitem mostrar uma marca semelhante à sua mantendo a estatística. Vários
+serviços de email oferecem-no. O custo: o domínio deixa de identificar o
+intermediário.
+
+**O rastreio de aberturas** — um píxel invisível na mensagem — levanta um
+problema específico: vários clientes de correio carregam as imagens remotas
+automaticamente, antes mesmo de a mensagem ser aberta. O dado « quem leu » é
+então falso. É a principal objecção a esta prática, mais do que a privacidade em
+si.
+
+Se basta uma simples leitura global de actividade, uma medição de audiência no
+site, feita por uma ferramenta que não implemente nenhum rastreio nos seus
+emails, evita o problema por inteiro.
+
+## O que reter
+
+**O redireccionamento está em todo o lado.** Emails transaccionais, newsletters e
+campanhas de marketing passam com frequência por domínios de rastreio, sem que
+seja informado.
+
+**O domínio de primeiro nível não mente.** Diz quem controla a página. A
+pergunta nunca é « o nome parece a marca certa? », mas « quem possui este
+domínio? ».
+
+**Verificar não custa nada.** Passar o cursor sobre um link, ler o código-fonte ou
+desenvê-lo num serviço dedicado leva segundos e evita muitos problemas.
+
+**O rastreio tem um custo.** Para o remetente, degrada a entregabilidade das suas
+mensagens. Para o destinatário, acrescenta um intermediário que sabe mais sobre
+os seus hábitos do que você próprio.
+
+## Fontes
+
+- Kaspersky — [Os perigos dos links curtos](https://www.kaspersky.com/blog/link-shorteners-privacy-security/48856/) — Como funciona um encurtador, o rastreio de cliques, os redireccionamentos dinâmicos e o ataque de homem no meio.
+- Fórum iode — [«Um link de activação de conta é um rastreador!»](https://community.iode.tech/t/account-activation-link-is-a-tracker/1507) — Caso real de um link de activação redireccionado através de `sendibt3.com` e explicação do gestor do fórum (maio de 2023).
+- Brevo — [Porque é que o URL dos meus links é diferente do que escolhi?](https://help.brevo.com/hc/en-us/articles/209421325) — Documentação oficial do mecanismo de redireccionamento e rastreio de cliques.
+- CNIL — [Cookies: soluções para as ferramentas de medição de audiência](https://www.cnil.fr/fr/cookies-solutions-pour-les-outils-de-mesure-daudience) — Condições de dispensa de consentimento para os rastreadores de medição de audiência.
+- CNIL — [Cookies e outros rastreadores: o que diz a lei?](https://www.cnil.fr/fr/cookies-et-autres-traceurs/que-dit-la-loi) — Princípio do consentimento prévio.
+- Menlo Security — [URL shortening allows threats to evade URL filtering](https://www.menlosecurity.com/blog/url-shortening-allows-threats-to-evade-url-filtering-and-categorization-tools) — Encurtadores usados para contornar filtros de segurança.
+- Cofense — [The URL Shorteners You Didn't Know Were Helping Hackers](https://cofense.com/blog/the-6-url-shorteners-you-didn-t-know-were-helping-hackers) — Distribuição das campanhas maliciosas por serviço de encurtamento.
+- APWG — [Using URL Shorteners to Compare Phishing and Malware Campaigns](https://docs.apwg.org/ecrimeresearch/2018/5351273.pdf) — Investigação académica sobre o uso de encurtadores em campanhas de phishing.
