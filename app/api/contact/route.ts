@@ -104,16 +104,27 @@ async function forwardToWebhook(payload: Record<string, string>) {
     return { ok: false, configured: false, detail: "aucune URL configuree" };
   }
 
-  // Discord tronque un embed au-dela de 1024 caracteres pour la description,
-  // et de 256 pour un champ. On reste large en dessous.
-  const truncate = (text: string, max = 1024) =>
+  // Limites Discord : titre 256, description 4096, champ 1024,
+  // pied de page 2048, et 6000 caracteres au total pour l'ensemble.
+  const truncate = (text: string, max: number) =>
     text.length > max ? `${text.slice(0, max - 1)}…` : text;
 
-  const body = {
-    username: "fourty3000.fr",
-    // L'icone du site sert d'avatar au webhook.
-    avatar_url: "https://fourty3000.fr/logo.png",
+  const name = truncate(payload.name, 256);
+  const email = truncate(payload.email, 256);
 
+  // Un e-mail devient cliquable dans Discord : un simple Ctrl+clic
+  // ouvre le client de messagerie.
+  const mailto = `[${email}](mailto:${email})`;
+
+  // Les adresses a throwaway ou de test n'ont pas vocation a etre
+  // repondues : on le signale plutot que de pretendre le contraire.
+  const disposable = /\b(mailinator|guerrillamail|10minutemail|yopmail|trashmail)\b/i;
+  const isLikelyDisposable = disposable.test(email);
+
+  // Le nom et l'avatar du webhook ne sont volontairement pas definis ici :
+  // Discord reprend ceux configures dans les parametres du webhook, ce qui
+  // laisse la main pour la personnalisation du salon.
+  const body = {
     // Notification affichee dans la liste des salons.
     content: `📬 Nouveau message de ${truncate(payload.name, 80)}`,
 
@@ -123,33 +134,55 @@ async function forwardToWebhook(payload: Record<string, string>) {
     embeds: [
       {
         title: "📨 Nouveau message",
-        description: truncate(payload.message),
+        description: truncate(payload.message, 4096),
+        url: "https://fourty3000.fr/fr/contact",
+        // Vert : message envoye avec succes.
         color: 0x2ecc71,
+        // Bandeau d'en-tete : rend le bloc immediatement identifiable
+        // dans un salon ou circulent d'autres messages.
+        image: {
+          url: "https://fourty3000.fr/opengraph-image.png",
+          height: 100,
+        },
         fields: [
           {
             name: "👤 Nom",
-            value: truncate(payload.name, 256),
+            value: name,
             inline: true,
           },
           {
             name: "✉️ E-mail",
-            value: truncate(payload.email, 256),
+            value: mailto,
             inline: true,
           },
           {
-            name: "🌐 Origine",
-            value: payload.source,
+            name: "📏 Longueur",
+            value: `${payload.message.length} caractères`,
             inline: true,
+          },
+          ...(isLikelyDisposable
+            ? [
+                {
+                  name: "⚠️ À vérifier",
+                  value: "Adresse d'un service jetable : la réponse ne sera pas lue.",
+                  inline: false,
+                },
+              ]
+            : []),
+          {
+            name: "🔗 Répondre",
+            value: `[Ouvrir un e-mail vers ${email}](mailto:${email}?subject=${encodeURIComponent(
+              `Réponse à votre message sur fourty3000.fr`
+            )})`,
+            inline: false,
           },
         ],
         footer: {
-          text: `Envoyé le ${new Date().toLocaleString("fr-FR", {
-            dateStyle: "short",
-            timeStyle: "short",
-            timeZone: "Europe/Paris",
-          })}`,
+          // La date est deja affichee par `timestamp` : on ne la repete
+          // pas ici, Discord ajouterait un doublon.
+          text: "Envoyé via le site web",
         },
-        // Horodatage affiche en bas a droite de l'embed.
+        // Horodatage affiche en bas a droite de l'embed, en heure locale.
         timestamp: new Date().toISOString(),
       },
     ],
