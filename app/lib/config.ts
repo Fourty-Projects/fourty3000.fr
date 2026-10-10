@@ -19,7 +19,7 @@ export const socialLinks = {
   github: "https://github.com/Fourty3000",
   instagram: "https://www.instagram.com/fourty3000/",
   youtube: "https://www.youtube.com/@fourty3000",
-  tiktok: "https://www.tiktok.com/@fourty3000",
+  tiktok: "https://www.tiktok.com/@fourty3000.new",
   discord: "https://discord.gg/5qKEHFw9T2",
   email: "mailto:fourty3000@gmail.com",
 };
