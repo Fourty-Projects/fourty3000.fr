@@ -2,7 +2,7 @@ import type { Locale } from "../i18n";
 import type { LegalPage } from "./types";
 
 const email = "fourty3000@gmail.com";
-const updated = "07/10/2026";
+const updated = "10/10/2026";
 
 export const privacyPolicies: Record<Locale, LegalPage> = {
   fr: {
@@ -25,11 +25,11 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Le site ne propose ni inscription, ni compte utilisateur, ni formulaire de contact. Aucune donnée ne vous est demandée à la visite.",
+            text: "Le site ne propose ni inscription, ni compte utilisateur. La simple consultation d'une page ne vous demande aucune donnée : les données décrites ci-dessous ne sont collectées que si vous utilisez activement le formulaire de contact ou la messagerie de discussion.",
           },
           {
             type: "p",
-            text: "Le site fait néanmoins appel à des services tiers qui peuvent traiter des données techniques vous concernant : mesure d'audience et messagerie de discussion. Ces traitements sont décrits ci-dessous.",
+            text: "Le site fait appel à des services tiers qui peuvent traiter des données techniques vous concernant : mesure d'audience, vérification anti-spam et messagerie de discussion. Ces traitements sont décrits ci-dessous.",
           },
         ],
       },
@@ -38,14 +38,26 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Mesure d'audience. Le site utilise Vercel Analytics et Vercel Speed Insights, qui collectent des données techniques agrégées : pages consultées, performance de chargement, adresse IP tronquée, agent utilisateur, pays ou région. Ces outils ont vocation à produire des statistiques de trafic sans identifier les personnes.",
+            text: "Formulaire de contact. Le site met à disposition un formulaire permettant de lui écrire. Il recueille uniquement votre nom, votre adresse électronique et le contenu de votre message. Aucune autre information n'est demandée.",
           },
           {
             type: "list",
             items: [
-              "Base légale : intérêt légitime de l'éditeur à comprendre l'utilisation du site et à l'améliorer.",
-              "Destinataire : Vercel Inc.",
-              "Durée : durée limitée choisie par le prestataire, généralement inférieure à quatorze mois, puis suppression ou anonymisation.",
+              "Base légale : consentement, donné par l'envoi volontaire du formulaire.",
+              "Destinataire : l'éditeur, via un webhook Discord (Discord Inc., société de droit américain). Votre message est transmis aux serveurs de Discord, situés aux États-Unis : ce transfert en dehors de l'Union européenne est encadré par les garanties appropriées prévues par Discord, notamment un accord de traitement des données et des clauses contractuelles types. L'éditeur demeure le seul destinataire du contenu de vos messages.",
+              "Durée : conservation de votre message pendant la durée de la conversation, puis suppression. Vous pouvez demander sa suppression à tout moment exerçant votre droit à l'effacement.",
+            ],
+          },
+          {
+            type: "p",
+            text: "Vérification anti-spam (Cloudflare Turnstile). Le formulaire est précédé d'une vérification qui distingue les visiteurs humains des robots. Elle est conçue pour rester invisible, y compris lorsque votre navigateur ne dispose pas des interfaces utilisées : le prestataire traite alors votre adresse IP et des données techniques de votre navigateur, uniquement pour produire un jeton de validation. L'éditeur ne conserve aucune donnée issue de cette vérification.",
+          },
+          {
+            type: "list",
+            items: [
+              "Base légale : intérêt légitime de l'éditeur à protéger son service contre les envois automatisés.",
+              "Destinataire : Cloudflare, Inc.",
+              "Durée : conservation par le prestataire limitée à la durée de la vérification, sans transfert à des tiers à des fins commerciales.",
             ],
           },
           {
@@ -70,7 +82,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
           },
           {
             type: "p",
-            text: "Hébergement. Le site est hébergé par Amber Hosting, qui assure la conservation des journaux de connexion techniques nécessaires à la sécurité du service.",
+            text: "Hébergement. Le site est hébergé sur une infrastructure gérée par l'éditeur lui-même, qui assure la conservation des journaux de connexion techniques nécessaires à la sécurité du service.",
           },
         ],
       },
@@ -110,7 +122,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Les traceurs utilisés pour la mesure d'audience sont exemptés de consentement lorsqu'ils respectent les conditions posées par la CNIL, notamment l'absence de recoupement avec d'autres données et une conservation limitée à la durée de la session.",
+            text: "Le site ne dépose aucun traceur de mesure d'audience et ne réalise aucun recoupement avec des données provenant d'autres services. Les seules données techniques traitées sont celles nécessaires au fonctionnement du site et à la sécurité du service.",
           },
           {
             type: "p",
@@ -150,11 +162,11 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "The site offers no registration, user account or contact form. No data is requested from you when you visit.",
+            text: "The site offers no registration and no user account. Simply browsing a page asks you for no data: the data described below is collected only if you actively use the contact form or the instant messaging widget.",
           },
           {
             type: "p",
-            text: "The site nevertheless uses third-party services that may process technical data about you: audience measurement and instant messaging. These processes are described below.",
+            text: "The site nevertheless uses third-party services that may process technical data about you: spam verification and instant messaging. These processes are described below.",
           },
         ],
       },
@@ -163,14 +175,26 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Audience measurement. The site uses Vercel Analytics and Vercel Speed Insights, which collect aggregated technical data: pages viewed, loading performance, truncated IP address, user agent, country or region. These tools are intended to produce traffic statistics without identifying individuals.",
+            text: "Contact form. The site provides a form that lets you write to the publisher. It collects only your name, your email address and the content of your message. No other information is requested, and the form stores nothing in your browser.",
           },
           {
             type: "list",
             items: [
-              "Legal basis: the publisher's legitimate interest in understanding use of the site and improving it.",
-              "Recipient: Vercel Inc.",
-              "Retention: a limited period chosen by the provider, generally under fourteen months, then deletion or anonymisation.",
+              "Legal basis: consent, given by voluntarily submitting the form.",
+              "Recipient: the publisher, via a Discord webhook (Discord Inc., a US company). Your message is transmitted to Discord's servers, located in the United States: this transfer outside the European Union is covered by the appropriate safeguards provided by Discord, notably a data processing agreement and standard contractual clauses. The publisher remains the sole recipient of the content of your messages.",
+              "Retention: your message is kept for the duration of the exchange, then deleted. You may request its deletion at any time by exercising your right to erasure.",
+            ],
+          },
+          {
+            type: "p",
+            text: "Spam check (Cloudflare Turnstile). The form is preceded by a check that tells human visitors apart from bots. It is designed to remain invisible, including when your browser lacks the interfaces it normally uses: the provider then processes your IP address and technical browser data, solely to produce a validation token. The publisher keeps no data from this check.",
+          },
+          {
+            type: "list",
+            items: [
+              "Legal basis: the publisher's legitimate interest in protecting the service against automated submissions.",
+              "Recipient: Cloudflare, Inc.",
+              "Retention: the provider keeps data for the duration of the check only, with no transfer to third parties for commercial purposes.",
             ],
           },
           {
@@ -195,7 +219,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
           },
           {
             type: "p",
-            text: "Hosting. The site is hosted by Amber Hosting, which keeps the technical connection logs needed for service security.",
+            text: "Hosting. The site is hosted on infrastructure managed by the publisher, who keeps the technical connection logs needed for service security.",
           },
         ],
       },
@@ -235,7 +259,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Trackers used for audience measurement are exempt from consent where they comply with the conditions set by the CNIL, notably the absence of matching with other data and retention limited to the session duration.",
+            text: "The site sets no audience measurement tracker and carries out no matching with data from other services. The only technical data processed is that required for the site to run and for the security of the service.",
           },
           {
             type: "p",
@@ -275,11 +299,11 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "El sitio no ofrece registro, cuenta de usuario ni formulario de contacto. No se le solicita ningún dato durante la visita.",
+            text: "El sitio no ofrece registro ni cuenta de usuario. La simple consulta de una página no le solicita ningún dato: los datos descritos a continuación solo se recopilan si usted utiliza activamente el formulario de contacto o el widget de mensajería.",
           },
           {
             type: "p",
-            text: "No obstante, el sitio recurre a servicios de terceros que pueden tratar datos técnicos sobre usted: medición de audiencia y mensajería instantánea. Estos tratamientos se describen a continuación.",
+            text: "No obstante, el sitio recurre a servicios de terceros que pueden tratar datos técnicos sobre usted: verificación antispam y mensajería instantánea. Estos tratamientos se describen a continuación.",
           },
         ],
       },
@@ -288,14 +312,26 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Medición de audiencia. El sitio utiliza Vercel Analytics y Vercel Speed Insights, que recogen datos técnicos agregados: páginas visitadas, rendimiento de carga, dirección IP truncada, agente de usuario, país o región. Estas herramientas sirven para producir estadísticas de tráfico sin identificar a las personas.",
+            text: "Formulario de contacto. El sitio ofrece un formulario que permite escribirle. Solo recopila su nombre, su dirección de correo electrónico y el contenido de su mensaje. No se solicita ninguna otra información, y el formulario no almacena nada en su navegador.",
           },
           {
             type: "list",
             items: [
-              "Base jurídica: interés legítimo del editor para comprender el uso del sitio y mejorarlo.",
-              "Destinatario: Vercel Inc.",
-              "Conservación: un plazo limitado elegido por el prestador, normalmente inferior a catorce meses, y posterior supresión o anonimización.",
+              "Base jurídica: consentimiento, otorgado al enviar voluntariamente el formulario.",
+              "Destinatario: el editor, a través de un webhook de Discord (Discord Inc., sociedad estadounidense). Su mensaje se transmite a los servidores de Discord, ubicados en Estados Unidos: dicha transferencia fuera de la Unión Europea está amparada por las garantías adecuadas previstas por Discord, en particular un acuerdo de tratamiento de datos y cláusulas contractuales tipo. El editor sigue siendo el único destinatario del contenido de sus mensajes.",
+              "Conservación: su mensaje se conserva durante la duración del intercambio y después se suprime. Puede solicitar su supresión en cualquier momento ejerciendo su derecho a la supresión.",
+            ],
+          },
+          {
+            type: "p",
+            text: "Verificación antispam (Cloudflare Turnstile). El formulario va precedido de una verificación que distingue a las personas de los robots. Está diseñada para permanecer invisible, incluso cuando su navegador carece de las interfaces que suele utilizar: el prestador trata entonces su dirección IP y datos técnicos del navegador, únicamente para producir un token de validación. El editor no conserva ningún dato de esta verificación.",
+          },
+          {
+            type: "list",
+            items: [
+              "Base jurídica: interés legítimo del editor para proteger el servicio frente a envíos automatizados.",
+              "Destinatario: Cloudflare, Inc.",
+              "Conservación: el prestador conserva los datos solo durante la verificación, sin cesión a terceros con fines comerciales.",
             ],
           },
           {
@@ -320,7 +356,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
           },
           {
             type: "p",
-            text: "Alojamiento. El sitio está alojado por Amber Hosting, que conserva los registros técnicos de conexión necesarios para la seguridad del servicio.",
+            text: "Alojamiento. El sitio está alojado en una infraestructura gestionada por el propio editor, que conserva los registros técnicos de conexión necesarios para la seguridad del servicio.",
           },
         ],
       },
@@ -360,7 +396,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Los rastreadores utilizados para la medición de audiencia están exentos de consentimiento cuando cumplen las condiciones establecidas por la CNIL, en particular la ausencia de cruce con otros datos y una conservación limitada a la duración de la sesión.",
+            text: "El sitio no implanta ningún rastreador de medición de audiencia ni realiza ningún cruce con datos procedentes de otros servicios. Los únicos datos técnicos tratados son los necesarios para el funcionamiento del sitio y la seguridad del servicio.",
           },
           {
             type: "p",
@@ -400,11 +436,11 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Die Website bietet weder Registrierung noch Benutzerkonto noch Kontaktformular an. Beim Besuch werden Sie nicht nach Daten gefragt.",
+            text: "Die Website bietet weder Registrierung noch Benutzerkonto an. Das blosse Aufrufen einer Seite fragt keine Daten von Ihnen ab: Die nachstehend beschriebenen Daten werden nur erhoben, wenn Sie das Kontaktformular oder das Messaging-Widget aktiv nutzen.",
           },
           {
             type: "p",
-            text: "Die Website nutzt jedoch Dienste Dritter, die technische Daten über Sie verarbeiten können: Reichweitenmessung und Instant Messaging. Diese Verarbeitungen werden nachstehend beschrieben.",
+            text: "Die Website nutzt jedoch Dienste Dritter, die technische Daten über Sie verarbeiten können: Spam-Prüfung und Instant Messaging. Diese Verarbeitungen werden nachstehend beschrieben.",
           },
         ],
       },
@@ -413,14 +449,26 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Reichweitenmessung. Die Website nutzt Vercel Analytics und Vercel Speed Insights, die aggregierte technische Daten erheben: aufgerufene Seiten, Ladeleistung, gekürzte IP-Adresse, User-Agent, Land oder Region. Diese Werkzeuge sollen Verkehrsstatistiken erzeugen, ohne Personen zu identifizieren.",
+            text: "Kontaktformular. Die Website stellt ein Formular bereit, über das Sie dem Herausgeber schreiben können. Es erhebt ausschließlich Ihren Namen, Ihre E-Mail-Adresse und den Inhalt Ihrer Nachricht. Weitere Angaben werden nicht abgefragt, und das Formular speichert nichts in Ihrem Browser.",
           },
           {
             type: "list",
             items: [
-              "Rechtsgrundlage: berechtigtes Interesse des Herausgebers, die Nutzung der Website zu verstehen und zu verbessern.",
-              "Empfänger: Vercel Inc.",
-              "Speicherdauer: ein vom Dienstleister gewählter begrenzter Zeitraum, in der Regel unter vierzehn Monaten, anschließend Löschung oder Anonymisierung.",
+              "Rechtsgrundlage: Einwilligung, erteilt durch freiwilliges Absenden des Formulars.",
+              "Empfänger: der Herausgeber, über einen Discord-Webhook (Discord Inc., eine US-amerikanische Gesellschaft). Ihre Nachricht wird an die Server von Discord in den Vereinigten Staaten übermittelt: Diese Übermittlung außerhalb der Europäischen Union wird durch die von Discord vorgesehenen geeigneten Garantien abgedeckt, insbesondere durch eine Auftragsverarbeitungsvereinbarung und Standardvertragsklauseln. Der Herausgeber bleibt der einzige Empfänger des Inhalts Ihrer Nachrichten.",
+              "Speicherdauer: Ihre Nachricht wird für die Dauer des Schriftwechsels aufbewahrt und anschließend gelöscht. Sie können ihre Löschung jederzeit durch Ausübung Ihres Rechts auf Löschung verlangen.",
+            ],
+          },
+          {
+            type: "p",
+            text: "Spam-Prüfung (Cloudflare Turnstile). Dem Formular ist eine Prüfung vorgeschaltet, die menschliche Besucher von Bots unterscheidet. Sie ist so gestaltet, dass sie unsichtbar bleibt, auch wenn Ihr Browser über die üblicherweise genutzten Schnittstellen nicht verfügt: Der Anbieter verarbeitet dann Ihre IP-Adresse und technische Browserdaten, ausschließlich zur Erzeugung eines Prüftokens. Der Herausgeber bewahrt aus dieser Prüfung keine Daten auf.",
+          },
+          {
+            type: "list",
+            items: [
+              "Rechtsgrundlage: berechtigtes Interesse des Herausgebers, den Dienst vor automatisierten Einsendungen zu schützen.",
+              "Empfänger: Cloudflare, Inc.",
+              "Speicherdauer: Der Anbieter bewahrt die Daten nur für die Dauer der Prüfung auf, ohne Weitergabe an Dritte zu kommerziellen Zwecken.",
             ],
           },
           {
@@ -445,7 +493,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
           },
           {
             type: "p",
-            text: "Hosting. Die Website wird von Amber Hosting gehostet, das die für die Sicherheit des Dienstes erforderlichen technischen Verbindungsprotokolle aufbewahrt.",
+            text: "Hosting. Die Website wird auf einer vom Herausgeber selbst verwalteten Infrastruktur gehostet, die die für die Sicherheit des Dienstes erforderlichen technischen Verbindungsprotokolle aufbewahrt.",
           },
         ],
       },
@@ -485,7 +533,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Tracker zur Reichweitenmessung sind von der Einwilligung befreit, wenn sie die von der CNIL festgelegten Bedingungen erfüllen, insbesondere keine Verknüpfung mit anderen Daten und eine Speicherung nur für die Dauer der Sitzung.",
+            text: "Die Website setzt keinen Reichweitenmess-Tracker und führt keine Verknüpfung mit Daten anderer Dienste durch. Verarbeitet werden nur die technischen Daten, die für den Betrieb der Website und die Sicherheit des Dienstes erforderlich sind.",
           },
           {
             type: "p",
@@ -525,11 +573,11 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Il sito non offre registrazione, account utente né moduli di contatto. Durante la visita non vi vengono richiesti dati.",
+            text: "Il sito non offre registrazione né account utente. La semplice consultazione di una pagina non vi chiede alcun dato: i dati descritti di seguito vengono raccolti solo se utilizzate attivamente il modulo di contatto o il widget di messaggistica.",
           },
           {
             type: "p",
-            text: "Il sito fa tuttavia ricorso a servizi di terzi che possono trattare dati tecnici riguardanti voi: misurazione del pubblico e messaggistica istantanea. Tali trattamenti sono descritti di seguito.",
+            text: "Il sito fa tuttavia ricorso a servizi di terzi che possono trattare dati tecnici riguardanti voi: verifica antispam e messaggistica istantanea. Tali trattamenti sono descritti di seguito.",
           },
         ],
       },
@@ -538,14 +586,26 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Misurazione del pubblico. Il sito utilizza Vercel Analytics e Vercel Speed Insights, che raccolgono dati tecnici aggregati: pagine consultate, prestazioni di caricamento, indirizzo IP troncato, user agent, paese o regione. Questi strumenti servono a produrre statistiche di traffico senza identificare le persone.",
+            text: "Modulo di contatto. Il sito mette a disposizione un modulo che vi permette di scrivere all'editore. Raccoglie soltanto il vostro nome, il vostro indirizzo email e il contenuto del vostro messaggio. Non viene richiesta alcuna altra informazione.",
           },
           {
             type: "list",
             items: [
-              "Base giuridica: legittimo interesse dell'editore a comprendere l'uso del sito e a migliorarlo.",
-              "Destinatario: Vercel Inc.",
-              "Conservazione: un periodo limitato scelto dal fornitore, in genere inferiore a quattordici mesi, poi cancellazione o anonimizzazione.",
+              "Base giuridica: consenso, rilasciato con l'invio volontario del modulo.",
+              "Destinatario: l'editore, tramite un webhook di Discord (Discord Inc., società di diritto degli Stati Uniti). Il vostro messaggio viene trasmesso ai server di Discord, situati negli Stati Uniti: tale trasferimento al di fuori dell'Unione europea è disciplinato dalle garanzie appropriate previste da Discord, in particolare un accordo sul trattamento dei dati e clausole contrattuali standard. L'editore resta l'unico destinatario del contenuto dei vostri messaggi.",
+              "Conservazione: il vostro messaggio viene conservato per la durata della conversazione e poi cancellato. Potete chiederne la cancellazione in qualsiasi momento esercitando il diritto alla cancellazione.",
+            ],
+          },
+          {
+            type: "p",
+            text: "Verifica antispam (Cloudflare Turnstile). Il modulo è preceduto da una verifica che distingue le persone dai bot. È progettata per restare invisibile, anche quando il browser non dispone delle interfacce che normalmente utilizza: il fornitore tratta allora il vostro indirizzo IP e dati tecnici del browser, unicamente per produrre un token di validazione. L'editore non conserva alcun dato derivante da questa verifica.",
+          },
+          {
+            type: "list",
+            items: [
+              "Base giuridica: legittimo interesse dell'editore a proteggere il servizio dagli invii automatizzati.",
+              "Destinatario: Cloudflare, Inc.",
+              "Conservazione: il fornitore conserva i dati solo per la durata della verifica, senza cessione a terzi per finalità commerciali.",
             ],
           },
           {
@@ -570,7 +630,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
           },
           {
             type: "p",
-            text: "Hosting. Il sito è ospitato da Amber Hosting, che conserva i registri tecnici di connessione necessari alla sicurezza del servizio.",
+            text: "Hosting. Il sito è ospitato su un'infrastruttura gestita direttamente dall'editore, che conserva i registri tecnici di connessione necessari alla sicurezza del servizio.",
           },
         ],
       },
@@ -610,7 +670,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "I tracciatori utilizzati per la misurazione del pubblico sono esenti dal consenso quando rispettano le condizioni poste dal CNIL, in particolare l'assenza di collegamento con altri dati e una conservazione limitata alla durata della sessione.",
+            text: "Il sito non imposta alcun tracciatore per la misurazione del pubblico e non effettua alcun collegamento con dati provenienti da altri servizi. Gli unici dati tecnici trattati sono quelli necessari al funzionamento del sito e alla sicurezza del servizio.",
           },
           {
             type: "p",
@@ -650,11 +710,11 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "O sítio não oferece registo, conta de utilizador nem formulário de contacto. Não lhe são pedidos dados durante a visita.",
+            text: "O sítio não oferece registo nem conta de utilizador. A simples consulta de uma página não lhe pede qualquer dado: os dados descritos abaixo só são recolhidos se utilizar activamente o formulário de contacto ou o widget de mensagens.",
           },
           {
             type: "p",
-            text: "Ainda assim, o sítio recorre a serviços de terceiros que podem tratar dados técnicos a si respeitantes: medição de audiência e mensagens instantâneas. Esses tratamentos são descritos abaixo.",
+            text: "Ainda assim, o sítio recorre a serviços de terceiros que podem tratar dados técnicos a si respeitantes: verificação antisspam e mensagens instantâneas. Esses tratamentos são descritos abaixo.",
           },
         ],
       },
@@ -663,14 +723,26 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Medição de audiência. O sítio utiliza Vercel Analytics e Vercel Speed Insights, que recolhem dados técnicos agregados: páginas consultadas, desempenho de carregamento, endereço IP truncado, agente de utilizador, país ou região. Estas ferramentas servem para produzir estatísticas de tráfego sem identificar pessoas.",
+            text: "Formulário de contacto. O sítio disponibiliza um formulário que lhe permite escrever. Recolhe apenas o seu nome, o seu endereço de correio electrónico e o conteúdo da sua mensagem. Não é pedida qualquer outra informação.",
           },
           {
             type: "list",
             items: [
-              "Fundamento jurídico: interesse legítimo do editor para compreender a utilização do sítio e melhorá-lo.",
-              "Destinatário: Vercel Inc.",
-              "Conservação: um período limitado escolhido pelo prestador, normalmente inferior a catorze meses, seguido de supressão ou anonimização.",
+              "Fundamento jurídico: consentimento, prestado através do envio voluntário do formulário.",
+              "Destinatário: o editor, através de um webhook do Discord (Discord Inc., sociedade de direito norte-americano). A sua mensagem é transmitida para os servidores do Discord, situados nos Estados Unidos: essa transferência para fora da União Europeia está abrangida pelas garantias adequadas previstas pelo Discord, nomeadamente um acordo de tratamento de dados e cláusulas contratuais-tipo. O editor continua a ser o único destinatário do conteúdo das suas mensagens.",
+              "Conservação: a sua mensagem é conservada durante a duração da conversa e depois eliminada. Pode pedir a sua eliminação a qualquer momento exerciendo o seu direito ao apagamento.",
+            ],
+          },
+          {
+            type: "p",
+            text: "Verificação antisspam (Cloudflare Turnstile). O formulário é precedido de uma verificação que distingue as pessoas dos robôs. Foi concebida para permanecer invisível, mesmo quando o seu navegador não dispõe das interfaces que normalmente utiliza: o prestador trata então o seu endereço IP e dados técnicos do navegador, unicamente para produzir um token de validação. O editor não conserva quaisquer dados provenientes dessa verificação.",
+          },
+          {
+            type: "list",
+            items: [
+              "Fundamento jurídico: interesse legítimo do editor em proteger o serviço contra envios automatizados.",
+              "Destinatário: Cloudflare, Inc.",
+              "Conservação: o prestador conserva os dados apenas durante a verificação, sem cessão a terceiros para fins comerciais.",
             ],
           },
           {
@@ -695,7 +767,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
           },
           {
             type: "p",
-            text: "Alojamento. O sítio está alojado pela Amber Hosting, que conserva os registos técnicos de ligação necessários à segurança do serviço.",
+            text: "Alojamento. O sítio está alojado numa infraestrutura gerida pelo próprio editor, que conserva os registos técnicos de ligação necessários à segurança do serviço.",
           },
         ],
       },
@@ -735,7 +807,7 @@ export const privacyPolicies: Record<Locale, LegalPage> = {
         blocks: [
           {
             type: "p",
-            text: "Os rastreadores utilizados para a medição de audiência estão dispensados de consentimento quando cumprem as condições definidas pela CNIL, nomeadamente a ausência de cruzamento com outros dados e uma conservação limitada à duração da sessão.",
+            text: "O sítio não implanta qualquer rastreador de medição de audiência nem faz qualquer cruzamento com dados provenientes de outros serviços. Os únicos dados técnicos tratados são os necessários ao funcionamento do sítio e à segurança do serviço.",
           },
           {
             type: "p",
