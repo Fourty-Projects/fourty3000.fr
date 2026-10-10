@@ -36,6 +36,7 @@ const dictionaries = {
     nav: {
       blog: "Blog",
       projects: "Projets",
+      contact: "Contact",
       language: "Changer de langue",
     },
     home: {
@@ -72,6 +73,34 @@ const dictionaries = {
     notice: {
       frenchOnly: "Cette page n'est disponible qu'en français.",
     },
+    contact: {
+      title: "Me contacter",
+      intro:
+        "Une question, une idée, un problème à signaler ? Écrivez-moi, je réponds.",
+      name: "Nom",
+      email: "E-mail",
+      message: "Message",
+      namePlaceholder: "Votre nom",
+      emailPlaceholder: "vous@exemple.fr",
+      messagePlaceholder: "Votre message",
+      submit: "Envoyer",
+      sending: "Envoi en cours…",
+      success:
+        "Message envoyé. Merci ! Je vous réponds dès que possible.",
+      errorGeneric:
+        "L'envoi a échoué. Réessayez, ou écrivez-moi directement par e-mail.",
+      errorWebhookMissing:
+        "Le formulaire est momentanément indisponible. Écrivez-moi par e-mail.",
+      errorCaptcha: "La vérification anti-spam a échoué. Rechargez la page.",
+      errorRateLimit:
+        "Trop d'envois depuis ce navigateur. Réessayez dans quelques minutes.",
+      captchaLabel: "Vérification anti-spam",
+      fieldRequired: "Champ obligatoire",
+      emailInvalid: "Adresse e-mail invalide",
+      messageTooShort: "Le message doit faire au moins 10 caractères",
+      rateLimited: "Trop de tentatives.",
+      honeypotLabel: "Ne pas remplir ce champ",
+    },
   },
 
   en: {
@@ -98,6 +127,7 @@ const dictionaries = {
     nav: {
       blog: "Blog",
       projects: "Projects",
+      contact: "Contact",
       language: "Change language",
     },
     home: {
@@ -134,6 +164,33 @@ const dictionaries = {
     notice: {
       frenchOnly: "This page is only available in French.",
     },
+    contact: {
+      title: "Contact me",
+      intro:
+        "A question, an idea, something to report? Write to me, I answer.",
+      name: "Name",
+      email: "Email",
+      message: "Message",
+      namePlaceholder: "Your name",
+      emailPlaceholder: "you@example.com",
+      messagePlaceholder: "Your message",
+      submit: "Send",
+      sending: "Sending…",
+      success: "Message sent. Thank you! I reply as soon as possible.",
+      errorGeneric:
+        "Sending failed. Try again, or write to me directly by email.",
+      errorWebhookMissing:
+        "The form is temporarily unavailable. Please write to me by email.",
+      errorCaptcha: "Spam check failed. Reload the page.",
+      errorRateLimit:
+        "Too many sends from this browser. Try again in a few minutes.",
+      captchaLabel: "Spam check",
+      fieldRequired: "Required field",
+      emailInvalid: "Invalid email address",
+      messageTooShort: "The message must be at least 10 characters",
+      rateLimited: "Too many attempts.",
+      honeypotLabel: "Do not fill this field",
+    },
   },
 
   es: {
@@ -162,6 +219,7 @@ const dictionaries = {
     nav: {
       blog: "Blog",
       projects: "Proyectos",
+      contact: "Contacto",
       language: "Cambiar de idioma",
     },
     home: {
@@ -198,6 +256,34 @@ const dictionaries = {
     notice: {
       frenchOnly: "Esta página solo está disponible en francés.",
     },
+    contact: {
+      title: "Contacto",
+      intro:
+        "¿Una pregunta, una idea, algo que señalar? Escríbeme y te respondo.",
+      name: "Nombre",
+      email: "Correo electrónico",
+      message: "Mensaje",
+      namePlaceholder: "Tu nombre",
+      emailPlaceholder: "tu@ejemplo.es",
+      messagePlaceholder: "Tu mensaje",
+      submit: "Enviar",
+      sending: "Enviando…",
+      success: "Mensaje enviado. ¡Gracias! Responderé lo antes posible.",
+      errorGeneric:
+        "El envío falló. Inténtalo de nuevo o escríbeme directamente por correo.",
+      errorWebhookMissing:
+        "El formulario no está disponible por ahora. Escríbeme por correo.",
+      errorCaptcha:
+        "La verificación antirrobó falló. Recarga la página.",
+      errorRateLimit:
+        "Demasiados envíos desde este navegador. Inténtalo de nuevo en unos minutos.",
+      captchaLabel: "Verificación antirrobó",
+      fieldRequired: "Campo obligatorio",
+      emailInvalid: "Correo electrónico no válido",
+      messageTooShort: "El mensaje debe tener al menos 10 caracteres",
+      rateLimited: "Demasiados intentos.",
+      honeypotLabel: "No rellenes este campo",
+    },
   },
 
   de: {
@@ -227,6 +313,7 @@ const dictionaries = {
     nav: {
       blog: "Blog",
       projects: "Projekte",
+      contact: "Kontakt",
       language: "Sprache wechseln",
     },
     home: {
@@ -263,6 +350,35 @@ const dictionaries = {
     notice: {
       frenchOnly: "Diese Seite ist nur auf Französisch verfügbar.",
     },
+    contact: {
+      title: "Kontakt",
+      intro:
+        "Eine Frage, eine Idee, etwas zu melden? Schreiben Sie mir, ich antworte.",
+      name: "Name",
+      email: "E-Mail",
+      message: "Nachricht",
+      namePlaceholder: "Ihr Name",
+      emailPlaceholder: "sie@beispiel.de",
+      messagePlaceholder: "Ihre Nachricht",
+      submit: "Senden",
+      sending: "Wird gesendet…",
+      success:
+        "Nachricht gesendet. Danke! Ich antworte so bald wie möglich.",
+      errorGeneric:
+        "Der Versand ist fehlgeschlagen. Versuchen Sie es erneut oder schreiben Sie mir direkt per E-Mail.",
+      errorWebhookMissing:
+        "Das Formular ist derzeit nicht verfügbar. Bitte schreiben Sie mir per E-Mail.",
+      errorCaptcha:
+        "Die Spam-Prüfung ist fehlgeschlagen. Laden Sie die Seite neu.",
+      errorRateLimit:
+        "Zu viele Sendungen aus diesem Browser. Versuchen Sie es in wenigen Minuten erneut.",
+      captchaLabel: "Spam-Prüfung",
+      fieldRequired: "Pflichtfeld",
+      emailInvalid: "Ungültige E-Mail-Adresse",
+      messageTooShort: "Die Nachricht muss mindestens 10 Zeichen lang sein",
+      rateLimited: "Zu viele Versuche.",
+      honeypotLabel: "Füllen Sie dieses Feld nicht aus",
+    },
   },
 
   it: {
@@ -291,6 +407,7 @@ const dictionaries = {
     nav: {
       blog: "Blog",
       projects: "Progetti",
+      contact: "Contatti",
       language: "Cambia lingua",
     },
     home: {
@@ -327,6 +444,34 @@ const dictionaries = {
     notice: {
       frenchOnly: "Questa pagina è disponibile solo in francese.",
     },
+    contact: {
+      title: "Contatti",
+      intro:
+        "Una domanda, un'idea, qualcosa da segnalare? Scrivimi, rispondo.",
+      name: "Nome",
+      email: "E-mail",
+      message: "Messaggio",
+      namePlaceholder: "Il tuo nome",
+      emailPlaceholder: "tu@esempio.it",
+      messagePlaceholder: "Il tuo messaggio",
+      submit: "Invia",
+      sending: "Invio in corso…",
+      success: "Messaggio inviato. Grazie! Rispondo il prima possibile.",
+      errorGeneric:
+        "Invio non riuscito. Riprova o scrivimi direttamente via e-mail.",
+      errorWebhookMissing:
+        "Il modulo non è disponibile al momento. Scrivimi via e-mail.",
+      errorCaptcha:
+        "La verifica antispam non è riuscita. Ricarica la pagina.",
+      errorRateLimit:
+        "Troppi invii da questo browser. Riprova tra qualche minuto.",
+      captchaLabel: "Verifica antispam",
+      fieldRequired: "Campo obbligatorio",
+      emailInvalid: "Indirizzo e-mail non valido",
+      messageTooShort: "Il messaggio deve contenere almeno 10 caratteri",
+      rateLimited: "Troppi tentativi.",
+      honeypotLabel: "Non compilare questo campo",
+    },
   },
 
   pt: {
@@ -355,6 +500,7 @@ const dictionaries = {
     nav: {
       blog: "Blog",
       projects: "Projetos",
+      contact: "Contacto",
       language: "Mudar de idioma",
     },
     home: {
@@ -390,6 +536,34 @@ const dictionaries = {
     },
     notice: {
       frenchOnly: "Esta página só está disponível em francês.",
+    },
+    contact: {
+      title: "Contacto",
+      intro:
+        "Uma pergunta, uma ideia, algo a assinalar? Escreva-me, eu respondo.",
+      name: "Nome",
+      email: "E-mail",
+      message: "Mensagem",
+      namePlaceholder: "O seu nome",
+      emailPlaceholder: "voce@exemplo.pt",
+      messagePlaceholder: "A sua mensagem",
+      submit: "Enviar",
+      sending: "A enviar…",
+      success: "Mensagem enviada. Obrigado! Respondo assim que possível.",
+      errorGeneric:
+        "O envio falhou. Tente novamente ou escreva-me diretamente por e-mail.",
+      errorWebhookMissing:
+        "O formulário está temporariamente indisponível. Escreva-me por e-mail.",
+      errorCaptcha:
+        "A verificação antisspam falhou. Recarregue a página.",
+      errorRateLimit:
+        "Demasiados envios deste navegador. Tente novamente dentro de alguns minutos.",
+      captchaLabel: "Verificação antisspam",
+      fieldRequired: "Campo obrigatório",
+      emailInvalid: "Endereço de e-mail inválido",
+      messageTooShort: "A mensagem deve ter pelo menos 10 caracteres",
+      rateLimited: "Demasiadas tentativas.",
+      honeypotLabel: "Não preencha este campo",
     },
   },
 } satisfies Record<Locale, Record<string, unknown>>;

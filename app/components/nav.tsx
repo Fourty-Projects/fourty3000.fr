@@ -8,6 +8,7 @@ import type { Locale } from "../lib/i18n";
 const navItems = {
   "/blog": { key: "blog" },
   "/projects": { key: "projects" },
+  "/contact": { key: "contact" },
 } as const;
 
 export function Navbar({ locale }: { locale: Locale }) {

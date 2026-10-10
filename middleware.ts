@@ -40,8 +40,9 @@ export const config = {
      * - les fichiers de Next.js (statique, image, data)
      * - les assets publics (toutes extensions possibles)
      * - les routes techniques deja servies a la racine (og, feed, sitemap, robots)
+     * - l'API du formulaire de contact, qui n'a pas de segment de langue
      * - le widget et les domaines tiers
      */
-    "/((?!_next/|favicon\\.ico|robots\\.txt|sitemap\\.xml|og$|og/|feed|.*\\.[a-zA-Z0-9]+$).*)",
+    "/((?!_next/|favicon\\.ico|robots\\.txt|sitemap\\.xml|og$|og/|feed|api/|.*\\.[a-zA-Z0-9]+$).*)",
   ],
 };

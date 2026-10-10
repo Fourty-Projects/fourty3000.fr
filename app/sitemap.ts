@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "blog",
     "projects",
+    "contact",
     "mentions-legales",
     "cgu",
     "politique-confidentialite",

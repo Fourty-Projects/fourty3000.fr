@@ -27,7 +27,13 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files
+# .env contient les secrets (webhook, cles Turnstile) : jamais versionne.
 .env
+.env*.local
+
+# .env.example documente les variables attendues sans aucune valeur :
+# il doit rester versionne.
+!.env.example
 
 # vercel
 .vercel
