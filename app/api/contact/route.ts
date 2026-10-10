@@ -138,12 +138,6 @@ async function forwardToWebhook(payload: Record<string, string>) {
         url: "https://fourty3000.fr/fr/contact",
         // Vert : message envoye avec succes.
         color: 0x2ecc71,
-        // Bandeau d'en-tete : rend le bloc immediatement identifiable
-        // dans un salon ou circulent d'autres messages.
-        image: {
-          url: "https://fourty3000.fr/opengraph-image.png",
-          height: 100,
-        },
         fields: [
           {
             name: "👤 Nom",
