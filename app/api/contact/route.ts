@@ -93,10 +93,10 @@ async function verifyCaptcha(token: string, ip: string): Promise<boolean> {
 /**
  * Envoie le message au webhook configure.
  *
- * Le format JSON "generic" ne convient pas a tous les services : Discord
- * attend la propriete `content`, Slack attend `text`, et un simple collecteur
- * peut accepter n'importe quoi. On envoie donc un objet qui satisfait les
- * trois, en gardant les champs separes pour un collecteur JSON.
+ * Discord sait afficher un "embed" : un bloc colore avec un titre, des
+ * champs et un pied de page, beaucoup plus lisible qu'un texte brut.
+ * On construit un embed, tout en conservant `content` et `text` pour que
+ * la notification apparaisse dans la liste des salons.
  */
 async function forwardToWebhook(payload: Record<string, string>) {
   const webhookUrl = process.env.CONTACT_WEBHOOK_URL;
@@ -104,20 +104,57 @@ async function forwardToWebhook(payload: Record<string, string>) {
     return { ok: false, configured: false, detail: "aucune URL configuree" };
   }
 
-  // Discord renvoie 400 si la charge utile ne contient pas `content`.
-  // Un nom d'hote `discord.com` est donc la preuve qu'on parle a Discord.
+  // Discord tronque un embed au-dela de 1024 caracteres pour la description,
+  // et de 256 pour un champ. On reste large en dessous.
+  const truncate = (text: string, max = 1024) =>
+    text.length > max ? `${text.slice(0, max - 1)}…` : text;
+
   const body = {
-    // Discord
-    content: [
-      "**Nouveau message depuis fourty3000.fr**",
-      `**Nom :** ${payload.name}`,
-      `**E-mail :** ${payload.email}`,
-      "",
-      payload.message,
-    ].join("\n"),
-    // Slack et services compatibles
+    username: "fourty3000.fr",
+    // L'icone du site sert d'avatar au webhook.
+    avatar_url: "https://fourty3000.fr/logo.png",
+
+    // Notification affichee dans la liste des salons.
+    content: `📬 Nouveau message de ${truncate(payload.name, 80)}`,
+
+    // Slack et services compatibles.
     text: `Nouveau message de ${payload.name} (${payload.email}) : ${payload.message}`,
-    // Collecteurs JSON generiques
+
+    embeds: [
+      {
+        title: "📨 Nouveau message",
+        description: truncate(payload.message),
+        color: 0x2ecc71,
+        fields: [
+          {
+            name: "👤 Nom",
+            value: truncate(payload.name, 256),
+            inline: true,
+          },
+          {
+            name: "✉️ E-mail",
+            value: truncate(payload.email, 256),
+            inline: true,
+          },
+          {
+            name: "🌐 Origine",
+            value: payload.source,
+            inline: true,
+          },
+        ],
+        footer: {
+          text: `Envoyé le ${new Date().toLocaleString("fr-FR", {
+            dateStyle: "short",
+            timeStyle: "short",
+            timeZone: "Europe/Paris",
+          })}`,
+        },
+        // Horodatage affiche en bas a droite de l'embed.
+        timestamp: new Date().toISOString(),
+      },
+    ],
+
+    // Champs separes, pour un collecteur JSON qui ignore les embeds.
     source: payload.source,
     name: payload.name,
     email: payload.email,
