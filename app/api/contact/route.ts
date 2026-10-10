@@ -90,20 +90,63 @@ async function verifyCaptcha(token: string, ip: string): Promise<boolean> {
   }
 }
 
-/** Envoie le message au webhook configure. */
+/**
+ * Envoie le message au webhook configure.
+ *
+ * Le format JSON "generic" ne convient pas a tous les services : Discord
+ * attend la propriete `content`, Slack attend `text`, et un simple collecteur
+ * peut accepter n'importe quoi. On envoie donc un objet qui satisfait les
+ * trois, en gardant les champs separes pour un collecteur JSON.
+ */
 async function forwardToWebhook(payload: Record<string, string>) {
   const webhookUrl = process.env.CONTACT_WEBHOOK_URL;
   if (!webhookUrl) {
-    return { ok: false, configured: false };
+    return { ok: false, configured: false, detail: "aucune URL configuree" };
   }
 
-  const response = await fetch(webhookUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+  // Discord renvoie 400 si la charge utile ne contient pas `content`.
+  // Un nom d'hote `discord.com` est donc la preuve qu'on parle a Discord.
+  const body = {
+    // Discord
+    content: [
+      "**Nouveau message depuis fourty3000.fr**",
+      `**Nom :** ${payload.name}`,
+      `**E-mail :** ${payload.email}`,
+      "",
+      payload.message,
+    ].join("\n"),
+    // Slack et services compatibles
+    text: `Nouveau message de ${payload.name} (${payload.email}) : ${payload.message}`,
+    // Collecteurs JSON generiques
+    source: payload.source,
+    name: payload.name,
+    email: payload.email,
+    message: payload.message,
+  };
 
-  return { ok: response.ok, configured: true };
+  try {
+    const response = await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      // Le detail aide a diagnostiquer depuis les journaux du serveur.
+      // On ne renvoie jamais ce texte au navigateur.
+      const detail = await response.text().catch(() => "");
+      console.error(
+        `[contact] webhook ${response.status} ${response.statusText} :`,
+        detail.slice(0, 500)
+      );
+      return { ok: false, configured: true, detail: `${response.status}` };
+    }
+
+    return { ok: true, configured: true };
+  } catch (error) {
+    console.error("[contact] webhook injoignable :", error);
+    return { ok: false, configured: true, detail: "reseau" };
+  }
 }
 
 export async function POST(request: NextRequest) {
