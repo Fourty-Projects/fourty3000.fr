@@ -40,7 +40,7 @@ const dictionaries = {
       language: "Changer de langue",
     },
     home: {
-      tagline: "Développeur & passionné par l'IA",
+      tagline: "Développeur",
       introStart: "Je partage ici mes",
       projectsLink: "projets open source",
       introMiddle: "et mes",
@@ -131,7 +131,7 @@ const dictionaries = {
       language: "Change language",
     },
     home: {
-      tagline: "Developer & AI enthusiast",
+      tagline: "Developer",
       introStart: "I share my",
       projectsLink: "open source projects",
       introMiddle: "and my",
@@ -223,7 +223,7 @@ const dictionaries = {
       language: "Cambiar de idioma",
     },
     home: {
-      tagline: "Desarrollador y apasionado de la IA",
+      tagline: "Desarrollador",
       introStart: "Comparto aquí mis",
       projectsLink: "proyectos de código abierto",
       introMiddle: "y mis",
@@ -317,7 +317,7 @@ const dictionaries = {
       language: "Sprache wechseln",
     },
     home: {
-      tagline: "Entwickler und KI-Enthusiast",
+      tagline: "Entwickler",
       introStart: "Ich teile hier meine",
       projectsLink: "Open-Source-Projekte",
       introMiddle: "und meine",
@@ -411,7 +411,7 @@ const dictionaries = {
       language: "Cambia lingua",
     },
     home: {
-      tagline: "Sviluppatore e appassionato di IA",
+      tagline: "Sviluppatore",
       introStart: "Qui condivido i miei",
       projectsLink: "progetti open source",
       introMiddle: "e le mie",
@@ -504,7 +504,7 @@ const dictionaries = {
       language: "Mudar de idioma",
     },
     home: {
-      tagline: "Programador e apaixonado por IA",
+      tagline: "Programador",
       introStart: "Partilho aqui os meus",
       projectsLink: "projetos de código aberto",
       introMiddle: "e as minhas",
