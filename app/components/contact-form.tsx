@@ -56,7 +56,7 @@ const inputClass =
   "dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 " +
   "dark:placeholder:text-neutral-500 dark:focus:border-neutral-500";
 
-export default function ContactForm({ labels, locale }: ContactFormProps) {
+export function ContactForm({ labels, locale }: ContactFormProps) {
   const [status, setStatus] = React.useState<Status>("idle");
   const [error, setError] = React.useState<string>("");
   const [captchaToken, setCaptchaToken] = React.useState("");
